@@ -1,0 +1,52 @@
+PODS:
+  - Charts (4.1.0):
+    - Charts/Core (= 4.1.0)
+  - Charts/Core (4.1.0):
+    - SwiftAlgorithms (~> 1.0)
+  - KDCircularProgress (1.5.4)
+  - OptimizedSQLCipher (1.2.2)
+  - SnapKit (5.6.0)
+  - SQLiteRepair (1.2.2):
+    - OptimizedSQLCipher
+  - SwiftAlgorithms (1.0.0)
+  - WCDBSwift (1.0.2):
+    - OptimizedSQLCipher
+    - SQLiteRepair
+
+DEPENDENCIES:
+  - Charts (from `https://github.com/danielgindi/Charts.git`, branch `master`)
+  - KDCircularProgress
+  - SnapKit
+  - WCDBSwift
+
+SPEC REPOS:
+  trunk:
+    - KDCircularProgress
+    - OptimizedSQLCipher
+    - SnapKit
+    - SQLiteRepair
+    - SwiftAlgorithms
+    - WCDBSwift
+
+EXTERNAL SOURCES:
+  Charts:
+    :branch: master
+    :git: https://github.com/danielgindi/Charts.git
+
+CHECKOUT OPTIONS:
+  Charts:
+    :commit: d8d96d87b1044dd93d6fe38b0ff8e49e3734b9d5
+    :git: https://github.com/danielgindi/Charts.git
+
+SPEC CHECKSUMS:
+  Charts: 354f86803d11d9c35de280587fef50d1af063978
+  KDCircularProgress: 98200c6b8e85d22bc04eb644721d3b1e12b0686b
+  OptimizedSQLCipher: 92a1bf5cc94139e1da49de9c883ff9891bcd2a37
+  SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
+  SQLiteRepair: 65ac4472667ac8cdeb93c3765f2fcae4dd259204
+  SwiftAlgorithms: 38dda4731d19027fdeee1125f973111bf3386b53
+  WCDBSwift: 6687dc2d4bebce2b237017ca367730f5f8409e67
+
+PODFILE CHECKSUM: 9d7e42a46cd56ec3025ecce2263ccc4cb3351ac3
+
+COCOAPODS: 1.11.3

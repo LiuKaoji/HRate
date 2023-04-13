@@ -1,0 +1,6 @@
+framework module Pods_HeartRate {
+  umbrella header "Pods-HeartRate-umbrella.h"
+
+  export *
+  module * { export * }
+}
