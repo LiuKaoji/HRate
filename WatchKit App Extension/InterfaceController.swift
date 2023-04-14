@@ -43,17 +43,17 @@ class InterfaceController: WKInterfaceController {
     
     private var currentQuery: HKAnchoredObjectQuery?
     
-    private var messageHandler: WatchConnectivityManager.MessageHandler?
+    private var messageHandler: WatchConnector.MessageHandler?
     
     override func awake(withContext context: Any?) {
         super.awake(withContext: context)
         
-        messageHandler = WatchConnectivityManager.MessageHandler { [weak self] message in
+        messageHandler = WatchConnector.MessageHandler { [weak self] message in
             if message[.workoutStop] != nil {
                 self?.stopWorkout()
             }
         }
-        WatchConnectivityManager.shared.addMessageHandler(messageHandler!)
+        WatchConnector.shared.addMessageHandler(messageHandler!)
     }
     
     deinit {
@@ -61,10 +61,10 @@ class InterfaceController: WKInterfaceController {
     }
     
     
-    // we can only get real time heart rate data when a workout session is running.
+    // 获取实时心率
     func startWorkout(with configuration: HKWorkoutConfiguration? = nil) {
         
-        // stop current workout if have
+        // 停止workoutsession
         if workoutManager.isWorkoutSessionRunning {
             workoutManager.stopWorkout()
         }
@@ -78,7 +78,7 @@ class InterfaceController: WKInterfaceController {
         do {
             try workoutManager.startWorkout(with: configuration ?? defaultWorkoutConfiguration)
             
-            WatchConnectivityManager.shared.send([.workoutStart : true])
+            WatchConnector.shared.send([.workoutStart : true])
             
             startHeartRateQuery()
             
@@ -93,7 +93,7 @@ class InterfaceController: WKInterfaceController {
             print("Workout initial error:", error)
             
             let errorData = NSKeyedArchiver.archivedData(withRootObject: error)
-            WatchConnectivityManager.shared.send([.workoutError : errorData])
+            WatchConnector.shared.send([.workoutError : errorData])
         }
     }
     
@@ -101,11 +101,11 @@ class InterfaceController: WKInterfaceController {
         
         WKInterfaceDevice.current().play(.stop)
         
-        setTitle("Ready")
-        startStopButton.setTitle("Start")
+        setTitle("准备就绪")
+        startStopButton.setTitle("开始")
         
         stopHeartRateQuery()
-        WatchConnectivityManager.shared.send([.workoutStop : true])
+        WatchConnector.shared.send([.workoutStop : true])
         
         workoutManager.stopWorkout()
         
@@ -142,8 +142,8 @@ class InterfaceController: WKInterfaceController {
             
             print(doubleValue, dateString)
             
-            // notify our iPhone app.
-            WatchConnectivityManager.shared.send([
+            // 通知iPhone程序接收心率数据
+            WatchConnector.shared.send([
                 .heartRateIntergerValue : integerValue,
                 .heartRateRecordDate : date,
                 ])
@@ -152,7 +152,7 @@ class InterfaceController: WKInterfaceController {
                 
                 self.heartRateChartGenerator.values.append(NSNumber(integerLiteral: integerValue))
                 
-                // only update UI when sample is the last one.
+                // 只有一个数据
                 guard index == samplesCount - 1 else { return }
                 
                 // guard WKExtension.shared().applicationState == .active else { return }
@@ -161,10 +161,10 @@ class InterfaceController: WKInterfaceController {
                 
                 var values = self.heartRateChartGenerator.values
                 
-                // The framework require at least 2 point to draw a line chart.
+                // 需要2个数据才能绘制图
                 guard values.count >= 2 else { return }
                 
-                // Only shows recent 10 heart rate records on chart.
+                // 只显示最近的10个心率数据
                 let maximumShowsCount = 10
                 
                 if values.count > maximumShowsCount {
@@ -175,7 +175,7 @@ class InterfaceController: WKInterfaceController {
                 
                 let imageFrame = CGRect(x: 0, y: 0, width: self.contentFrame.width, height: 50)
                 
-                let uiImage = self.heartRateChartGenerator.draw(in: imageFrame, scale: WKInterfaceDevice.current().screenScale, edgeInsets: UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)) // draw an image
+                let uiImage = self.heartRateChartGenerator.draw(in: imageFrame, scale: WKInterfaceDevice.current().screenScale, edgeInsets: UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)) // 绘制图片
                 
                 self.imageView.setImage(uiImage)
             }
@@ -188,11 +188,11 @@ class InterfaceController: WKInterfaceController {
     @IBAction func startStopButtonDidTap() {
         
         if workoutManager.isWorkoutSessionRunning {
-            // heart rate recording, stop it.
+            // 停止监听心率
             stopWorkout()
         }
         else {
-            // heart rate recording not start yet, start.
+            // 开始监听心率
             startWorkout()
         }
     }

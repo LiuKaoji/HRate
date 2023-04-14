@@ -12,58 +12,39 @@ import ClockKit
 
 
 class ExtensionDelegate: NSObject, WKExtensionDelegate {
-
+    
+    // 应用程序启动时调用的方法
     func applicationDidFinishLaunching() {
         requestAuthorization({})
         scheduleBackgroundRefresh()
-        WatchConnectivityManager.shared.activate()
+        WatchConnector.shared.activate()
     }
     
+    // 处理来自 Watch App 的运动配置请求
+    // 参数：workoutConfiguration 运动配置
     func handle(_ workoutConfiguration: HKWorkoutConfiguration) {
         let root = WKExtension.shared().rootInterfaceController as! InterfaceController
         root.startWorkout(with: workoutConfiguration)
     }
-
-//    func handle(_ backgroundTasks: Set<WKRefreshBackgroundTask>) {
-//        // Sent when the system needs to launch the application in the background to process tasks. Tasks arrive in a set, so loop through and process each one.
-//        for task in backgroundTasks {
-//            // Use a switch statement to check the task type
-//            switch task {
-//            case let backgroundTask as WKApplicationRefreshBackgroundTask:
-//                // Be sure to complete the background task once you’re done.
-//                backgroundTask.setTaskCompletedWithSnapshot(true )
-//            case let snapshotTask as WKSnapshotRefreshBackgroundTask:
-//                // Snapshot tasks have a unique completion call, make sure to set your expiration date
-//                snapshotTask.setTaskCompleted(restoredDefaultState: true, estimatedSnapshotExpiration: Date.distantFuture, userInfo: nil)
-//            case let connectivityTask as WKWatchConnectivityRefreshBackgroundTask:
-//                // Be sure to complete the connectivity task once you’re done.
-//                connectivityTask.setTaskCompletedWithSnapshot(true)
-//            case let urlSessionTask as WKURLSessionRefreshBackgroundTask:
-//                // Be sure to complete the URL session task once you’re done.
-//                urlSessionTask.setTaskCompletedWithSnapshot(true)
-//            default:
-//                // make sure to complete unhandled task types
-//                task.setTaskCompletedWithSnapshot(true)
-//            }
-//        }
-//    }
     
+    // 处理后台刷新任务
+    // 参数：backgroundTasks 后台刷新任务集合
     func handle(_ backgroundTasks: Set<WKRefreshBackgroundTask>) {
         for task in backgroundTasks {
             // 更新 complication 数据
             let complicationController = ComplicationController()
             complicationController.extendTimeline()
-
+            
             // 重新调度下一次后台刷新
             scheduleBackgroundRefresh()
-
+            
             // 完成后台任务
             task.setTaskCompletedWithSnapshot(false)
         }
     }
-
-
-    func scheduleBackgroundRefresh() {
+    
+    // 调度后台刷新任务
+    private func scheduleBackgroundRefresh() {
         let backgroundRefreshDate = Date(timeIntervalSinceNow: 60 * 60) // 您可以根据需要调整时间间隔
         WKExtension.shared().scheduleBackgroundRefresh(withPreferredDate: backgroundRefreshDate, userInfo: nil) { error in
             if let error = error {
@@ -74,6 +55,8 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
         }
     }
     
+    // 请求健康数据权限
+    // 参数：handler 请求完成后的回调
     private func requestAuthorization(_ handler: @escaping () -> Void) {
         
         let heartRateType = HKQuantityType.quantityType(forIdentifier: .heartRate)!

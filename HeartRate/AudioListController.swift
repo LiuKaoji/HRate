@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 class AudioListTableViewController: UITableViewController {
-    var audiosWithBPMs: [AudioEntity: [BPMEntity]] = [:]
+    var audios: [AudioEntity] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,9 +18,14 @@ class AudioListTableViewController: UITableViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         loadData()
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        clearTempDirectory()
+    }
 
     func loadData() {
-        audiosWithBPMs = PersistManager.shared.fetchAllAudiosWithBPMs()
+        audios = PersistManager.shared.fetchAllAudios()
         tableView.reloadData()
     }
 
@@ -31,49 +36,64 @@ class AudioListTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return audiosWithBPMs.keys.count
+        return audios.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        let audio = Array(audiosWithBPMs.keys)[indexPath.row]
+        let audio = audios[indexPath.row]
         cell.textLabel?.text = audio.name
         return cell
     }
 
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Audio List"
-    }
-
     // Swipe actions
 
-//    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-//        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { _, _, completionHandler in
-//            let audio = Array(self.audiosWithBPMs.keys)[indexPath.section]
-//            
-//            // delete
-//            PersistManager.shared.deleteAudio(audioEntity: audio)
-//            if let bpms = self.audiosWithBPMs[audio] {
-//                bpms.forEach { bpm in
-//                    PersistManager.shared.deleteBPM(bpmEntity: bpm)
-//                }
-//            }
-//            completionHandler(true)
-//        }
-//
-//        let shareAction = UIContextualAction(style: .normal, title: "Share") { _, _, completionHandler in
-//            let audio = Array(self.audiosWithBPMs.keys)[indexPath.section]
-//            if let bpm = self.audiosWithBPMs[audio]?[indexPath.row] {
-//                let textToShare = "BPM: \(bpm.bpm), Timestamp: \(bpm.ts)"
-//                let activityViewController = UIActivityViewController(activityItems: [textToShare], applicationActivities: nil)
-//                self.present(activityViewController, animated: true, completion: nil)
-//            }
-//            completionHandler(true)
-//        }
-//
-//        shareAction.backgroundColor = .systemBlue
-//
-//        let swipeActions = UISwipeActionsConfiguration(actions: [deleteAction, shareAction])
-//        return swipeActions
-//    }
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { [weak self] _, _, completionHandler in
+            guard let self = self else { return }
+            let audio = self.audios[indexPath.section]
+            
+            // 删除
+            let fileManager = FileManager.default
+            let documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            let audioURL = documentsDirectory.appendingPathComponent(audio.name!)//移除音频
+            PersistManager.shared.deleteAudio(audioEntity: audio)//移除数据库
+            self.audios.removeAll(where: { $0.name == audio.name })//当前列表数据源
+            tableView.reloadData()//刷新列表
+            completionHandler(true)
+        }
+
+        let shareAction = UIContextualAction(style: .normal, title: "Share") { [weak self] _, _, completionHandler in
+            guard let self = self else { return }
+            
+            // 打包数据分享
+            let audio = self.audios[indexPath.section]
+            if let topController = UIApplication.topViewController() {
+                BPMExporter.exportAndShare(audioEntity: audio, viewController: topController)
+            }
+           
+            
+            completionHandler(true)
+        }
+
+        shareAction.backgroundColor = .systemBlue
+
+        let swipeActions = UISwipeActionsConfiguration(actions: [deleteAction, shareAction])
+        return swipeActions
+    }
+    
+    func clearTempDirectory() {
+        let fileManager = FileManager.default
+        let tempDirectoryURL = NSURL.fileURL(withPath: NSTemporaryDirectory(), isDirectory: true)
+
+        do {
+            let fileURLs = try fileManager.contentsOfDirectory(at: tempDirectoryURL, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
+            for fileURL in fileURLs {
+                try fileManager.removeItem(at: fileURL)
+            }
+            print("Successfully cleared the temp directory.")
+        } catch {
+            print("Error while clearing temp directory: \(error)")
+        }
+    }
 }

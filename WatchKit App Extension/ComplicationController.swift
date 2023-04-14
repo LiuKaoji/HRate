@@ -8,7 +8,6 @@
 
 import ClockKit
 
-
 class ComplicationController: NSObject, CLKComplicationDataSource {
     
     // 获取最早的时间旅行日期
@@ -124,20 +123,6 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             
             handler(sampleTemplate)
     }
-    
-    // MARK: - 更新
-    
-    // 请求的更新已开始
-//    func requestedUpdateDidBegin() {
-//        print(#function)
-//        extendTimeline()
-//    }
-//
-//    // 请求的更新预算已用尽
-//    func requestedUpdateBudgetExhausted() {
-//        print(#function)
-//        extendTimeline()
-//    }
     
     // 扩展时间线
     public func extendTimeline() {

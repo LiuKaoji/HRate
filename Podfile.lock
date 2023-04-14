@@ -5,6 +5,12 @@ PODS:
     - SwiftAlgorithms (~> 1.0)
   - KDCircularProgress (1.5.4)
   - OptimizedSQLCipher (1.2.2)
+  - RxCocoa (6.5.0):
+    - RxRelay (= 6.5.0)
+    - RxSwift (= 6.5.0)
+  - RxRelay (6.5.0):
+    - RxSwift (= 6.5.0)
+  - RxSwift (6.5.0)
   - SnapKit (5.6.0)
   - SQLiteRepair (1.2.2):
     - OptimizedSQLCipher
@@ -12,21 +18,29 @@ PODS:
   - WCDBSwift (1.0.2):
     - OptimizedSQLCipher
     - SQLiteRepair
+  - Zip (2.1.2)
 
 DEPENDENCIES:
   - Charts (from `https://github.com/danielgindi/Charts.git`, branch `master`)
   - KDCircularProgress
+  - RxCocoa
+  - RxSwift
   - SnapKit
   - WCDBSwift
+  - Zip (~> 2.1)
 
 SPEC REPOS:
   trunk:
     - KDCircularProgress
     - OptimizedSQLCipher
+    - RxCocoa
+    - RxRelay
+    - RxSwift
     - SnapKit
     - SQLiteRepair
     - SwiftAlgorithms
     - WCDBSwift
+    - Zip
 
 EXTERNAL SOURCES:
   Charts:
@@ -42,11 +56,15 @@ SPEC CHECKSUMS:
   Charts: 354f86803d11d9c35de280587fef50d1af063978
   KDCircularProgress: 98200c6b8e85d22bc04eb644721d3b1e12b0686b
   OptimizedSQLCipher: 92a1bf5cc94139e1da49de9c883ff9891bcd2a37
+  RxCocoa: 94f817b71c07517321eb4f9ad299112ca8af743b
+  RxRelay: 1de1523e604c72b6c68feadedd1af3b1b4d0ecbd
+  RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   SQLiteRepair: 65ac4472667ac8cdeb93c3765f2fcae4dd259204
   SwiftAlgorithms: 38dda4731d19027fdeee1125f973111bf3386b53
   WCDBSwift: 6687dc2d4bebce2b237017ca367730f5f8409e67
+  Zip: b3fef584b147b6e582b2256a9815c897d60ddc67
 
-PODFILE CHECKSUM: 9d7e42a46cd56ec3025ecce2263ccc4cb3351ac3
+PODFILE CHECKSUM: 2b5c7b1e8bdb92e5748c889bf5127e5f7a8630bc
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.0

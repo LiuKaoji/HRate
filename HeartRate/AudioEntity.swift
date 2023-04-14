@@ -9,23 +9,27 @@
 import Foundation
 import WCDBSwift
 
+struct BPMDescription: Codable{
+    var bpm: Int16 = 0 // 心率
+    var date: String? // 心率记录日期
+    var ts: TimeInterval = 0 // 录音时间戳
+}
+
+// 记录一次训练过程的录音数据
 final class AudioEntity: TableCodable {
-    var id: Int? = 0 // Add an identifier
+    var id: Int? // 标识
     var name: String? // 文件名
     var ext: String? // 扩展名
     var date: String? // 创建日期
     var duration: String = "00:00" // 录制时长
     var size: String = "0 KB" // 文件大小
-    var maxBpm: Int16 = 0 // 最大心率
-    var minBPM: Int16 = 0 // 最小心率
-    var avgBPM: Int16 = 0 // 平均心率
-    var audioId: String? = nil // Add an identifier
+    var bpms: [BPMDescription] = [] // 心率数据
 
     enum CodingKeys: String, CodingTableKey {
         typealias Root = AudioEntity
         static let objectRelationalMapping = TableBinding(CodingKeys.self)
         
-        case id, name, date, duration, size, maxBpm, minBPM, avgBPM
+        case id, name, date, duration, size, ext, bpms
         
         static var columnConstraintBindings: [CodingKeys: ColumnConstraintBinding]? {
             return [
@@ -36,7 +40,7 @@ final class AudioEntity: TableCodable {
     }
 }
 
-// Hashable conformance
+// 哈希协议 对比数据
 extension AudioEntity: Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)

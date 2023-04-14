@@ -14,36 +14,42 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
-    var recordVC: RecordController = RecordController()
+    var recordVC: BPMController = BPMController()
 
     func applicationDidFinishLaunching(_ application: UIApplication) {
+        // 设置后台获取的最小时间间隔
         application.setMinimumBackgroundFetchInterval(UIApplication.backgroundFetchIntervalMinimum)
+        
+        // 注册推送通知
         application.registerForRemoteNotifications()
         
-        // 启动时 激活 WCSession
-        WatchConnectivityManager.shared?.activate()
+        // 在应用程序启动时激活 WatchConnectivity 会话
+        WatchConnector.shared?.activate()
         
-        // 申请心率权限
+        // 申请权限来访问心率数据
         requestHeartRateAuthorization()
         
-        // 显示窗口
+        // 创建一个窗口并设置根视图控制器
         window = UIWindow.init(frame: UIScreen.main.bounds)
         window?.backgroundColor = .black
-        window?.rootViewController = recordVC
+        window?.rootViewController = UINavigationController.init(rootViewController: recordVC)
         window?.makeKeyAndVisible()
     }
 
+    // 处理远程推送通知
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         print(#function)
+        // 调用 performFetchWithCompletionHandler 方法来处理后台获取
         self.application(application, performFetchWithCompletionHandler: completionHandler)
     }
 
+    // 处理后台获取
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         print(#function)
         
         var didCompleted = false
         
-        // 最大市场是 30秒, 设置 25 25秒.
+        // 设置后台获取的最大时间限制为 25 秒
         DispatchQueue.main.asyncAfter(deadline: .now() + 25) {
             guard !didCompleted else { return }
             didCompleted = true
@@ -51,6 +57,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
+    // 申请访问健康数据的权限
     func applicationShouldRequestHealthAuthorization(_ application: UIApplication) {
         HKHealthStore().handleAuthorizationForExtension { _, error in
             if let error = error {
@@ -65,6 +72,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let typesToShare: Set = [heartRateType]
             let typesToRead: Set = [heartRateType]
             
+            // 请求权限来分享和读取心率数据
             HKHealthStore().requestAuthorization(toShare: typesToShare, read: typesToRead) { success, error in
                 if let error = error {
                     print("Error requesting authorization: \(error.localizedDescription)")
@@ -78,50 +86,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             //completion(false)
         }
     }
-    
-    // MARK: - Core Data stack
+}
 
-    lazy var persistentContainer: NSPersistentContainer = {
-        /*
-         The persistent container for the application. This implementation
-         creates and returns a container, having loaded the store for the
-         application to it. This property is optional since there are legitimate
-         error conditions that could cause the creation of the store to fail.
-        */
-        let container = NSPersistentContainer(name: "HeartRate")
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
-            if let error = error as NSError? {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                 
-                /*
-                 Typical reasons for an error here include:
-                 * The parent directory does not exist, cannot be created, or disallows writing.
-                 * The persistent store is not accessible, due to permissions or data protection when the device is locked.
-                 * The device is out of space.
-                 * The store could not be migrated to the current model version.
-                 Check the error message to determine what the actual problem was.
-                 */
-                fatalError("Unresolved error \(error), \(error.userInfo)")
-            }
-        })
-        return container
-    }()
+extension UIApplication {
+    class func topViewController(base: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
+        if let nav = base as? UINavigationController {
+            return topViewController(base: nav.visibleViewController)
+        }
 
-    // MARK: - Core Data Saving support
-
-    func saveContext () {
-        let context = persistentContainer.viewContext
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+        if let tab = base as? UITabBarController {
+            if let selected = tab.selectedViewController {
+                return topViewController(base: selected)
             }
         }
+
+        if let presented = base?.presentedViewController {
+            return topViewController(base: presented)
+        }
+
+        return base
     }
 }
 

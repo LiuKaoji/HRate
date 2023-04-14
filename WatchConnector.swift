@@ -1,5 +1,5 @@
 //
-//  WatchConnectivityManager.swift
+//  WatchConnector.swift
 //  HeartRate
 //
 //  Created by kaoji on 01/25/23.
@@ -9,28 +9,28 @@
 import WatchConnectivity
 
 /// iPhone 和 Apple Watch 之间的通信管理器。
-class WatchConnectivityManager: NSObject, WCSessionDelegate {
+class WatchConnector: NSObject, WCSessionDelegate {
     
     // MARK: - 初始化
     
 #if os(iOS)
     /// 一个共享的单例。如果当前设备不支持 Watch Connectivity 框架，则返回 nil。
-    static var shared: WatchConnectivityManager? {
+    static var shared: WatchConnector? {
         if WCSession.isSupported() {
-            return WatchConnectivityManager.sharedInstance
+            return WatchConnector.sharedInstance
         }
         return nil
     }
 #elseif os(watchOS)
     /// 一个共享的单例。
-    static var shared: WatchConnectivityManager {
+    static var shared: WatchConnector {
         // 在 watchOS 上，Watch Connectivity 框架始终受支持。
-        return WatchConnectivityManager.sharedInstance
+        return WatchConnector.sharedInstance
     }
 #endif
     
     /// 单例。
-    private static let sharedInstance = WatchConnectivityManager()
+    private static let sharedInstance = WatchConnector()
     
     private override init() {
         super.init()
@@ -58,11 +58,14 @@ class WatchConnectivityManager: NSObject, WCSessionDelegate {
     ///
     /// 处理程序承诺从主队列调用。
     func addMessageHandler(_ messageHandler: MessageHandler) {
+        guard !messageHandlers.contains(messageHandler) else{
+            return
+        }
         messageHandlers.append(messageHandler)
     }
     
     /// 从列表中移除处理程序句柄。
-    fileprivate func removeMessageHandler(_ messageHandler: MessageHandler) {
+    func removeMessageHandler(_ messageHandler: MessageHandler) {
         if let index = messageHandlers.firstIndex(of: messageHandler) {
             messageHandlers.remove(at: index)
         }
@@ -194,7 +197,7 @@ class WatchConnectivityManager: NSObject, WCSessionDelegate {
         }
         
         func invalidate() {
-            let manager: WatchConnectivityManager? = WatchConnectivityManager.shared
+            let manager: WatchConnector? = WatchConnector.shared
             manager?.removeMessageHandler(self)
         }
         

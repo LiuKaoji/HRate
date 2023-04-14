@@ -10,8 +10,19 @@ import Foundation
 import KDCircularProgress
 import Charts
 import SnapKit
+import RxCocoa
+import RxSwift
 
-class RecordView: UIView {
+import Foundation
+import KDCircularProgress
+import Charts
+import SnapKit
+import RxCocoa
+import RxSwift
+
+class BPMView: UIView {
+    
+    let disposeBag = DisposeBag()
     
     // MARK: - UI Elements
     lazy var decibelLabel: Label = {
@@ -54,8 +65,8 @@ class RecordView: UIView {
     
     lazy var chart: BarChartView = {
         let chart = BarChartView()
-        chart.noDataTextColor = RecordViewConfig.noDataTextColor
-        chart.noDataText = RecordViewConfig.noDataText
+        chart.noDataTextColor = BPMViewConfig.noDataTextColor
+        chart.noDataText = BPMViewConfig.noDataText
         
         chart.dragEnabled = false
         chart.pinchZoomEnabled = false
@@ -66,13 +77,13 @@ class RecordView: UIView {
         chart.chartDescription.enabled = false
         
         chart.rightAxis.enabled = false
-        chart.leftAxis.labelTextColor = RecordViewConfig.labelTextColor
+        chart.leftAxis.labelTextColor = BPMViewConfig.labelTextColor
         
         chart.xAxis.labelPosition = .bottom
         chart.xAxis.drawLabelsEnabled = false
         
-        chart.leftAxis.axisMinimum = RecordViewConfig.axisMinimum
-        chart.leftAxis.axisMaximum = RecordViewConfig.axisMaximum
+        chart.leftAxis.axisMinimum = BPMViewConfig.axisMinimum
+        chart.leftAxis.axisMaximum = BPMViewConfig.axisMaximum
         
         chart.translatesAutoresizingMaskIntoConstraints = false
         
@@ -85,7 +96,8 @@ class RecordView: UIView {
     }()
     
     lazy var historyButton: UIButton = {
-        let button = UIButton.init(type: .detailDisclosure)
+        let button = UIButton()
+        button.setImage(.init(named: "USB"), for: .normal)
         return button
     }()
     
@@ -99,16 +111,16 @@ class RecordView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Setup Methods
+    
     private func setupView() {
-        backgroundColor = RecordViewConfig.backgroundColor
+        backgroundColor = BPMViewConfig.backgroundColor
         
         addSubview(progress)
         addSubview(verticalStack)
         addSubview(recordButton)
         addSubview(historyButton)
         addSubview(containerForSmallDisplay)
-
+        
         verticalStack.addArrangedSubview(timeLabel)
         verticalStack.addArrangedSubview(timeTitleLabel)
         
@@ -179,12 +191,12 @@ class RecordView: UIView {
     
     //MARK: - 圆环
     private func setupCircleView() {
-        progress.startAngle = RecordViewConfig.startAngle
-        progress.progressThickness = RecordViewConfig.progressThickness
-        progress.trackThickness = RecordViewConfig.trackThickness
-        progress.glowMode = RecordViewConfig.glowMode
-        progress.trackColor = RecordViewConfig.trackColor!
-        progress.set(colors: RecordViewConfig.progressColors[0], RecordViewConfig.progressColors[1], RecordViewConfig.progressColors[2])
+        progress.startAngle = BPMViewConfig.startAngle
+        progress.progressThickness = BPMViewConfig.progressThickness
+        progress.trackThickness = BPMViewConfig.trackThickness
+        progress.glowMode = BPMViewConfig.glowMode
+        progress.trackColor = BPMViewConfig.trackColor!
+        progress.set(colors: BPMViewConfig.progressColors[0], BPMViewConfig.progressColors[1], BPMViewConfig.progressColors[2])
         
         if Constants().screenSize.height <= 667 {
             progress.center = CGPoint(x: self.center.x, y: self.center.y / 1.9)
@@ -198,44 +210,51 @@ class RecordView: UIView {
     }
 }
 
-extension RecordView {
-    
-    func updateChartData(bpms: [Int16]) {
+extension BPMView {
+
+    func bindViewModel(to viewModel: BPMViewModel) {
+        // 绑定 nowBPM
+        viewModel.nowBPM
+            .bind(to: avgBar.nowBPMLabel.rx.text)
+            .disposed(by: disposeBag)
         
-        var entries = [BarChartDataEntry]()
-        for i in 0..<bpms.count {
-            entries.append(BarChartDataEntry(x: Double(i), y: Double(bpms[i])))
-        }
-        let set = BarChartDataSet(entries: entries)
-        let data = BarChartData(dataSet: set)
-        chart.data = data
+        // 绑定 minBPM
+        viewModel.minBPM
+            .bind(to: avgBar.minBPMLabel.rx.text)
+            .disposed(by: disposeBag)
         
-        set.colors = [UIColor(named: "Color")!]
+        // 绑定 maxBPM
+        viewModel.maxBPM
+            .bind(to: avgBar.maxBPMLabel.rx.text)
+            .disposed(by: disposeBag)
         
-        chart.barData?.setDrawValues(false)
-    }
-    
-    func recordUI(){
-        self.recordButton.buttonState = .recording
-        self.recordButton.buttonColor = .red
-        self.historyButton.isHidden = true
-    }
-    
-    func resetUI(){
-    
-        self.avgBar.avgBPMLabel.text = "-"
-        self.avgBar.nowBPMLabel.text = "-"
-        self.avgBar.minBPMLabel.text = "-"
-        self.avgBar.maxBPMLabel.text = "-"
-        self.timeLabel.text = "00:00"
-        self.progress.progress = 0
-        self.recordButton.buttonState = .normal
-        self.recordButton.buttonColor = .white
-        self.historyButton.isHidden = false
+        // 绑定 avgBPM
+        viewModel.avgBPM
+            .bind(to: avgBar.avgBPMLabel.rx.text)
+            .disposed(by: disposeBag)
         
-        let set = BarChartDataSet(entries: [])
-        let data = BarChartData(dataSet: set)
-        chart.data = data
-        chart.updateFocusIfNeeded()
+        // 图表更新
+        viewModel.charData.bind(to: chart.rx.data).disposed(by: disposeBag)
+        
+        // 心率进度更新
+        viewModel.progress.bind(to: progress.rx.progress).disposed(by: disposeBag)
+        
+        //更新录音时间
+        viewModel.time.bind(to: timeLabel.rx.text).disposed(by: disposeBag)
+        
+        // 绑定 录音按钮
+        recordButton.rx.tap
+                .bind(to: viewModel.recordButtonTapped)
+                .disposed(by: disposeBag)
+        
+        viewModel.recordButtonEnabled.bind(to: recordButton.rx.isEnabled).disposed(by: disposeBag)
+        
+        //区分录制和非录制UI
+        viewModel.isRecording.bind(to: self.rx.isRecording).disposed(by: disposeBag)
+        
+        // 绑定 历史按钮
+        historyButton.rx.tap
+                .bind(to: viewModel.historyButtonTapped)
+                .disposed(by: disposeBag)
     }
 }

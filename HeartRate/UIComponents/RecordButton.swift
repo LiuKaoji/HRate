@@ -286,7 +286,7 @@ open class RecordButton: UIButton {
         super.setTitle("", for: state)
     }
     
-     // MARK: - 方法
+    // MARK: - 方法
     
     private func p_addTimeLapseAnimations() {
         _progressLayer.add(_startProgressAnimation, forKey: "start-anim")
@@ -304,11 +304,11 @@ open class RecordButton: UIButton {
     private func p_arcPathWithProgress(_ progress: CGFloat, clockwise: Bool = true) -> UIBezierPath {
         let diameter = 2*CGFloat.pi*(self.bounds.width/2 - self._arcWidth/3)
         let startAngle = clockwise ?
-            -CGFloat.pi/2 :
-            -CGFloat.pi/2 + CGFloat.pi*(540/diameter)/180
+        -CGFloat.pi/2 :
+        -CGFloat.pi/2 + CGFloat.pi*(540/diameter)/180
         let endAngle   = clockwise ?
-            CGFloat.pi*2*progress - CGFloat.pi/2 :
-            CGFloat.pi*2*progress - CGFloat.pi/2 + CGFloat.pi*(540/diameter)/180
+        CGFloat.pi*2*progress - CGFloat.pi/2 :
+        CGFloat.pi*2*progress - CGFloat.pi/2 + CGFloat.pi*(540/diameter)/180
         let path = UIBezierPath(
             arcCenter: CGPoint(x: self.bounds.midX, y: self.bounds.midY),
             radius: self.bounds.width/2 - self._arcWidth/3,

@@ -8,9 +8,12 @@
 import Foundation
 import HealthKit
 
+
 class WorkoutManager {
     
     // MARK: - Initial
+    private var heartRateUpdateTimer: Timer?
+
     
     /// 共享单例。
     static let shared = WorkoutManager()
@@ -36,7 +39,7 @@ class WorkoutManager {
     /// 开始健身会话的方法。
     /// - Parameter configuration: 健身会话配置。
     func startWorkout(with configuration: HKWorkoutConfiguration) throws {
-    
+        
         do {
             
             let workoutSession = try HKWorkoutSession.init(healthStore: healthStore, configuration: configuration)

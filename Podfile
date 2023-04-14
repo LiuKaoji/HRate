@@ -10,6 +10,9 @@ target 'HeartRate' do
   pod 'Charts', :git => 'https://github.com/danielgindi/Charts.git', :branch => 'master'
   pod 'SnapKit'
   pod 'WCDBSwift'
+  pod 'RxSwift'
+  pod 'RxCocoa'
+  pod 'Zip', '~> 2.1'
 
 end
 

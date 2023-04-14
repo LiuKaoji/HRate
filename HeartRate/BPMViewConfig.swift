@@ -1,5 +1,5 @@
 //
-//  RecordViewConfig.swift
+//  BPMViewConfig.swift
 //  HeartRate
 //
 //  Created by kaoji on 4/9/23.
@@ -9,11 +9,11 @@
 import Foundation
 import KDCircularProgress
 
-struct RecordViewConfig {
-    // General
+struct BPMViewConfig {
+    // 通用
     static let backgroundColor = UIColor(named: "BackgroundColor")
     
-    // KDCircularProgress
+    // 进度
     static let startAngle: CGFloat = -270
     static let progressThickness: CGFloat = 0.6
     static let trackThickness: CGFloat = 0.7
@@ -26,7 +26,7 @@ struct RecordViewConfig {
     ]
     static let progressSizeDivisor: CGFloat = 1.2
     
-    // Screen
+    // 屏幕
     static let bigScreenVerticalCenterDivisor: CGFloat = 1.9
     static let smallScreenVerticalCenterDivisor: CGFloat = 1.5
     
