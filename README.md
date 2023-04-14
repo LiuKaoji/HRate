@@ -21,7 +21,28 @@
    3.1. 使用心率数据及对应录制的音频进行回放，感觉蛮适合团操记录生活  
    3.2. 调用摄像头采集画面 并实时绘制心率至字幕，进行精彩时刻分享  
 
+```mermaid
+sequenceDiagram
+    participant A as APP
+    participant WC as WatchConnector
+    participant WCSession
+    participant W as Watch
+    participant BPMTracker
+    participant BPMViewModel
+    participant BPMView
 
+    A->>WCSession: 初始化 (基于WCSession)
+    A->>W: 唤醒WatchApp
+    W->>WC: 检测到心率数据
+    WC->>WCSession: 使用WCSession进行通信
+    WCSession->>A: sendMessage (实时通信)
+    WCSession->>A: transferUserInfo (后台传输)
+    A->>BPMTracker: 接收到心率数据
+    BPMTracker->>BPMViewModel: 心率计算
+    BPMViewModel->>BPMView: 录音数据及心率数据关联
+    BPMView->>BPMView: 展示柱状图及心率数据
+    A->>A: 导出json及关联音频压缩包
+```
   
 ### 引用
 
