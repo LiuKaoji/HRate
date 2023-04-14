@@ -24,12 +24,12 @@
 ```mermaid
 sequenceDiagram
     participant A as APP
-    participant WC as WatchConnector
-    participant WCSession
-    participant W as Watch
     participant BPMTracker
     participant BPMViewModel
     participant BPMView
+    participant WC as WatchConnector
+    participant WCSession
+    participant W as Watch
 
     A->>WCSession: 初始化 (基于WCSession)
     A->>W: 唤醒WatchApp
