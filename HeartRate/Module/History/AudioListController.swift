@@ -10,13 +10,17 @@ import Foundation
 import UIKit
 
 class AudioListTableViewController: UITableViewController {
+    
+    
     var audios: [AudioEntity] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Audio List"
+        title = "历史录制"
+        view.backgroundColor = .black
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         loadData()
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
