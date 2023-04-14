@@ -7,30 +7,30 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3641847829E63E0100DD42A8 /* AudioEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3641847729E63E0100DD42A8 /* AudioEntity.swift */; };
-		3641847C29E63FA400DD42A8 /* PersistManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3641847B29E63FA400DD42A8 /* PersistManager.swift */; };
-		3641847E29E6452E00DD42A8 /* AudioListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3641847D29E6452E00DD42A8 /* AudioListController.swift */; };
-		3641848029E665BE00DD42A8 /* BPMExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3641847F29E665BE00DD42A8 /* BPMExporter.swift */; };
-		3644E7CB29E137A6005DDEA3 /* Recorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3644E7CA29E137A6005DDEA3 /* Recorder.swift */; };
-		3644E7CE29E139E8005DDEA3 /* TimeFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3644E7CD29E139E8005DDEA3 /* TimeFormat.swift */; };
-		3644E7F529E1C687005DDEA3 /* BPMTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3644E7F429E1C687005DDEA3 /* BPMTracker.swift */; };
-		3644E80829E28FF4005DDEA3 /* BPMController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3644E80729E28FF4005DDEA3 /* BPMController.swift */; };
-		3644E80C29E2947A005DDEA3 /* BPMView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3644E80B29E2947A005DDEA3 /* BPMView.swift */; };
 		3644E81129E29DB8005DDEA3 /* OpenSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3644E80E29E29DB8005DDEA3 /* OpenSans-SemiBold.ttf */; };
 		3644E81229E29DB8005DDEA3 /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3644E80F29E29DB8005DDEA3 /* OpenSans-Bold.ttf */; };
 		3644E81329E29DB8005DDEA3 /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3644E81029E29DB8005DDEA3 /* OpenSans-Regular.ttf */; };
-		3644E81829E29DDB005DDEA3 /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3644E81529E29DDA005DDEA3 /* Label.swift */; };
-		3644E81D29E2A32F005DDEA3 /* AvgMinMaxBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3644E81C29E2A32F005DDEA3 /* AvgMinMaxBar.swift */; };
-		3644E81F29E2A364005DDEA3 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3644E81E29E2A364005DDEA3 /* Stack.swift */; };
-		3644E82129E2A709005DDEA3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3644E82029E2A709005DDEA3 /* Constants.swift */; };
-		3644E82729E2AB3D005DDEA3 /* BPMViewConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3644E82629E2AB3D005DDEA3 /* BPMViewConfig.swift */; };
-		3644E82929E2AFD1005DDEA3 /* RecordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3644E82829E2AFD1005DDEA3 /* RecordButton.swift */; };
-		369BD4E129E8E10A00CB6B97 /* BPMViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369BD4E029E8E10A00CB6B97 /* BPMViewModel.swift */; };
-		369BD4E329E8F8C000CB6B97 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369BD4E229E8F8C000CB6B97 /* Toast.swift */; };
-		369BD4E529E9186600CB6B97 /* UIBinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369BD4E429E9186600CB6B97 /* UIBinder.swift */; };
+		369BD4EE29E93C7F00CB6B97 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369BD4ED29E93C7F00CB6B97 /* AppDelegate.swift */; };
+		369BD4F129E93CB300CB6B97 /* PersistManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369BD4F029E93CB300CB6B97 /* PersistManager.swift */; };
+		369BD50129E93D9F00CB6B97 /* AudioListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369BD4F429E93D9F00CB6B97 /* AudioListController.swift */; };
+		369BD50229E93D9F00CB6B97 /* BPMExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369BD4F529E93D9F00CB6B97 /* BPMExporter.swift */; };
+		369BD50329E93D9F00CB6B97 /* UIBinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369BD4F829E93D9F00CB6B97 /* UIBinder.swift */; };
+		369BD50429E93D9F00CB6B97 /* BPMViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369BD4F929E93D9F00CB6B97 /* BPMViewModel.swift */; };
+		369BD50529E93D9F00CB6B97 /* BPMTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369BD4FA29E93D9F00CB6B97 /* BPMTracker.swift */; };
+		369BD50629E93D9F00CB6B97 /* BPMController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369BD4FB29E93D9F00CB6B97 /* BPMController.swift */; };
+		369BD50729E93D9F00CB6B97 /* AudioEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369BD4FD29E93D9F00CB6B97 /* AudioEntity.swift */; };
+		369BD50829E93D9F00CB6B97 /* BPMView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369BD4FF29E93D9F00CB6B97 /* BPMView.swift */; };
+		369BD50929E93D9F00CB6B97 /* BPMViewConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369BD50029E93D9F00CB6B97 /* BPMViewConfig.swift */; };
+		369BD51429E93E0100CB6B97 /* TimeFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369BD50B29E93E0100CB6B97 /* TimeFormat.swift */; };
+		369BD51529E93E0100CB6B97 /* Recorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369BD50C29E93E0100CB6B97 /* Recorder.swift */; };
+		369BD51629E93E0100CB6B97 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369BD50E29E93E0100CB6B97 /* Constants.swift */; };
+		369BD51729E93E0100CB6B97 /* AvgMinMaxBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369BD50F29E93E0100CB6B97 /* AvgMinMaxBar.swift */; };
+		369BD51829E93E0100CB6B97 /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369BD51029E93E0100CB6B97 /* Label.swift */; };
+		369BD51929E93E0100CB6B97 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369BD51129E93E0100CB6B97 /* Stack.swift */; };
+		369BD51A29E93E0100CB6B97 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369BD51229E93E0100CB6B97 /* Toast.swift */; };
+		369BD51B29E93E0100CB6B97 /* RecordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369BD51329E93E0100CB6B97 /* RecordButton.swift */; };
 		51B10E9D8327B1EB75704EC4 /* Pods_HeartRate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B591A31C10DA124D6D8DE591 /* Pods_HeartRate.framework */; };
 		FB1CFF331DD0203D0018BD87 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB1CFF321DD0203D0018BD87 /* CloudKit.framework */; };
-		FBA2D6111DBF9B7300728078 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA2D6101DBF9B7300728078 /* AppDelegate.swift */; };
 		FBA2D6181DBF9B7300728078 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FBA2D6171DBF9B7300728078 /* Assets.xcassets */; };
 		FBA2D61B1DBF9B7300728078 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FBA2D6191DBF9B7300728078 /* LaunchScreen.storyboard */; };
 		FBA2D6791DBF9BD300728078 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FBA2D6771DBF9BD300728078 /* Interface.storyboard */; };
@@ -102,34 +102,34 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		3641847729E63E0100DD42A8 /* AudioEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioEntity.swift; sourceTree = "<group>"; };
-		3641847B29E63FA400DD42A8 /* PersistManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistManager.swift; sourceTree = "<group>"; };
-		3641847D29E6452E00DD42A8 /* AudioListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioListController.swift; sourceTree = "<group>"; };
-		3641847F29E665BE00DD42A8 /* BPMExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPMExporter.swift; sourceTree = "<group>"; };
-		3644E7CA29E137A6005DDEA3 /* Recorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recorder.swift; sourceTree = "<group>"; };
-		3644E7CD29E139E8005DDEA3 /* TimeFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeFormat.swift; sourceTree = "<group>"; };
-		3644E7F429E1C687005DDEA3 /* BPMTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPMTracker.swift; sourceTree = "<group>"; };
-		3644E80729E28FF4005DDEA3 /* BPMController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPMController.swift; sourceTree = "<group>"; };
-		3644E80B29E2947A005DDEA3 /* BPMView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPMView.swift; sourceTree = "<group>"; };
 		3644E80E29E29DB8005DDEA3 /* OpenSans-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-SemiBold.ttf"; sourceTree = "<group>"; };
 		3644E80F29E29DB8005DDEA3 /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Bold.ttf"; sourceTree = "<group>"; };
 		3644E81029E29DB8005DDEA3 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
-		3644E81529E29DDA005DDEA3 /* Label.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
-		3644E81C29E2A32F005DDEA3 /* AvgMinMaxBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvgMinMaxBar.swift; sourceTree = "<group>"; };
-		3644E81E29E2A364005DDEA3 /* Stack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
-		3644E82029E2A709005DDEA3 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		3644E82629E2AB3D005DDEA3 /* BPMViewConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPMViewConfig.swift; sourceTree = "<group>"; };
-		3644E82829E2AFD1005DDEA3 /* RecordButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordButton.swift; sourceTree = "<group>"; };
-		369BD4E029E8E10A00CB6B97 /* BPMViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPMViewModel.swift; sourceTree = "<group>"; };
-		369BD4E229E8F8C000CB6B97 /* Toast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
-		369BD4E429E9186600CB6B97 /* UIBinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBinder.swift; sourceTree = "<group>"; };
+		369BD4ED29E93C7F00CB6B97 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		369BD4F029E93CB300CB6B97 /* PersistManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistManager.swift; sourceTree = "<group>"; };
+		369BD4F429E93D9F00CB6B97 /* AudioListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioListController.swift; sourceTree = "<group>"; };
+		369BD4F529E93D9F00CB6B97 /* BPMExporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BPMExporter.swift; sourceTree = "<group>"; };
+		369BD4F829E93D9F00CB6B97 /* UIBinder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIBinder.swift; sourceTree = "<group>"; };
+		369BD4F929E93D9F00CB6B97 /* BPMViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BPMViewModel.swift; sourceTree = "<group>"; };
+		369BD4FA29E93D9F00CB6B97 /* BPMTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BPMTracker.swift; sourceTree = "<group>"; };
+		369BD4FB29E93D9F00CB6B97 /* BPMController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BPMController.swift; sourceTree = "<group>"; };
+		369BD4FD29E93D9F00CB6B97 /* AudioEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioEntity.swift; sourceTree = "<group>"; };
+		369BD4FF29E93D9F00CB6B97 /* BPMView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BPMView.swift; sourceTree = "<group>"; };
+		369BD50029E93D9F00CB6B97 /* BPMViewConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BPMViewConfig.swift; sourceTree = "<group>"; };
+		369BD50B29E93E0100CB6B97 /* TimeFormat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeFormat.swift; sourceTree = "<group>"; };
+		369BD50C29E93E0100CB6B97 /* Recorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Recorder.swift; sourceTree = "<group>"; };
+		369BD50E29E93E0100CB6B97 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		369BD50F29E93E0100CB6B97 /* AvgMinMaxBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvgMinMaxBar.swift; sourceTree = "<group>"; };
+		369BD51029E93E0100CB6B97 /* Label.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
+		369BD51129E93E0100CB6B97 /* Stack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
+		369BD51229E93E0100CB6B97 /* Toast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
+		369BD51329E93E0100CB6B97 /* RecordButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordButton.swift; sourceTree = "<group>"; };
 		7C8687C4BF25A918F7C2DC52 /* Pods-HeartRate.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HeartRate.release.xcconfig"; path = "Target Support Files/Pods-HeartRate/Pods-HeartRate.release.xcconfig"; sourceTree = "<group>"; };
 		B591A31C10DA124D6D8DE591 /* Pods_HeartRate.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HeartRate.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1E4B3415F67403294C4E323 /* Pods-HeartRate.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HeartRate.debug.xcconfig"; path = "Target Support Files/Pods-HeartRate/Pods-HeartRate.debug.xcconfig"; sourceTree = "<group>"; };
 		FB1CFF321DD0203D0018BD87 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		FB1EA2C51DD0001F008CCFFD /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		FBA2D60D1DBF9B7300728078 /* HeartRate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HeartRate.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		FBA2D6101DBF9B7300728078 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FBA2D6171DBF9B7300728078 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FBA2D61A1DBF9B7300728078 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FBA2D61C1DBF9B7300728078 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -189,79 +189,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3641848C29E72ACE00DD42A8 /* Module */ = {
-			isa = PBXGroup;
-			children = (
-				3641848E29E72AEB00DD42A8 /* History */,
-				3641848D29E72AE300DD42A8 /* HeartRate */,
-			);
-			name = Module;
-			sourceTree = "<group>";
-		};
-		3641848D29E72AE300DD42A8 /* HeartRate */ = {
-			isa = PBXGroup;
-			children = (
-				369BD4DF29E8DE5500CB6B97 /* ViewModel */,
-				3641849629E72C3000DD42A8 /* Model */,
-				3641849529E72C2200DD42A8 /* View */,
-				3644E7F429E1C687005DDEA3 /* BPMTracker.swift */,
-				3644E80729E28FF4005DDEA3 /* BPMController.swift */,
-			);
-			name = HeartRate;
-			sourceTree = "<group>";
-		};
-		3641848E29E72AEB00DD42A8 /* History */ = {
-			isa = PBXGroup;
-			children = (
-				3641847D29E6452E00DD42A8 /* AudioListController.swift */,
-				3641847F29E665BE00DD42A8 /* BPMExporter.swift */,
-			);
-			name = History;
-			sourceTree = "<group>";
-		};
-		3641848F29E72AF700DD42A8 /* Storge */ = {
-			isa = PBXGroup;
-			children = (
-				3641847B29E63FA400DD42A8 /* PersistManager.swift */,
-			);
-			name = Storge;
-			sourceTree = "<group>";
-		};
-		3641849429E72BCB00DD42A8 /* Application */ = {
-			isa = PBXGroup;
-			children = (
-				FBA2D6101DBF9B7300728078 /* AppDelegate.swift */,
-			);
-			name = Application;
-			sourceTree = "<group>";
-		};
-		3641849529E72C2200DD42A8 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				3644E82629E2AB3D005DDEA3 /* BPMViewConfig.swift */,
-				3644E80B29E2947A005DDEA3 /* BPMView.swift */,
-			);
-			name = View;
-			sourceTree = "<group>";
-		};
-		3641849629E72C3000DD42A8 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				3641847729E63E0100DD42A8 /* AudioEntity.swift */,
-			);
-			name = Model;
-			sourceTree = "<group>";
-		};
-		3644E7CC29E139E0005DDEA3 /* Utility */ = {
-			isa = PBXGroup;
-			children = (
-				3644E81B29E29DF3005DDEA3 /* UIComponents */,
-				3644E7CA29E137A6005DDEA3 /* Recorder.swift */,
-				3644E7CD29E139E8005DDEA3 /* TimeFormat.swift */,
-			);
-			name = Utility;
-			sourceTree = "<group>";
-		};
 		3644E80D29E29DB8005DDEA3 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -272,26 +199,108 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
-		3644E81B29E29DF3005DDEA3 /* UIComponents */ = {
+		369BD4E829E93B4100CB6B97 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				369BD4E229E8F8C000CB6B97 /* Toast.swift */,
-				3644E82029E2A709005DDEA3 /* Constants.swift */,
-				3644E82829E2AFD1005DDEA3 /* RecordButton.swift */,
-				3644E81C29E2A32F005DDEA3 /* AvgMinMaxBar.swift */,
-				3644E81E29E2A364005DDEA3 /* Stack.swift */,
-				3644E81529E29DDA005DDEA3 /* Label.swift */,
+				FBA2D6C61DC054E200728078 /* WatchConnector.swift */,
+				FBA2D6AF1DBF9C5700728078 /* WatchConnectorConstants.swift */,
 			);
-			path = UIComponents;
+			path = Shared;
 			sourceTree = "<group>";
 		};
-		369BD4DF29E8DE5500CB6B97 /* ViewModel */ = {
+		369BD4EC29E93C7F00CB6B97 /* Application */ = {
 			isa = PBXGroup;
 			children = (
-				369BD4E029E8E10A00CB6B97 /* BPMViewModel.swift */,
-				369BD4E429E9186600CB6B97 /* UIBinder.swift */,
+				369BD4ED29E93C7F00CB6B97 /* AppDelegate.swift */,
 			);
-			name = ViewModel;
+			path = Application;
+			sourceTree = "<group>";
+		};
+		369BD4EF29E93CB300CB6B97 /* Storge */ = {
+			isa = PBXGroup;
+			children = (
+				369BD4F029E93CB300CB6B97 /* PersistManager.swift */,
+			);
+			path = Storge;
+			sourceTree = "<group>";
+		};
+		369BD4F229E93D9F00CB6B97 /* Module */ = {
+			isa = PBXGroup;
+			children = (
+				369BD4F329E93D9F00CB6B97 /* History */,
+				369BD4F629E93D9F00CB6B97 /* HeartRate */,
+			);
+			path = Module;
+			sourceTree = "<group>";
+		};
+		369BD4F329E93D9F00CB6B97 /* History */ = {
+			isa = PBXGroup;
+			children = (
+				369BD4F429E93D9F00CB6B97 /* AudioListController.swift */,
+				369BD4F529E93D9F00CB6B97 /* BPMExporter.swift */,
+			);
+			path = History;
+			sourceTree = "<group>";
+		};
+		369BD4F629E93D9F00CB6B97 /* HeartRate */ = {
+			isa = PBXGroup;
+			children = (
+				369BD4F729E93D9F00CB6B97 /* ViewModel */,
+				369BD4FA29E93D9F00CB6B97 /* BPMTracker.swift */,
+				369BD4FB29E93D9F00CB6B97 /* BPMController.swift */,
+				369BD4FC29E93D9F00CB6B97 /* Model */,
+				369BD4FE29E93D9F00CB6B97 /* View */,
+			);
+			path = HeartRate;
+			sourceTree = "<group>";
+		};
+		369BD4F729E93D9F00CB6B97 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				369BD4F829E93D9F00CB6B97 /* UIBinder.swift */,
+				369BD4F929E93D9F00CB6B97 /* BPMViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		369BD4FC29E93D9F00CB6B97 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				369BD4FD29E93D9F00CB6B97 /* AudioEntity.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		369BD4FE29E93D9F00CB6B97 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				369BD4FF29E93D9F00CB6B97 /* BPMView.swift */,
+				369BD50029E93D9F00CB6B97 /* BPMViewConfig.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		369BD50A29E93E0100CB6B97 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				369BD50B29E93E0100CB6B97 /* TimeFormat.swift */,
+				369BD50C29E93E0100CB6B97 /* Recorder.swift */,
+				369BD50D29E93E0100CB6B97 /* UIComponents */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
+		369BD50D29E93E0100CB6B97 /* UIComponents */ = {
+			isa = PBXGroup;
+			children = (
+				369BD50E29E93E0100CB6B97 /* Constants.swift */,
+				369BD50F29E93E0100CB6B97 /* AvgMinMaxBar.swift */,
+				369BD51029E93E0100CB6B97 /* Label.swift */,
+				369BD51129E93E0100CB6B97 /* Stack.swift */,
+				369BD51229E93E0100CB6B97 /* Toast.swift */,
+				369BD51329E93E0100CB6B97 /* RecordButton.swift */,
+			);
+			path = UIComponents;
 			sourceTree = "<group>";
 		};
 		9C0B78B3EF604FE8B0A3FF61 /* Pods */ = {
@@ -326,22 +335,13 @@
 			name = "Support Files";
 			sourceTree = "<group>";
 		};
-		FB11C5D81E03796400FE72D0 /* Shared */ = {
-			isa = PBXGroup;
-			children = (
-				FBA2D6C61DC054E200728078 /* WatchConnector.swift */,
-				FBA2D6AF1DBF9C5700728078 /* WatchConnectorConstants.swift */,
-			);
-			name = Shared;
-			sourceTree = "<group>";
-		};
 		FBA2D6041DBF9B7300728078 = {
 			isa = PBXGroup;
 			children = (
+				369BD4E829E93B4100CB6B97 /* Shared */,
 				FBA2D60F1DBF9B7300728078 /* iOS App */,
 				FBA2D6761DBF9BD300728078 /* WatchKit App */,
 				FBA2D6851DBF9BD400728078 /* WatchKit App Extension */,
-				FB11C5D81E03796400FE72D0 /* Shared */,
 				FBA2D6991DBF9C4900728078 /* YOChartImageKit */,
 				FBA2D6BF1DBF9DAA00728078 /* Frameworks */,
 				FBA2D60E1DBF9B7300728078 /* Products */,
@@ -362,10 +362,10 @@
 		FBA2D60F1DBF9B7300728078 /* iOS App */ = {
 			isa = PBXGroup;
 			children = (
-				3641849429E72BCB00DD42A8 /* Application */,
-				3641848F29E72AF700DD42A8 /* Storge */,
-				3641848C29E72ACE00DD42A8 /* Module */,
-				3644E7CC29E139E0005DDEA3 /* Utility */,
+				369BD50A29E93E0100CB6B97 /* Utility */,
+				369BD4F229E93D9F00CB6B97 /* Module */,
+				369BD4EF29E93CB300CB6B97 /* Storge */,
+				369BD4EC29E93C7F00CB6B97 /* Application */,
 				FB11C5D61E03790B00FE72D0 /* Support Files */,
 			);
 			name = "iOS App";
@@ -666,31 +666,31 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				369BD4E129E8E10A00CB6B97 /* BPMViewModel.swift in Sources */,
 				FBA2D6A71DBF9C4900728078 /* README.md in Sources */,
+				369BD51A29E93E0100CB6B97 /* Toast.swift in Sources */,
+				369BD51529E93E0100CB6B97 /* Recorder.swift in Sources */,
+				369BD51729E93E0100CB6B97 /* AvgMinMaxBar.swift in Sources */,
+				369BD51B29E93E0100CB6B97 /* RecordButton.swift in Sources */,
 				FBA2D6AD1DBF9C4900728078 /* YOLineChartImage.m in Sources */,
-				3644E81D29E2A32F005DDEA3 /* AvgMinMaxBar.swift in Sources */,
+				369BD51829E93E0100CB6B97 /* Label.swift in Sources */,
 				FBA2D6B01DBF9C5700728078 /* WatchConnectorConstants.swift in Sources */,
-				3644E82129E2A709005DDEA3 /* Constants.swift in Sources */,
-				3641847E29E6452E00DD42A8 /* AudioListController.swift in Sources */,
-				3644E7CE29E139E8005DDEA3 /* TimeFormat.swift in Sources */,
+				369BD50229E93D9F00CB6B97 /* BPMExporter.swift in Sources */,
 				FBA2D6C71DC054E200728078 /* WatchConnector.swift in Sources */,
 				FBA2D6AB1DBF9C4900728078 /* YODonutChartImage.m in Sources */,
-				3644E80C29E2947A005DDEA3 /* BPMView.swift in Sources */,
-				3644E82729E2AB3D005DDEA3 /* BPMViewConfig.swift in Sources */,
-				3644E81829E29DDB005DDEA3 /* Label.swift in Sources */,
-				369BD4E529E9186600CB6B97 /* UIBinder.swift in Sources */,
-				3644E81F29E2A364005DDEA3 /* Stack.swift in Sources */,
-				3641847C29E63FA400DD42A8 /* PersistManager.swift in Sources */,
-				3644E7F529E1C687005DDEA3 /* BPMTracker.swift in Sources */,
-				3641847829E63E0100DD42A8 /* AudioEntity.swift in Sources */,
-				3644E7CB29E137A6005DDEA3 /* Recorder.swift in Sources */,
-				3644E82929E2AFD1005DDEA3 /* RecordButton.swift in Sources */,
-				3641848029E665BE00DD42A8 /* BPMExporter.swift in Sources */,
+				369BD50829E93D9F00CB6B97 /* BPMView.swift in Sources */,
+				369BD51929E93E0100CB6B97 /* Stack.swift in Sources */,
+				369BD50729E93D9F00CB6B97 /* AudioEntity.swift in Sources */,
+				369BD4F129E93CB300CB6B97 /* PersistManager.swift in Sources */,
+				369BD50529E93D9F00CB6B97 /* BPMTracker.swift in Sources */,
+				369BD4EE29E93C7F00CB6B97 /* AppDelegate.swift in Sources */,
+				369BD50929E93D9F00CB6B97 /* BPMViewConfig.swift in Sources */,
+				369BD50629E93D9F00CB6B97 /* BPMController.swift in Sources */,
 				FBA2D6A91DBF9C4900728078 /* YOBarChartImage.m in Sources */,
-				369BD4E329E8F8C000CB6B97 /* Toast.swift in Sources */,
-				3644E80829E28FF4005DDEA3 /* BPMController.swift in Sources */,
-				FBA2D6111DBF9B7300728078 /* AppDelegate.swift in Sources */,
+				369BD51629E93E0100CB6B97 /* Constants.swift in Sources */,
+				369BD50429E93D9F00CB6B97 /* BPMViewModel.swift in Sources */,
+				369BD51429E93E0100CB6B97 /* TimeFormat.swift in Sources */,
+				369BD50129E93D9F00CB6B97 /* AudioListController.swift in Sources */,
+				369BD50329E93D9F00CB6B97 /* UIBinder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
