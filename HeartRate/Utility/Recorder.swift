@@ -67,7 +67,7 @@ class Recorder: NSObject, AVAudioRecorderDelegate {
     public func setupRecorder(identify: String) {
         self.identify = identify
         let session = AVAudioSession.sharedInstance()
-        try? session.setCategory(.playAndRecord, mode: .default, options: .defaultToSpeaker)
+        try? session.setCategory(.playAndRecord, mode: .default, options: .allowBluetoothA2DP)
         try? session.setActive(true, options: .notifyOthersOnDeactivation)
         
         // 检查录音权限

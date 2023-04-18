@@ -11,8 +11,8 @@ import UIKit
 
 class AudioCell: UITableViewCell{
     
-    private let selectedBackgroundViewColor = StyleConfig.backgroundColor!.withAlphaComponent(0.8)
-    private let unselectedBackgroundViewColor = StyleConfig.backgroundColor!.withAlphaComponent(0.5)
+    private let selectedBackgroundViewColor = StyleConfig.backgroundColor!.withAlphaComponent(0.9)
+    private let unselectedBackgroundViewColor = StyleConfig.backgroundColor!.withAlphaComponent(0.7)
     private let nameLabel = UILabel()
     private let dateLabel = UILabel()
     private let durationLabel = UILabel()

@@ -115,9 +115,10 @@ extension BPMTracker{
                 DispatchQueue.main.async {
                     if let error = error {
                         print("healthStore.startWatchApp error:", error)
+                        HRToast(message: "手表端无响应,请佩戴并解锁...")
                         handler(error)
                     } else {
-                        print("healthStore.startWatchApp success.")
+                        HRToast(message: "手表端已响应,请耐心等待数据...")
                         handler(nil)
                     }
                     

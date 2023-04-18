@@ -45,3 +45,9 @@ public class Constants {
     }
     
 }
+
+func HRToast(message: String, duration: TimeInterval = 2.0, position: ToastPosition = .center) {
+    if let topWindow = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) {
+        topWindow.makeToast(message, duration: duration, position: position)
+    }
+}

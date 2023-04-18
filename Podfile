@@ -13,6 +13,8 @@ target 'HeartRate' do
   pod 'RxSwift'
   pod 'RxCocoa'
   pod 'Zip', '~> 2.1'
+  pod 'ESTMusicIndicator'
+
 
 end
 

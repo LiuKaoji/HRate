@@ -45,17 +45,22 @@ extension Reactive where Base: MusicPlayer {
     }
     
     
-    /// 尝试连接到IP
+    /// 当前播放时间
     public var currentTime: Observable<TimeInterval> {
         delegate.methodInvoked(#selector(MusicPlayerDelegate.audioPlayer(_:didUpdateCurrentTime:))).map { a in
             try castOrThrow(TimeInterval.self, a[1])
         }
     }
     
-    /// 尝试连接到IP
+    /// 播放状态
     public var state: Observable<MusicPlayer.State> {
         delegate.methodInvoked(#selector(MusicPlayerDelegate.audioPlayer(_:didChangeState:))).map { a in
-            try castOrThrow(MusicPlayer.State.self, a[1])
+            let rawValue = try castOrThrow(NSNumber.self, a[1])
+            guard let state = MusicPlayer.State(rawValue: Int(truncating: rawValue)) else {
+                throw RxCocoaError.castingError(object: a[1], targetType: MusicPlayer.State.self)
+            }
+            return state
         }
     }
+
 }

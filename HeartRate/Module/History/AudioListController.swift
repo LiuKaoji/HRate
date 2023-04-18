@@ -16,6 +16,7 @@ class AudioListTableViewController: UIViewController {
     
     override var preferredStatusBarStyle: UIStatusBarStyle{.lightContent}
     private let tableView = UITableView.init(frame: .zero, style: .insetGrouped)
+    let indicatorBarButton = PlaybackIndicator()
     private var headerView: LineChartHeaderView!
     private let viewModel = ViewModel()
     private let disposeBag = DisposeBag()
@@ -28,6 +29,7 @@ class AudioListTableViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.navigationBar.isHidden = true
+        viewModel.musicPlayer.stop()
     }
     
     override func viewDidLoad() {
@@ -50,11 +52,13 @@ class AudioListTableViewController: UIViewController {
         
         let backImage = UIImage.init(named: "backLight")?.withRenderingMode(.alwaysOriginal)
         self.navigationItem.leftBarButtonItem = .init(image: backImage, style: .plain, target: self, action: #selector(onClickBack))
+        self.navigationItem.rightBarButtonItem = indicatorBarButton
         
         selectFirstRow()
     }
     
     @objc func onClickBack(){
+        viewModel
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -81,6 +85,7 @@ class AudioListTableViewController: UIViewController {
         viewModel.chartBPMData.bind(to: self.headerView.chart.rx.data).disposed(by: disposeBag)// 更新图表
         viewModel.playTime?.bind(to: self.headerView.durationLabel.rx.text).disposed(by: disposeBag)// 更新播放时长
         viewModel.bpmStatus?.bind(to: self.headerView.bpmLable.rx.text).disposed(by: disposeBag)//更新心率
+        viewModel.indicateState?.bind(to: self.indicatorBarButton.rx.state).disposed(by: disposeBag)//绑定音频指示器转态
         
     }
     

@@ -11,6 +11,7 @@ import RxSwift
 import RxCocoa
 import Charts
 import KDCircularProgress
+import ESTMusicIndicator
 
 extension Reactive where Base: BarChartView {
     var data: Binder<[Int16]> {
@@ -51,19 +52,31 @@ extension Reactive where Base: LineChartView {
             }
             
             let lineDataSet = LineChartDataSet(entries: entries, label: "心率")
-            lineDataSet.setColor(.red)
+            lineDataSet.setColor(UIColor.systemRed.withAlphaComponent(0.9))
             lineDataSet.drawCirclesEnabled = false
-            lineDataSet.lineWidth = 2
-            lineDataSet.mode = .cubicBezier
+            lineDataSet.lineWidth = 1
+            lineDataSet.mode = .linear // 使用线性插值以提高波峰尖锐度
             lineDataSet.drawFilledEnabled = true
             lineDataSet.fillColor = UIColor.systemRed.withAlphaComponent(0.5)
+            lineDataSet.drawValuesEnabled = false // 不绘制数据点上的值
             
             let lineData = LineChartData(dataSet: lineDataSet)
             chartView.data = lineData
             chartView.lineData?.setDrawValues(false)
+            
+            // 提高图表的清晰度
+            chartView.setScaleEnabled(true)
+            chartView.pinchZoomEnabled = true
+            chartView.doubleTapToZoomEnabled = true
+            chartView.dragEnabled = true
+            
+            // 设置图例样式
+            chartView.legend.textColor = .red
+            chartView.legend.font = UIFont.systemFont(ofSize: 12)
         }
     }
 }
+
 
 extension Reactive where Base: KDCircularProgress {
     var progress: Binder<Double> {
@@ -94,4 +107,11 @@ extension Reactive where Base: BPMView {
     }
 }
 
+extension Reactive where Base: PlaybackIndicator {
+    var state: Binder<ESTMusicIndicatorViewState> {
+        return Binder(base) { view, state in
+            view.updateMusicIndicatorState(state: state)
+        }
+    }
+}
 

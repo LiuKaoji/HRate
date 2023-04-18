@@ -3,6 +3,7 @@ PODS:
     - Charts/Core (= 4.1.0)
   - Charts/Core (4.1.0):
     - SwiftAlgorithms (~> 1.0)
+  - ESTMusicIndicator (0.2.0)
   - KDCircularProgress (1.5.4)
   - OptimizedSQLCipher (1.2.2)
   - RxCocoa (6.5.0):
@@ -22,6 +23,7 @@ PODS:
 
 DEPENDENCIES:
   - Charts (from `https://github.com/danielgindi/Charts.git`, branch `master`)
+  - ESTMusicIndicator
   - KDCircularProgress
   - RxCocoa
   - RxSwift
@@ -31,6 +33,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - ESTMusicIndicator
     - KDCircularProgress
     - OptimizedSQLCipher
     - RxCocoa
@@ -54,6 +57,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Charts: 354f86803d11d9c35de280587fef50d1af063978
+  ESTMusicIndicator: 80a123b51a7de3caa44dc91829b9619185dad0f6
   KDCircularProgress: 98200c6b8e85d22bc04eb644721d3b1e12b0686b
   OptimizedSQLCipher: 92a1bf5cc94139e1da49de9c883ff9891bcd2a37
   RxCocoa: 94f817b71c07517321eb4f9ad299112ca8af743b
@@ -65,6 +69,6 @@ SPEC CHECKSUMS:
   WCDBSwift: 6687dc2d4bebce2b237017ca367730f5f8409e67
   Zip: b3fef584b147b6e582b2256a9815c897d60ddc67
 
-PODFILE CHECKSUM: 2b5c7b1e8bdb92e5748c889bf5127e5f7a8630bc
+PODFILE CHECKSUM: 67766042e291b7508ef7ddc3f1f7318dc7296ffe
 
 COCOAPODS: 1.12.0

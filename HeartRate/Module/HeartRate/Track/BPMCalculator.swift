@@ -39,7 +39,7 @@ class BPMCalculator {
         // 更新平均心率
         let sum = bpms.reduce(0, +)
         let average = Double(sum) / Double(bpms.count)
-        (bpms.count == 1) ?maxBPM.accept(bpm):avgBPM.accept(Int16(average))
+        (bpms.count == 1) ?avgBPM.accept(bpm):avgBPM.accept(Int16(average))
         
         // 当前心率
         nowBPM.accept(bpm)

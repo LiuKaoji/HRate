@@ -8,6 +8,7 @@
 
 import RxSwift
 import RxCocoa
+import ESTMusicIndicator
 
 class ViewModel {
     
@@ -22,6 +23,7 @@ class ViewModel {
     let musicPlayer = MusicPlayer()
     var playTime:Observable<String>?
     let bpmStatus:Observable<String>?
+    let indicateState:BehaviorRelay<ESTMusicIndicatorViewState>? = .init(value: .paused)
     
     let chartBPMData = BehaviorRelay<[Int16]>(value: [])
     let disposeBag = DisposeBag()
@@ -61,6 +63,22 @@ class ViewModel {
                 ViewModel.calculator.addHeartRate(audioEntity.bpms[strongSelf.currentIndex].bpm)
             }
         }.disposed(by: disposeBag)
+        
+        // 转换播放状态至 指示器
+        musicPlayer.rx.state.map { musicPlayerState -> ESTMusicIndicatorViewState in
+            switch musicPlayerState {
+            case .playing:
+                return .playing
+            case .paused, .stopped:
+                return .paused
+            case .error:
+                return .stopped
+            }
+        }.do { state in
+            self.indicateState?.accept(state)
+        }.subscribe()
+        .disposed(by: disposeBag)
+        
     }
     
     func playMusic(with entity: AudioEntity) {
