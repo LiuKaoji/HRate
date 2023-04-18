@@ -34,17 +34,10 @@ class BPMTracker: NSObject {
     
     static let shared = BPMTracker()
     
+    public let calculator = BPMCalculator()
     public var state = BehaviorRelay<MonitorState>(value: .notStarted) // 当前心率监测器的状态
-    public var nowBPM = BehaviorRelay<Int16>(value: 0) // 实时心率
-    public var minBPM = BehaviorRelay<Int16>(value: 0) // 最低心率
-    public var maxBPM = BehaviorRelay<Int16>(value: 0) // 最高心率
-    public var avgBPM = BehaviorRelay<Int16>(value: 0) // 平均心率
-    public var bpmPercent = BehaviorRelay<Double>(value: 0) // 心率占比 0-220区间
     public var dataHandle = PublishSubject<(bpm: Int16, date: String)>() // 心率数据发布对象
-    public var bpmData = BehaviorRelay<[Int16]>(value: []) // 所有实时心率 用于计算平均心率及表格显示
-    
     private var bpmAccess: Bool = false // 所有心率值的和
-    private var sumBPM: Int64 = 0 // 所有心率值的和
     private var bpms: [Int16] = [] // 所有心率值
     private var messageHandler: WatchConnector.MessageHandler? // Watch App 发送的消息处理对象
     private let healthStore = HKHealthStore() // HealthKit 存储库
@@ -97,44 +90,13 @@ class BPMTracker: NSObject {
     
     // 添加心率值并进行统计计算
     func addHeartRate(_ bpm: Int16, _ date: String) {
-        
-        // 全部心率
-        var bpms: [Int16] = bpmData.value
-        bpms.append(bpm)
-        bpmData.accept(bpms)
-        
-        // 当前心率
-        nowBPM.accept(bpm)
-        
-        // 心率占比
-        bpmPercent.accept(Double(bpm)/220.0)
-        
-        // 更新最低心率
-        if let min = bpms.min(){
-            minBPM.accept(min)
-        }
-        
-        // 更新最高心率
-        if let max = bpms.max(){
-            maxBPM.accept(max)
-        }
-        
-        // 更新平均心率
-        let sum = bpms.reduce(0, +)
-        let average = Double(sum) / Double(bpms.count)
-        avgBPM.accept(Int16(average))
-        
+        calculator.addHeartRate(bpm)
         //抛出数据以存储至数据库
         dataHandle.onNext((bpm, date)) // 发布心率数据
     }
     
     func reset() {
-        nowBPM.accept(0)
-        minBPM.accept(0)
-        maxBPM.accept(0)
-        avgBPM.accept(0)
-        bpmData.accept([])
-        sumBPM = 0
+        calculator.reset()
     }
 }
 

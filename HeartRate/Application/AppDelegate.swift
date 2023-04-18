@@ -20,6 +20,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // 设置后台获取的最小时间间隔
         application.setMinimumBackgroundFetchInterval(UIApplication.backgroundFetchIntervalMinimum)
         
+        //导航栏样式
+        setupGlobalNavigationBarStyle()
+        
         // 注册推送通知
         application.registerForRemoteNotifications()
         
@@ -85,6 +88,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("Health data is not available on this device.")
             //completion(false)
         }
+    }
+    
+    // MARK: - 自定义方法
+    
+    func setupGlobalNavigationBarStyle() {
+        // 获取全局导航栏的外观代理
+        let navigationBarAppearance = UINavigationBar.appearance()
+        
+        // 设置导航栏背景颜色
+        navigationBarAppearance.barTintColor = StyleConfig.backgroundColor
+        
+        // 设置导航栏标题字体和颜色
+        navigationBarAppearance.titleTextAttributes = [
+            NSAttributedString.Key.foregroundColor: UIColor.white,
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18.0, weight: .semibold)
+        ]
+        
+        // 设置导航栏按钮字体和颜色
+        UIBarButtonItem.appearance().setTitleTextAttributes([
+            NSAttributedString.Key.foregroundColor: UIColor.white,
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16.0)
+        ], for: .normal)
     }
 }
 

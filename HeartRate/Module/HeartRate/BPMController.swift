@@ -21,6 +21,16 @@ class BPMController: UIViewController {
     // 视图
     private lazy var bpmView = BPMView.init(frame: UIScreen.main.bounds)
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.isHidden = false
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.navigationBar.isHidden = true
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(bpmView)

@@ -3,7 +3,7 @@
 //  HeartRate
 //
 //  Created by kaoji on 4/14/23.
-//  Copyright © 2023 Jonny. All rights reserved.
+//  Copyright © 2023 kaoji. All rights reserved.
 //
 
 import Foundation
@@ -19,7 +19,7 @@ class BPMViewModel: NSObject {
     let minBPM: Observable<String>        // 最小心率（可观察）
     let maxBPM: Observable<String>        // 最大心率（可观察）
     let avgBPM: Observable<String>        // 平均心率（可观察）
-    let charData: Observable<BarChartData> // 图表数据（可观察）
+    let charData: Observable<[Int16]> // 图表数据（可观察）
     let progress: Observable<Double>      // 心率百分比（可观察）
 
     // Recorder 相关属性
@@ -50,22 +50,12 @@ class BPMViewModel: NSObject {
         
         recordButtonEnabled = recordButtonEnabledSubject.asObservable()
         
-        nowBPM = tracker.nowBPM.asObservable().map { "\($0)" }
-        minBPM = tracker.minBPM.asObservable().map { "\($0)" }
-        maxBPM = tracker.maxBPM.asObservable().map { "\($0)" }
-        avgBPM = tracker.avgBPM.asObservable().map { "\($0)" }
-        progress = tracker.bpmPercent.asObservable().map { $0 }
-        
-        charData = tracker.bpmData.asObservable().map { bpms -> BarChartData in
-            var entries = [BarChartDataEntry]()
-            for i in 0..<bpms.count {
-                entries.append(BarChartDataEntry(x: Double(i), y: Double(bpms[i])))
-            }
-            let set = BarChartDataSet(entries: entries)
-            let data = BarChartData(dataSet: set)
-            set.colors = [UIColor(named: "Color")!]
-            return data
-        }
+        nowBPM = tracker.calculator.nowBPM.asObservable().map { "\($0)" }
+        minBPM = tracker.calculator.minBPM.asObservable().map { "\($0)" }
+        maxBPM = tracker.calculator.maxBPM.asObservable().map { "\($0)" }
+        avgBPM = tracker.calculator.avgBPM.asObservable().map { "\($0)" }
+        progress = tracker.calculator.bpmPercent.asObservable().map { $0 }
+        charData = tracker.calculator.bpmData.asObservable().map { $0 }
         
         super.init()
         

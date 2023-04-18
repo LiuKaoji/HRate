@@ -3,101 +3,137 @@
 //  HeartRate
 //
 //  Created by kaoji on 4/12/23.
-//  Copyright © 2023 Jonny. All rights reserved.
+//  Copyright © 2023 kaoji. All rights reserved.
 //
 
 import Foundation
 import UIKit
+import RxCocoa
+import RxSwift
+import SnapKit
 
-class AudioListTableViewController: UITableViewController {
+class AudioListTableViewController: UIViewController {
     
+    override var preferredStatusBarStyle: UIStatusBarStyle{.lightContent}
+    private let tableView = UITableView.init(frame: .zero, style: .insetGrouped)
+    private var headerView: LineChartHeaderView!
+    private let viewModel = ViewModel()
+    private let disposeBag = DisposeBag()
     
-    var audios: [AudioEntity] = []
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        title = "历史录制"
-        view.backgroundColor = .black
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        loadData()
-        
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.isHidden = false
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        clearTempDirectory()
-    }
-
-    func loadData() {
-        audios = PersistManager.shared.fetchAllAudios()
-        tableView.reloadData()
-    }
-
-    // UITableViewDataSource methods
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return audios.count
-    }
-
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        let audio = audios[indexPath.row]
-        cell.textLabel?.text = audio.name
-        return cell
-    }
-
-    // Swipe actions
-
-    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let deleteAction = UIContextualAction(style: .destructive, title: "删除") { [weak self] _, _, completionHandler in
-            guard let self = self else { return }
-            let audio = self.audios[indexPath.section]
-            
-            // 删除
-            let fileManager = FileManager.default
-            let documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
-            let audioURL = documentsDirectory.appendingPathComponent(audio.name!)//移除音频
-            PersistManager.shared.deleteAudio(audioEntity: audio)//移除数据库
-            self.audios.removeAll(where: { $0.name == audio.name })//当前列表数据源
-            tableView.reloadData()//刷新列表
-            completionHandler(true)
-        }
-
-        let shareAction = UIContextualAction(style: .normal, title: "导出") { [weak self] _, _, completionHandler in
-            guard let self = self else { return }
-            
-            // 打包数据分享
-            let audio = self.audios[indexPath.section]
-            if let topController = UIApplication.topViewController() {
-                BPMExporter.exportAndShare(audioEntity: audio, viewController: topController)
-            }
-           
-            
-            completionHandler(true)
-        }
-
-        shareAction.backgroundColor = .systemBlue
-
-        let swipeActions = UISwipeActionsConfiguration(actions: [deleteAction, shareAction])
-        return swipeActions
+        self.navigationController?.navigationBar.isHidden = true
     }
     
-    func clearTempDirectory() {
-        let fileManager = FileManager.default
-        let tempDirectoryURL = NSURL.fileURL(withPath: NSTemporaryDirectory(), isDirectory: true)
-
-        do {
-            let fileURLs = try fileManager.contentsOfDirectory(at: tempDirectoryURL, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
-            for fileURL in fileURLs {
-                try fileManager.removeItem(at: fileURL)
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupTableView()
+        setupHeaderView()
+        bindViewModel()
+    }
+    
+    private func setupTableView() {
+        view.addSubview(tableView)
+        self.navigationController?.navigationBar.barStyle = .black
+        self.title = "录制历史"
+        tableView.backgroundColor = StyleConfig.backgroundColor
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.snp.makeConstraints({ $0.top.left.bottom.right.equalToSuperview() })
+        tableView.contentInset = UIEdgeInsets(top: viewModel.headerHeight.value, left: 0, bottom: 0, right: 0)
+        tableView.register(AudioCell.self, forCellReuseIdentifier: "AudioCell")
+        tableView.rx.setDelegate(self).disposed(by: disposeBag)
+        
+        let backImage = UIImage.init(named: "backLight")?.withRenderingMode(.alwaysOriginal)
+        self.navigationItem.leftBarButtonItem = .init(image: backImage, style: .plain, target: self, action: #selector(onClickBack))
+        
+        selectFirstRow()
+    }
+    
+    @objc func onClickBack(){
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    private func setupHeaderView() {
+        let initialHeaderHeight = viewModel.headerHeight.value
+        headerView = LineChartHeaderView(height: initialHeaderHeight)
+        tableView.tableHeaderView = headerView
+    }
+    
+    private func bindViewModel() {
+        viewModel.headerHeight
+            .asDriver()
+            .drive(onNext: { [weak self] height in
+                self?.headerView.updateHeight(height)
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.audioEntities
+            .bind(to: tableView.rx.items(cellIdentifier: "AudioCell", cellType: AudioCell.self)) { (row, element, cell) in
+                cell.configure(with: element)
             }
-            print("Successfully cleared the temp directory.")
-        } catch {
-            print("Error while clearing temp directory: \(error)")
+            .disposed(by: disposeBag)
+        
+        viewModel.chartBPMData.bind(to: self.headerView.chart.rx.data).disposed(by: disposeBag)// 更新图表
+        viewModel.playTime?.bind(to: self.headerView.durationLabel.rx.text).disposed(by: disposeBag)// 更新播放时长
+        viewModel.bpmStatus?.bind(to: self.headerView.bpmLable.rx.text).disposed(by: disposeBag)//更新心率
+        
+    }
+    
+    func selectFirstRow(){
+        // 选中第一行
+        DispatchQueue.main.async { [self] in
+            let firstIndexPath = IndexPath(row: 0, section: 0)
+            if viewModel.audioEntities.value.count > 0 {
+                let audioEntity = viewModel.audioEntities.value[firstIndexPath.row]
+                viewModel.playMusic(with: audioEntity)
+                tableView.selectRow(at: firstIndexPath, animated: false, scrollPosition: .none)
+            }
         }
     }
+}
+
+extension AudioListTableViewController: UITableViewDelegate {
+    
+    // 
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60
+    }
+    
+    //选中播放
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let audioEntity = viewModel.audioEntities.value[indexPath.row]
+        viewModel.playMusic(with: audioEntity)
+    }
+    
+    // 侧滑选项
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+           let deleteAction = UIContextualAction(style: .destructive, title: "删除") { [weak self] _, _, completionHandler in
+               guard let self = self else { return }
+               let audio = viewModel.audioEntities.value[indexPath.row]
+               let isSelected = (audio == viewModel.audioEntity)
+               viewModel.deleteEntity(with: audio)
+               isSelected ?selectFirstRow():nil
+               completionHandler(true)
+           }
+
+           let shareAction = UIContextualAction(style: .normal, title: "导出") { [weak self] _, _, completionHandler in
+               guard let self = self else { return }
+               // 打包数据分享
+               let audio = viewModel.audioEntities.value[indexPath.row]
+               if let topController = UIApplication.topViewController() {
+                   BPMExporter.exportAndShare(audioEntity: audio, viewController: topController)
+               }
+               completionHandler(true)
+           }
+
+           shareAction.backgroundColor = .systemBlue
+
+           let swipeActions = UISwipeActionsConfiguration(actions: [deleteAction, shareAction])
+           return swipeActions
+       }
 }

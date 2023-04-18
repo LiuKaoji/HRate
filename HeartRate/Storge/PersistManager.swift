@@ -51,6 +51,8 @@ class PersistManager {
     // 删除音频实体
     func deleteAudio(audioEntity: AudioEntity) {
         guard let audioId = audioEntity.id else { return }
+        try? FileManager.default.removeItem(at: audioURLForEntity(with: audioEntity))
+        
         do {
             try database.delete(fromTable: "AudioEntity", where: AudioEntity.CodingKeys.id == audioId)
         } catch {
@@ -71,5 +73,12 @@ extension PersistManager{
         audio.ext = "m4a"
         
         return audio
+    }
+    
+    func audioURLForEntity(with entity: AudioEntity)-> URL{
+        let fileManager = FileManager.default
+        let documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let audioURL = documentsDirectory.appendingPathComponent(entity.name!)
+        return audioURL
     }
 }

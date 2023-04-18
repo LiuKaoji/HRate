@@ -1,5 +1,5 @@
 //
-//  BPMViewConfig.swift
+//  StyleConfig.swift
 //  HeartRate
 //
 //  Created by kaoji on 4/9/23.
@@ -9,7 +9,7 @@
 import Foundation
 import KDCircularProgress
 
-struct BPMViewConfig {
+struct StyleConfig {
     // 通用
     static let backgroundColor = UIColor(named: "BackgroundColor")
     
@@ -31,9 +31,10 @@ struct BPMViewConfig {
     static let smallScreenVerticalCenterDivisor: CGFloat = 1.5
     
     // BarChartView
-    static let axisMinimum: Double = 0.0
-    static let axisMaximum: Double = 220.0
+    static let axisMinimum: Double = 60
+    static let axisMaximum: Double = 210.0
     static let noDataTextColor = UIColor.white
     static let noDataText = "佩戴手表再点击检测心率"
+    static let noDataText2 = "暂无数据, 当有数据时，图表将显示在此处"
     static let labelTextColor = UIColor.white
 }

@@ -69,7 +69,7 @@ class TimeFormat {
     // 格式化时间间隔为字符串
     class func formatTimeInterval(seconds: TimeInterval) -> String {
         let seconds = Int(seconds)
-        guard seconds > 0 else { return "--:--" }
+        guard seconds > 0 else { return "00:00" }
         
         let s = seconds % 60, m = seconds / 60 % 60, h = m/60
         var timeString = ""

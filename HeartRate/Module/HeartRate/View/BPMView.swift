@@ -65,8 +65,8 @@ class BPMView: UIView {
     
     lazy var chart: BarChartView = {
         let chart = BarChartView()
-        chart.noDataTextColor = BPMViewConfig.noDataTextColor
-        chart.noDataText = BPMViewConfig.noDataText
+        chart.noDataTextColor = StyleConfig.noDataTextColor
+        chart.noDataText = StyleConfig.noDataText
         
         chart.dragEnabled = false
         chart.pinchZoomEnabled = false
@@ -77,13 +77,13 @@ class BPMView: UIView {
         chart.chartDescription.enabled = false
         
         chart.rightAxis.enabled = false
-        chart.leftAxis.labelTextColor = BPMViewConfig.labelTextColor
+        chart.leftAxis.labelTextColor = StyleConfig.labelTextColor
         
         chart.xAxis.labelPosition = .bottom
         chart.xAxis.drawLabelsEnabled = false
         
-        chart.leftAxis.axisMinimum = BPMViewConfig.axisMinimum
-        chart.leftAxis.axisMaximum = BPMViewConfig.axisMaximum
+        chart.leftAxis.axisMinimum = StyleConfig.axisMinimum
+        chart.leftAxis.axisMaximum = StyleConfig.axisMaximum
         
         chart.translatesAutoresizingMaskIntoConstraints = false
         
@@ -111,9 +111,8 @@ class BPMView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     private func setupView() {
-        backgroundColor = BPMViewConfig.backgroundColor
+        backgroundColor = StyleConfig.backgroundColor
         
         addSubview(progress)
         addSubview(verticalStack)
@@ -191,12 +190,12 @@ class BPMView: UIView {
     
     //MARK: - 圆环
     private func setupCircleView() {
-        progress.startAngle = BPMViewConfig.startAngle
-        progress.progressThickness = BPMViewConfig.progressThickness
-        progress.trackThickness = BPMViewConfig.trackThickness
-        progress.glowMode = BPMViewConfig.glowMode
-        progress.trackColor = BPMViewConfig.trackColor!
-        progress.set(colors: BPMViewConfig.progressColors[0], BPMViewConfig.progressColors[1], BPMViewConfig.progressColors[2])
+        progress.startAngle = StyleConfig.startAngle
+        progress.progressThickness = StyleConfig.progressThickness
+        progress.trackThickness = StyleConfig.trackThickness
+        progress.glowMode = StyleConfig.glowMode
+        progress.trackColor = StyleConfig.trackColor!
+        progress.set(colors: StyleConfig.progressColors[0], StyleConfig.progressColors[1], StyleConfig.progressColors[2])
         
         if Constants().screenSize.height <= 667 {
             progress.center = CGPoint(x: self.center.x, y: self.center.y / 1.9)
