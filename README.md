@@ -1,7 +1,11 @@
-# HeartRate
+# HeartRate 将心率与录音关联起来
   
 
    https://user-images.githubusercontent.com/47659827/231647479-57ce7081-b2bf-46d9-bf0b-5cd96db1fe51.mp4
+
+
+   https://user-images.githubusercontent.com/47659827/232689744-2965736c-6e29-41cb-b922-374ac924df15.mp4
+
 
 ### 简述
 
