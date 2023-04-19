@@ -139,46 +139,45 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     /// - returns: 如果 heartRate 为 nil，则返回用于 Apple Watch 的 complication 选择屏幕的占位符条目。
     private func timelineEntryForComplication(_ complication: CLKComplication, heartRate: HeartRate? = nil) -> CLKComplicationTimelineEntry {
         
-        var complicationTemplate: CLKComplicationTemplate = CLKComplicationTemplate()
-        
-        let heartRateText = "\(heartRate?.bpm ?? 76)"
-        let unitText = " BPM"
-        let fullText = NSLocalizedString("Heart Rate", comment: "") + heartRateText + "BPM"
-        
-        let heartRateDate: Date
-        
-        if let heartRate = heartRate {
-            heartRateDate = heartRate.date as Date
-        }
-        else { // 设置占位符模板的日期为 9:41
-            let calendar = Calendar(identifier: Calendar.Identifier.gregorian)
-            var components = calendar.dateComponents([.year, .month, .day], from: Date())
-            components.hour = 9
-            components.minute = 41
-            heartRateDate = calendar.date(from: components) ?? Date()
-        }
-        
-        let timeTextProvider = CLKTimeTextProvider(date: heartRateDate)
-        
-        switch complication.family {
-            
-        case .modularSmall:
-            let template = CLKComplicationTemplateModularSmallStackText()
-            template.line1TextProvider = CLKSimpleTextProvider(text: heartRateText + unitText, shortText: heartRateText, accessibilityLabel: fullText)
-            template.line2TextProvider = timeTextProvider
-            complicationTemplate = template
-            
-        // ... 其他表盘样式的处理逻辑 ...
-        
-         default:
-            break;
-        }
-        // 使用 Health app 的着色
-        complicationTemplate.tintColor = UIColor(red: 1, green: 40/255, blue: 81/255, alpha: 1)
-        
-        return CLKComplicationTimelineEntry(date: heartRate?.date ?? Date(),
-                                            complicationTemplate: complicationTemplate)
+        let heartRateText = "\(heartRate?.bpm ?? 76) BPM"
+           let heartRateDate: Date = heartRate?.date ?? Date()
+
+           let timeTextProvider = CLKTimeTextProvider(date: heartRateDate)
+           let complicationTemplate = createComplicationTemplate(for: complication, heartRateText: heartRateText, timeTextProvider: timeTextProvider)
+
+           guard let template = complicationTemplate else {
+               fatalError("Unsupported complication family.")
+           }
+
+           return CLKComplicationTimelineEntry(date: heartRateDate, complicationTemplate: template)
     }
     
+    private func createComplicationTemplate(for complication: CLKComplication, heartRateText: String, timeTextProvider: CLKTimeTextProvider) -> CLKComplicationTemplate? {
+        var complicationTemplate: CLKComplicationTemplate? = nil
+
+        switch complication.family {
+        case .modularSmall:
+            let template = CLKComplicationTemplateModularSmallStackText()
+            template.line1TextProvider = CLKSimpleTextProvider(text: heartRateText, shortText: "", accessibilityLabel: heartRateText)
+            template.line2TextProvider = timeTextProvider
+            complicationTemplate = template
+
+        case .utilitarianSmall:
+            let template = CLKComplicationTemplateUtilitarianSmallFlat()
+            template.textProvider = CLKSimpleTextProvider(text: heartRateText, shortText: "", accessibilityLabel: heartRateText)
+            complicationTemplate = template
+
+        // ... 添加其他表盘样式的处理逻辑 ...
+
+        default:
+            break
+        }
+
+        // 使用 Health app 的着色
+        complicationTemplate?.tintColor = UIColor(red: 1, green: 40/255, blue: 81/255, alpha: 1)
+
+        return complicationTemplate
+    }
+
 }
 

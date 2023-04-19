@@ -15,10 +15,10 @@ class AvgMinMaxBar: UIView {
     lazy var maxBPMLabel = Label(style: .avgMinMax, "-")
     lazy var nowBPMLabel = Label(style: .avgMinMax, "-")
 
-    lazy var nowLabel = Label(style: .avgMinMax, "NOW")
-    lazy var avgLabel = Label(style: .avgMinMax, "AVG")
-    lazy var minLabel = Label(style: .avgMinMax, "MIN")
-    lazy var maxLabel = Label(style: .avgMinMax, "MAX")
+    lazy var nowLabel = Label(style: .avgMinMax, "当前")
+    lazy var avgLabel = Label(style: .avgMinMax, "平均")
+    lazy var minLabel = Label(style: .avgMinMax, "最小")
+    lazy var maxLabel = Label(style: .avgMinMax, "最大")
     
     lazy var mainStack: UIStackView = {
         let s = UIStackView()

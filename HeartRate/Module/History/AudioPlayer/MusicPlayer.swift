@@ -31,6 +31,17 @@ import AVFoundation
         }
     }
     
+    override init(){
+        super.init()
+        let session = AVAudioSession.sharedInstance()
+        do {
+            try session.setCategory(.playback, mode: .default, options: [.allowBluetoothA2DP])
+            try session.setActive(true, options: .notifyOthersOnDeactivation)
+        } catch {
+            print("Failed to set audio session category or activate session, error: \(error)")
+        }
+    }
+    
     public func play(url: URL) {
         self.stop()
         
@@ -87,5 +98,11 @@ import AVFoundation
     
     public func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
         state = .error
+    }
+    
+    deinit {
+        let session = AVAudioSession.sharedInstance()
+        try? session.setCategory(.ambient)
+        try? session.setActive(false, options: .notifyOthersOnDeactivation)
     }
 }

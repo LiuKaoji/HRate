@@ -149,7 +149,7 @@ class HeartRateController {
             }
             
             self.healthStore.save(heartRateSamples) { success, error in
-                print("save objects success? \(success), error \(error)")
+                print("save objects success? \(success), error \(error?.localizedDescription)")
             }
         }
     }

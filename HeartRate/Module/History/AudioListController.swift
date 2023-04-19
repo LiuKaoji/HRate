@@ -54,11 +54,28 @@ class AudioListTableViewController: UIViewController {
         self.navigationItem.leftBarButtonItem = .init(image: backImage, style: .plain, target: self, action: #selector(onClickBack))
         self.navigationItem.rightBarButtonItem = indicatorBarButton
         
+        // 增加一个无数据记录占位
+        let noDataLabel = UILabel()
+        noDataLabel.text = "暂无录制文件"
+        noDataLabel.textColor = UIColor.gray
+        noDataLabel.font = UIFont.boldSystemFont(ofSize: 18)
+        noDataLabel.textAlignment = .center
+        view.addSubview(noDataLabel)
+        noDataLabel.snp.makeConstraints({ $0.center.equalToSuperview() })
+
+        viewModel.audioEntities
+            .map { $0.isEmpty }
+            .distinctUntilChanged()
+            .subscribe(onNext: { [weak self, weak noDataLabel] isEmpty in
+                self?.tableView.isHidden = isEmpty
+                noDataLabel?.isHidden = !isEmpty
+            })
+            .disposed(by: disposeBag)
+        
         selectFirstRow()
     }
     
     @objc func onClickBack(){
-        viewModel
         self.navigationController?.popViewController(animated: true)
     }
     

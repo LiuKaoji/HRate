@@ -42,7 +42,7 @@ class ViewModel {
         
         // 更新心率显示文本
         bpmStatus = ViewModel.calculator.nowBPM.asObservable().map {
-            "now:\($0) max:\(ViewModel.calculator.maxBPM.value) average:\(ViewModel.calculator.avgBPM.value)"
+            "当前:\($0) 最大:\(ViewModel.calculator.maxBPM.value) 平均:\(ViewModel.calculator.avgBPM.value)"
         }
         
         // 读取心率数据更新UI

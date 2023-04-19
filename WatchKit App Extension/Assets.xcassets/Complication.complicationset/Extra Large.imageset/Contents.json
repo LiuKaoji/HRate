@@ -5,21 +5,9 @@
       "scale" : "2x"
     },
     {
-      "filename" : "HeartRate52.png",
       "idiom" : "watch",
       "scale" : "2x",
       "screen-width" : "<=145"
-    },
-    {
-      "idiom" : "watch",
-      "scale" : "2x",
-      "screen-width" : ">161"
-    },
-    {
-      "filename" : "HeartRate58.png",
-      "idiom" : "watch",
-      "scale" : "2x",
-      "screen-width" : ">145"
     },
     {
       "idiom" : "watch",
@@ -30,5 +18,8 @@
   "info" : {
     "author" : "xcode",
     "version" : 1
+  },
+  "properties" : {
+    "auto-scaling" : "auto"
   }
 }

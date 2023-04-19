@@ -11,7 +11,7 @@ import UIKit
 
 class AudioCell: UITableViewCell{
     
-    private let selectedBackgroundViewColor = StyleConfig.backgroundColor!.withAlphaComponent(0.9)
+    private let selectedBackgroundViewColor = StyleConfig.backgroundColor!.withAlphaComponent(0.3)
     private let unselectedBackgroundViewColor = StyleConfig.backgroundColor!.withAlphaComponent(0.7)
     private let nameLabel = UILabel()
     private let dateLabel = UILabel()
@@ -40,21 +40,19 @@ class AudioCell: UITableViewCell{
     
     private func setupViews() {
         nameLabel.font = .systemFont(ofSize: 16, weight: .bold)
-        nameLabel.textColor = .white
+        nameLabel.textColor = .white.withAlphaComponent(0.9)
         contentView.addSubview(nameLabel)
         
         dateLabel.font = .systemFont(ofSize: 14)
-        dateLabel.textColor = .gray
-        dateLabel.textColor = .white
+        dateLabel.textColor = .white.withAlphaComponent(0.7)
         contentView.addSubview(dateLabel)
         
         durationLabel.font = .systemFont(ofSize: 14)
-        durationLabel.textColor = .white
+        durationLabel.textColor = .white.withAlphaComponent(0.7)
         contentView.addSubview(durationLabel)
         
         sizeLabel.font = .systemFont(ofSize: 14)
-        sizeLabel.textColor = .gray
-        sizeLabel.textColor = .white
+        sizeLabel.textColor = .white.withAlphaComponent(0.7)
         contentView.addSubview(sizeLabel)
     }
     
