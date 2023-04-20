@@ -35,7 +35,7 @@ class InterfaceController: WKInterfaceController {
         
         // 模拟启动
         let _ = NotificationManager.shared.subscribeToActionNotification(using: { [weak self] in
-            self?.onClickAction()
+            self?.startworkoutAction()
         })
 
         messageHandler = WatchConnector.MessageHandler { [weak self] message in
@@ -94,14 +94,16 @@ class InterfaceController: WKInterfaceController {
             stopWorkout()
         } else {
             // 开始监听心率
-            startWorkout { isStarted in
-                self.actionImage.setImageNamed("stop")
-                NotificationManager.shared.postStartNotification()
-                switchToPumpingPage()//点击开始自动跳转心率页面
-            }
+            startworkoutAction()
         }
-        
-        func switchToPumpingPage() {
+
+    }
+    
+    func startworkoutAction(){
+        // 开始监听心率
+        startWorkout { isStarted in
+            self.actionImage.setImageNamed("stop")
+            NotificationManager.shared.postStartNotification()
             NotificationManager.shared.postPageSwitchNotification(classType: PumpingController.classForCoder())
         }
     }
@@ -117,23 +119,38 @@ class InterfaceController: WKInterfaceController {
         // 使用闭包回调更新UI
         statusUpdate(true)
 
-        do {
-            try workoutManager.startWorkout(with: configuration ?? defaultWorkoutConfiguration)
-            WatchConnector.shared.send([.workoutStart : true])
-            startHeartRateQuery()
-
-            if WKExtension.shared().applicationState == .active {
-                WKInterfaceDevice.current().play(.start)
-            } else {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+//        do {
+//            try workoutManager.startWorkout(with: configuration ?? defaultWorkoutConfiguration)
+//
+//        } catch {
+//            print("Workout initial error:", error)
+//            let errorData = NSKeyedArchiver.archivedData(withRootObject: error)
+//            WatchConnector.shared.send([.workoutError : errorData])
+//        }
+        
+        workoutManager.startWorkoutAndFetchHeartRate(with: configuration ?? defaultWorkoutConfiguration) { samples, error in
+            if let error = error{
+                print("Workout initial error:", error as Any)
+                let errorData = NSKeyedArchiver.archivedData(withRootObject: error)
+                WatchConnector.shared.send([.workoutError : errorData])
+            }else{
+                WatchConnector.shared.send([.workoutStart : true])
+                self.startHeartRateQuery()
+                   
+                if WKExtension.shared().applicationState == .active {
                     WKInterfaceDevice.current().play(.start)
+                } else {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        WKInterfaceDevice.current().play(.start)
+                    }
+                }
+                
+                if let samples = samples {
+                    self.handle(newHeartRateSamples: samples)
                 }
             }
-        } catch {
-            print("Workout initial error:", error)
-            let errorData = NSKeyedArchiver.archivedData(withRootObject: error)
-            WatchConnector.shared.send([.workoutError : errorData])
         }
+        
     }
 
 }

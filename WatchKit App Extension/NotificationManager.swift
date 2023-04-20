@@ -3,7 +3,7 @@
 //  WatchKit App Extension
 //
 //  Created by kaoji on 4/19/23.
-//  Copyright © 2023 Jonny. All rights reserved.
+//  Copyright © 2023 kaoji. All rights reserved.
 //
 
 import Foundation

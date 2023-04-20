@@ -43,6 +43,7 @@ class AudioListTableViewController: UIViewController {
         view.addSubview(tableView)
         self.navigationController?.navigationBar.barStyle = .black
         self.title = "录制历史"
+        view.backgroundColor = StyleConfig.backgroundColor
         tableView.backgroundColor = StyleConfig.backgroundColor
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.snp.makeConstraints({ $0.top.left.bottom.right.equalToSuperview() })
@@ -113,7 +114,7 @@ class AudioListTableViewController: UIViewController {
             if viewModel.audioEntities.value.count > 0 {
                 let audioEntity = viewModel.audioEntities.value[firstIndexPath.row]
                 viewModel.playMusic(with: audioEntity)
-                tableView.selectRow(at: firstIndexPath, animated: false, scrollPosition: .none)
+                tableView.selectRow(at: firstIndexPath, animated: false, scrollPosition: .top)
             }
         }
     }

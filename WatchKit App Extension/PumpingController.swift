@@ -3,7 +3,7 @@
 //  WatchKit App Extension
 //
 //  Created by kaoji on 4/19/23.
-//  Copyright © 2023 Jonny. All rights reserved.
+//  Copyright © 2023 kaoji. All rights reserved.
 //
 
 import WatchKit
@@ -16,6 +16,7 @@ class PumpingController: WKInterfaceController {
     @IBOutlet weak var heartImageView: WKInterfaceImage!
     @IBOutlet weak var bpmLabel: WKInterfaceLabel!
     @IBOutlet weak var timeLabel: WKInterfaceLabel!
+    //lazy var bpmTimedController = BPMTimedImage.init(interfaceImage: heartImageView)
     var lineChart: SSLineChart?
     var bpmData: [Int] = []// 所有接收到的心率数据
     private var heartRate: Double = 0 {
@@ -51,6 +52,7 @@ class PumpingController: WKInterfaceController {
             self?.bpmLabel.setText("---")
             self?.bpmData.removeAll()
             self?.updateBPMChartData()
+            self?.heartImageView.setImage(.init(named: "heart"))
         })
         
         //处理跳转事件事件
@@ -79,7 +81,7 @@ class PumpingController: WKInterfaceController {
                 self.bpmData.append(integerValue)
                 self.bpmLabel.setText("\(integerValue)")
                 self.updateBPMChartData()
-               
+                //self.bpmTimedController.updateBPM(Double(integerValue))
             }
         }
     }
@@ -89,7 +91,7 @@ class PumpingController: WKInterfaceController {
         lineChart?.chartMargin = 14
         lineChart?.yLabelFormat = "%1.0f"
         lineChart?.xLabels = (1...5).map{ $0.description }
-        lineChart?.yFixedValueMax = 150
+        lineChart?.yFixedValueMax = 205
         lineChart?.yFixedValueMin = 60
         lineChart?.yLabels = ["60", "135", "205"]
         lineChart?.xLabelWidth = 15.0

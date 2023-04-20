@@ -16,6 +16,10 @@
 		3670ACF329F037AC0026F2B5 /* SSLineChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3670ACF129F037AC0026F2B5 /* SSLineChart.swift */; };
 		3670ACF429F037AC0026F2B5 /* SSLineChartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3670ACF229F037AC0026F2B5 /* SSLineChartData.swift */; };
 		3670ACF629F037F50026F2B5 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3670ACF529F037F50026F2B5 /* NotificationManager.swift */; };
+		3670ACFC29F14D110026F2B5 /* DeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3670ACFA29F14CDE0026F2B5 /* DeviceView.swift */; };
+		3670AD0829F1829F0026F2B5 /* deviceGray.png in Resources */ = {isa = PBXBuildFile; fileRef = 3670AD0629F1829F0026F2B5 /* deviceGray.png */; };
+		3670AD0929F1829F0026F2B5 /* device.png in Resources */ = {isa = PBXBuildFile; fileRef = 3670AD0729F1829F0026F2B5 /* device.png */; };
+		3670AD0B29F188F30026F2B5 /* BPMTimedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3670AD0A29F188F30026F2B5 /* BPMTimedImage.swift */; };
 		369BD4EE29E93C7F00CB6B97 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369BD4ED29E93C7F00CB6B97 /* AppDelegate.swift */; };
 		369BD4F129E93CB300CB6B97 /* PersistManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369BD4F029E93CB300CB6B97 /* PersistManager.swift */; };
 		369BD50129E93D9F00CB6B97 /* AudioListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369BD4F429E93D9F00CB6B97 /* AudioListController.swift */; };
@@ -115,6 +119,10 @@
 		3670ACF129F037AC0026F2B5 /* SSLineChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SSLineChart.swift; sourceTree = "<group>"; };
 		3670ACF229F037AC0026F2B5 /* SSLineChartData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SSLineChartData.swift; sourceTree = "<group>"; };
 		3670ACF529F037F50026F2B5 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		3670ACFA29F14CDE0026F2B5 /* DeviceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceView.swift; sourceTree = "<group>"; };
+		3670AD0629F1829F0026F2B5 /* deviceGray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = deviceGray.png; sourceTree = "<group>"; };
+		3670AD0729F1829F0026F2B5 /* device.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = device.png; sourceTree = "<group>"; };
+		3670AD0A29F188F30026F2B5 /* BPMTimedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPMTimedImage.swift; sourceTree = "<group>"; };
 		369BD4ED29E93C7F00CB6B97 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		369BD4F029E93CB300CB6B97 /* PersistManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistManager.swift; sourceTree = "<group>"; };
 		369BD4F429E93D9F00CB6B97 /* AudioListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioListController.swift; sourceTree = "<group>"; };
@@ -225,6 +233,7 @@
 				3670ACE529EFFB170026F2B5 /* PumpingController.swift */,
 				FBA2D6861DBF9BD400728078 /* InterfaceController.swift */,
 				3670ACF529F037F50026F2B5 /* NotificationManager.swift */,
+				3670AD0A29F188F30026F2B5 /* BPMTimedImage.swift */,
 			);
 			name = UserInterface;
 			sourceTree = "<group>";
@@ -327,6 +336,7 @@
 			children = (
 				369BD4FF29E93D9F00CB6B97 /* BPMView.swift */,
 				369BD50029E93D9F00CB6B97 /* StyleConfig.swift */,
+				3670ACFA29F14CDE0026F2B5 /* DeviceView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -403,6 +413,8 @@
 		FB11C5D61E03790B00FE72D0 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
+				3670AD0729F1829F0026F2B5 /* device.png */,
+				3670AD0629F1829F0026F2B5 /* deviceGray.png */,
 				3644E80D29E29DB8005DDEA3 /* Fonts */,
 				FBA2D61C1DBF9B7300728078 /* Info.plist */,
 				FBA2D6191DBF9B7300728078 /* LaunchScreen.storyboard */,
@@ -623,7 +635,9 @@
 				36C3C6CB29EF881D00E8A4DB /* REEJI-PinboGB.ttf in Resources */,
 				FBA2D61B1DBF9B7300728078 /* LaunchScreen.storyboard in Resources */,
 				FBA2D6181DBF9B7300728078 /* Assets.xcassets in Resources */,
+				3670AD0829F1829F0026F2B5 /* deviceGray.png in Resources */,
 				3644E81229E29DB8005DDEA3 /* OpenSans-Bold.ttf in Resources */,
+				3670AD0929F1829F0026F2B5 /* device.png in Resources */,
 				3644E81329E29DB8005DDEA3 /* OpenSans-Regular.ttf in Resources */,
 				3644E81129E29DB8005DDEA3 /* OpenSans-SemiBold.ttf in Resources */,
 			);
@@ -720,6 +734,7 @@
 			files = (
 				369BD51A29E93E0100CB6B97 /* Toast.swift in Sources */,
 				36C3C69B29EDAB3900E8A4DB /* MusicPlayer.swift in Sources */,
+				3670ACFC29F14D110026F2B5 /* DeviceView.swift in Sources */,
 				369BD51529E93E0100CB6B97 /* Recorder.swift in Sources */,
 				369BD51729E93E0100CB6B97 /* AvgMinMaxBar.swift in Sources */,
 				36C3C69929ED845800E8A4DB /* AudioCell.swift in Sources */,
@@ -761,6 +776,7 @@
 				3670ACE429EFED100026F2B5 /* TimeFormat.swift in Sources */,
 				FBA2D6871DBF9BD400728078 /* InterfaceController.swift in Sources */,
 				3670ACF629F037F50026F2B5 /* NotificationManager.swift in Sources */,
+				3670AD0B29F188F30026F2B5 /* BPMTimedImage.swift in Sources */,
 				FBA2D6B11DBF9C5700728078 /* WatchConnectorConstants.swift in Sources */,
 				3670ACE829EFFE110026F2B5 /* OSTimer.swift in Sources */,
 				FBA2D68B1DBF9BD400728078 /* ComplicationController.swift in Sources */,

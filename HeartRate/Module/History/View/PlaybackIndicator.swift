@@ -3,7 +3,7 @@
 //  HeartRate
 //
 //  Created by kaoji on 4/18/23.
-//  Copyright © 2023 Jonny. All rights reserved.
+//  Copyright © 2023 kaoji. All rights reserved.
 //
 
 import UIKit
@@ -29,7 +29,7 @@ class PlaybackIndicator: UIBarButtonItem {
         musicIndicator = ESTMusicIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
 
         // 3. 设置ESTMusicIndicatorView的动画类型和颜色
-        musicIndicator.tintColor = .systemBlue
+        musicIndicator.tintColor = UIColor(named: "ColorCircleOne")!
         musicIndicator.state = .stopped // 状态可以是.stopped, .playing, .paused
         
         // 4. 将ESTMusicIndicatorView添加到一个自定义的UIView中

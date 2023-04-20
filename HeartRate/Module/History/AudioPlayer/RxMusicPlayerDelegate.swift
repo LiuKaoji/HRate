@@ -3,7 +3,7 @@
 //  HeartRate
 //
 //  Created by kaoji on 4/18/23.
-//  Copyright © 2023 Jonny. All rights reserved.
+//  Copyright © 2023 kaoji. All rights reserved.
 //
 
 import Foundation
