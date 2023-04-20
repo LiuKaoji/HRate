@@ -22,6 +22,7 @@ class Label: UILabel {
         case titleLabel
         case tableTopText
         case tableBottomText
+        case appTitle
     }
     
     init(style: LabelStyle, _ text: String?) {
@@ -59,6 +60,8 @@ class Label: UILabel {
             font = UIFont(name: "OpenSans-Regular", size: 14)
         case .tableBottomText:
             font = UIFont(name: "OpenSans-Regular", size: 10)
+        case .appTitle:
+            font = UIFont(name: "REEJI-PinboGB", size: 18)
         }
     }
     

@@ -108,14 +108,14 @@ extension BPMTracker{
         WatchConnector.shared?.fetchActivatedSession { _ in
             
             let configuration = HKWorkoutConfiguration()
-            configuration.activityType = .walking
-            configuration.locationType = .outdoor
+            configuration.activityType = .cycling
+            configuration.locationType = .indoor
             
             self.healthStore.startWatchApp(with: configuration) { _, error in
                 DispatchQueue.main.async {
                     if let error = error {
                         print("healthStore.startWatchApp error:", error)
-                        HRToast(message: "手表端无响应,请佩戴并解锁...")
+                        HRToast(message: "手表端无响应,请配对佩戴并解锁...")
                         handler(error)
                     } else {
                         HRToast(message: "手表端已响应,请耐心等待数据...")

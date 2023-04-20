@@ -10,11 +10,17 @@
 		3644E81129E29DB8005DDEA3 /* OpenSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3644E80E29E29DB8005DDEA3 /* OpenSans-SemiBold.ttf */; };
 		3644E81229E29DB8005DDEA3 /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3644E80F29E29DB8005DDEA3 /* OpenSans-Bold.ttf */; };
 		3644E81329E29DB8005DDEA3 /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3644E81029E29DB8005DDEA3 /* OpenSans-Regular.ttf */; };
+		3670ACE429EFED100026F2B5 /* TimeFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369BD50B29E93E0100CB6B97 /* TimeFormat.swift */; };
+		3670ACE629EFFB170026F2B5 /* PumpingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3670ACE529EFFB170026F2B5 /* PumpingController.swift */; };
+		3670ACE829EFFE110026F2B5 /* OSTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3670ACE729EFFE110026F2B5 /* OSTimer.swift */; };
+		3670ACF329F037AC0026F2B5 /* SSLineChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3670ACF129F037AC0026F2B5 /* SSLineChart.swift */; };
+		3670ACF429F037AC0026F2B5 /* SSLineChartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3670ACF229F037AC0026F2B5 /* SSLineChartData.swift */; };
+		3670ACF629F037F50026F2B5 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3670ACF529F037F50026F2B5 /* NotificationManager.swift */; };
 		369BD4EE29E93C7F00CB6B97 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369BD4ED29E93C7F00CB6B97 /* AppDelegate.swift */; };
 		369BD4F129E93CB300CB6B97 /* PersistManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369BD4F029E93CB300CB6B97 /* PersistManager.swift */; };
 		369BD50129E93D9F00CB6B97 /* AudioListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369BD4F429E93D9F00CB6B97 /* AudioListController.swift */; };
 		369BD50229E93D9F00CB6B97 /* BPMExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369BD4F529E93D9F00CB6B97 /* BPMExporter.swift */; };
-		369BD50329E93D9F00CB6B97 /* UIBinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369BD4F829E93D9F00CB6B97 /* UIBinder.swift */; };
+		369BD50329E93D9F00CB6B97 /* Binder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369BD4F829E93D9F00CB6B97 /* Binder.swift */; };
 		369BD50429E93D9F00CB6B97 /* BPMViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369BD4F929E93D9F00CB6B97 /* BPMViewModel.swift */; };
 		369BD50529E93D9F00CB6B97 /* BPMTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369BD4FA29E93D9F00CB6B97 /* BPMTracker.swift */; };
 		369BD50629E93D9F00CB6B97 /* BPMController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369BD4FB29E93D9F00CB6B97 /* BPMController.swift */; };
@@ -37,8 +43,8 @@
 		36C3C69F29EE167500E8A4DB /* RxCastOrThrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C3C69E29EE167500E8A4DB /* RxCastOrThrow.swift */; };
 		36C3C6A329EE507E00E8A4DB /* BPMCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C3C6A229EE507E00E8A4DB /* BPMCalculator.swift */; };
 		36C3C6B329EEC0CA00E8A4DB /* PlaybackIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C3C6B229EEC0CA00E8A4DB /* PlaybackIndicator.swift */; };
-		51B10E9D8327B1EB75704EC4 /* Pods_HeartRate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B591A31C10DA124D6D8DE591 /* Pods_HeartRate.framework */; };
-		FB1CFF331DD0203D0018BD87 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB1CFF321DD0203D0018BD87 /* CloudKit.framework */; };
+		36C3C6CB29EF881D00E8A4DB /* REEJI-PinboGB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 36C3C6CA29EF881D00E8A4DB /* REEJI-PinboGB.ttf */; };
+		83D01E0F2389BF7C41D44365 /* Pods_HRate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82AD0BBA65EE0367E4E67332 /* Pods_HRate.framework */; };
 		FBA2D6181DBF9B7300728078 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FBA2D6171DBF9B7300728078 /* Assets.xcassets */; };
 		FBA2D61B1DBF9B7300728078 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FBA2D6191DBF9B7300728078 /* LaunchScreen.storyboard */; };
 		FBA2D6791DBF9BD300728078 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FBA2D6771DBF9BD300728078 /* Interface.storyboard */; };
@@ -49,13 +55,6 @@
 		FBA2D68B1DBF9BD400728078 /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA2D68A1DBF9BD400728078 /* ComplicationController.swift */; };
 		FBA2D68D1DBF9BD400728078 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FBA2D68C1DBF9BD400728078 /* Assets.xcassets */; };
 		FBA2D6911DBF9BD400728078 /* WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = FBA2D6751DBF9BD300728078 /* WatchKit App.app */; };
-		FBA2D6A51DBF9C4900728078 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = FBA2D69A1DBF9C4900728078 /* LICENSE */; };
-		FBA2D6A61DBF9C4900728078 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = FBA2D69A1DBF9C4900728078 /* LICENSE */; };
-		FBA2D6A71DBF9C4900728078 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = FBA2D69B1DBF9C4900728078 /* README.md */; };
-		FBA2D6A81DBF9C4900728078 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = FBA2D69B1DBF9C4900728078 /* README.md */; };
-		FBA2D6AA1DBF9C4900728078 /* YOBarChartImage.m in Sources */ = {isa = PBXBuildFile; fileRef = FBA2D69F1DBF9C4900728078 /* YOBarChartImage.m */; };
-		FBA2D6AC1DBF9C4900728078 /* YODonutChartImage.m in Sources */ = {isa = PBXBuildFile; fileRef = FBA2D6A21DBF9C4900728078 /* YODonutChartImage.m */; };
-		FBA2D6AE1DBF9C4900728078 /* YOLineChartImage.m in Sources */ = {isa = PBXBuildFile; fileRef = FBA2D6A41DBF9C4900728078 /* YOLineChartImage.m */; };
 		FBA2D6B01DBF9C5700728078 /* WatchConnectorConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA2D6AF1DBF9C5700728078 /* WatchConnectorConstants.swift */; };
 		FBA2D6B11DBF9C5700728078 /* WatchConnectorConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA2D6AF1DBF9C5700728078 /* WatchConnectorConstants.swift */; };
 		FBA2D6B81DBF9C8C00728078 /* HeartRateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA2D6B71DBF9C8C00728078 /* HeartRateController.swift */; };
@@ -107,14 +106,20 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0A5433B5CC772D99BA3A11AE /* Pods-HRate.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HRate.release.xcconfig"; path = "Target Support Files/Pods-HRate/Pods-HRate.release.xcconfig"; sourceTree = "<group>"; };
 		3644E80E29E29DB8005DDEA3 /* OpenSans-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-SemiBold.ttf"; sourceTree = "<group>"; };
 		3644E80F29E29DB8005DDEA3 /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Bold.ttf"; sourceTree = "<group>"; };
 		3644E81029E29DB8005DDEA3 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
+		3670ACE529EFFB170026F2B5 /* PumpingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpingController.swift; sourceTree = "<group>"; };
+		3670ACE729EFFE110026F2B5 /* OSTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTimer.swift; sourceTree = "<group>"; };
+		3670ACF129F037AC0026F2B5 /* SSLineChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SSLineChart.swift; sourceTree = "<group>"; };
+		3670ACF229F037AC0026F2B5 /* SSLineChartData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SSLineChartData.swift; sourceTree = "<group>"; };
+		3670ACF529F037F50026F2B5 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		369BD4ED29E93C7F00CB6B97 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		369BD4F029E93CB300CB6B97 /* PersistManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistManager.swift; sourceTree = "<group>"; };
 		369BD4F429E93D9F00CB6B97 /* AudioListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioListController.swift; sourceTree = "<group>"; };
 		369BD4F529E93D9F00CB6B97 /* BPMExporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BPMExporter.swift; sourceTree = "<group>"; };
-		369BD4F829E93D9F00CB6B97 /* UIBinder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIBinder.swift; sourceTree = "<group>"; };
+		369BD4F829E93D9F00CB6B97 /* Binder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Binder.swift; sourceTree = "<group>"; };
 		369BD4F929E93D9F00CB6B97 /* BPMViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BPMViewModel.swift; sourceTree = "<group>"; };
 		369BD4FA29E93D9F00CB6B97 /* BPMTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BPMTracker.swift; sourceTree = "<group>"; };
 		369BD4FB29E93D9F00CB6B97 /* BPMController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BPMController.swift; sourceTree = "<group>"; };
@@ -137,12 +142,11 @@
 		36C3C69E29EE167500E8A4DB /* RxCastOrThrow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxCastOrThrow.swift; sourceTree = "<group>"; };
 		36C3C6A229EE507E00E8A4DB /* BPMCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPMCalculator.swift; sourceTree = "<group>"; };
 		36C3C6B229EEC0CA00E8A4DB /* PlaybackIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackIndicator.swift; sourceTree = "<group>"; };
-		7C8687C4BF25A918F7C2DC52 /* Pods-HeartRate.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HeartRate.release.xcconfig"; path = "Target Support Files/Pods-HeartRate/Pods-HeartRate.release.xcconfig"; sourceTree = "<group>"; };
-		B591A31C10DA124D6D8DE591 /* Pods_HeartRate.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HeartRate.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F1E4B3415F67403294C4E323 /* Pods-HeartRate.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HeartRate.debug.xcconfig"; path = "Target Support Files/Pods-HeartRate/Pods-HeartRate.debug.xcconfig"; sourceTree = "<group>"; };
-		FB1CFF321DD0203D0018BD87 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		36C3C6CA29EF881D00E8A4DB /* REEJI-PinboGB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "REEJI-PinboGB.ttf"; sourceTree = "<group>"; };
+		6890F261DD9D9730BD9EF681 /* Pods-HRate.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HRate.debug.xcconfig"; path = "Target Support Files/Pods-HRate/Pods-HRate.debug.xcconfig"; sourceTree = "<group>"; };
+		82AD0BBA65EE0367E4E67332 /* Pods_HRate.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HRate.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB1EA2C51DD0001F008CCFFD /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		FBA2D60D1DBF9B7300728078 /* HeartRate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HeartRate.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FBA2D60D1DBF9B7300728078 /* HRate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HRate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBA2D6171DBF9B7300728078 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FBA2D61A1DBF9B7300728078 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FBA2D61C1DBF9B7300728078 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -156,17 +160,8 @@
 		FBA2D68A1DBF9BD400728078 /* ComplicationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplicationController.swift; sourceTree = "<group>"; };
 		FBA2D68C1DBF9BD400728078 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FBA2D68E1DBF9BD400728078 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FBA2D69A1DBF9C4900728078 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		FBA2D69B1DBF9C4900728078 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		FBA2D69E1DBF9C4900728078 /* YOBarChartImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YOBarChartImage.h; sourceTree = "<group>"; };
-		FBA2D69F1DBF9C4900728078 /* YOBarChartImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YOBarChartImage.m; sourceTree = "<group>"; };
-		FBA2D6A01DBF9C4900728078 /* YOChartImageKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YOChartImageKit.h; sourceTree = "<group>"; };
-		FBA2D6A11DBF9C4900728078 /* YODonutChartImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YODonutChartImage.h; sourceTree = "<group>"; };
-		FBA2D6A21DBF9C4900728078 /* YODonutChartImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YODonutChartImage.m; sourceTree = "<group>"; };
-		FBA2D6A31DBF9C4900728078 /* YOLineChartImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YOLineChartImage.h; sourceTree = "<group>"; };
-		FBA2D6A41DBF9C4900728078 /* YOLineChartImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YOLineChartImage.m; sourceTree = "<group>"; };
 		FBA2D6AF1DBF9C5700728078 /* WatchConnectorConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchConnectorConstants.swift; sourceTree = "<group>"; };
-		FBA2D6B61DBF9C6E00728078 /* HeartRate.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HeartRate.entitlements; sourceTree = "<group>"; };
+		FBA2D6B61DBF9C6E00728078 /* HRate.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HRate.entitlements; sourceTree = "<group>"; };
 		FBA2D6B71DBF9C8C00728078 /* HeartRateController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeartRateController.swift; sourceTree = "<group>"; };
 		FBA2D6BB1DBF9C9600728078 /* WorkoutManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutManager.swift; sourceTree = "<group>"; };
 		FBA2D6BE1DBF9CBF00728078 /* BridgeHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BridgeHeader.h; sourceTree = "<group>"; };
@@ -187,8 +182,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FB1CFF331DD0203D0018BD87 /* CloudKit.framework in Frameworks */,
-				51B10E9D8327B1EB75704EC4 /* Pods_HeartRate.framework in Frameworks */,
+				83D01E0F2389BF7C41D44365 /* Pods_HRate.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -205,11 +199,51 @@
 		3644E80D29E29DB8005DDEA3 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				36C3C6CA29EF881D00E8A4DB /* REEJI-PinboGB.ttf */,
 				3644E80E29E29DB8005DDEA3 /* OpenSans-SemiBold.ttf */,
 				3644E80F29E29DB8005DDEA3 /* OpenSans-Bold.ttf */,
 				3644E81029E29DB8005DDEA3 /* OpenSans-Regular.ttf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		3670ACEB29F028BF0026F2B5 /* Complication */ = {
+			isa = PBXGroup;
+			children = (
+				FBA2D68A1DBF9BD400728078 /* ComplicationController.swift */,
+				FBA2D6B71DBF9C8C00728078 /* HeartRateController.swift */,
+			);
+			name = Complication;
+			sourceTree = "<group>";
+		};
+		3670ACEC29F028CB0026F2B5 /* UserInterface */ = {
+			isa = PBXGroup;
+			children = (
+				3670ACF029F037AC0026F2B5 /* Charts */,
+				FBA2D6BB1DBF9C9600728078 /* WorkoutManager.swift */,
+				3670ACE729EFFE110026F2B5 /* OSTimer.swift */,
+				3670ACE529EFFB170026F2B5 /* PumpingController.swift */,
+				FBA2D6861DBF9BD400728078 /* InterfaceController.swift */,
+				3670ACF529F037F50026F2B5 /* NotificationManager.swift */,
+			);
+			name = UserInterface;
+			sourceTree = "<group>";
+		};
+		3670ACED29F028E30026F2B5 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				FBA2D6881DBF9BD400728078 /* ExtensionDelegate.swift */,
+			);
+			name = Application;
+			sourceTree = "<group>";
+		};
+		3670ACF029F037AC0026F2B5 /* Charts */ = {
+			isa = PBXGroup;
+			children = (
+				3670ACF129F037AC0026F2B5 /* SSLineChart.swift */,
+				3670ACF229F037AC0026F2B5 /* SSLineChartData.swift */,
+			);
+			path = Charts;
 			sourceTree = "<group>";
 		};
 		369BD4E829E93B4100CB6B97 /* Shared */ = {
@@ -273,7 +307,7 @@
 		369BD4F729E93D9F00CB6B97 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				369BD4F829E93D9F00CB6B97 /* UIBinder.swift */,
+				369BD4F829E93D9F00CB6B97 /* Binder.swift */,
 				369BD4F929E93D9F00CB6B97 /* BPMViewModel.swift */,
 			);
 			path = ViewModel;
@@ -356,19 +390,11 @@
 			path = Track;
 			sourceTree = "<group>";
 		};
-		36C3C6AA29EEBF7C00E8A4DB /* Third */ = {
-			isa = PBXGroup;
-			children = (
-				FBA2D69D1DBF9C4900728078 /* YOChartImageKit */,
-			);
-			path = Third;
-			sourceTree = "<group>";
-		};
 		9C0B78B3EF604FE8B0A3FF61 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				F1E4B3415F67403294C4E323 /* Pods-HeartRate.debug.xcconfig */,
-				7C8687C4BF25A918F7C2DC52 /* Pods-HeartRate.release.xcconfig */,
+				6890F261DD9D9730BD9EF681 /* Pods-HRate.debug.xcconfig */,
+				0A5433B5CC772D99BA3A11AE /* Pods-HRate.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -379,7 +405,7 @@
 				3644E80D29E29DB8005DDEA3 /* Fonts */,
 				FBA2D61C1DBF9B7300728078 /* Info.plist */,
 				FBA2D6191DBF9B7300728078 /* LaunchScreen.storyboard */,
-				FBA2D6B61DBF9C6E00728078 /* HeartRate.entitlements */,
+				FBA2D6B61DBF9C6E00728078 /* HRate.entitlements */,
 				FBA2D6171DBF9B7300728078 /* Assets.xcassets */,
 				FBA2D6BE1DBF9CBF00728078 /* BridgeHeader.h */,
 			);
@@ -403,7 +429,6 @@
 				FBA2D60F1DBF9B7300728078 /* iOS App */,
 				FBA2D6761DBF9BD300728078 /* WatchKit App */,
 				FBA2D6851DBF9BD400728078 /* WatchKit App Extension */,
-				FBA2D6991DBF9C4900728078 /* YOChartImageKit */,
 				FBA2D6BF1DBF9DAA00728078 /* Frameworks */,
 				FBA2D60E1DBF9B7300728078 /* Products */,
 				9C0B78B3EF604FE8B0A3FF61 /* Pods */,
@@ -413,7 +438,7 @@
 		FBA2D60E1DBF9B7300728078 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				FBA2D60D1DBF9B7300728078 /* HeartRate.app */,
+				FBA2D60D1DBF9B7300728078 /* HRate.app */,
 				FBA2D6751DBF9BD300728078 /* WatchKit App.app */,
 				FBA2D6811DBF9BD300728078 /* WatchKit App Extension.appex */,
 			);
@@ -423,7 +448,6 @@
 		FBA2D60F1DBF9B7300728078 /* iOS App */ = {
 			isa = PBXGroup;
 			children = (
-				36C3C6AA29EEBF7C00E8A4DB /* Third */,
 				369BD50A29E93E0100CB6B97 /* Utility */,
 				369BD4F229E93D9F00CB6B97 /* Module */,
 				369BD4EF29E93CB300CB6B97 /* Storge */,
@@ -447,54 +471,20 @@
 		FBA2D6851DBF9BD400728078 /* WatchKit App Extension */ = {
 			isa = PBXGroup;
 			children = (
-				FBA2D6881DBF9BD400728078 /* ExtensionDelegate.swift */,
-				FBA2D6861DBF9BD400728078 /* InterfaceController.swift */,
-				FBA2D68A1DBF9BD400728078 /* ComplicationController.swift */,
-				FBA2D6B71DBF9C8C00728078 /* HeartRateController.swift */,
-				FBA2D6BB1DBF9C9600728078 /* WorkoutManager.swift */,
+				3670ACED29F028E30026F2B5 /* Application */,
+				3670ACEC29F028CB0026F2B5 /* UserInterface */,
+				3670ACEB29F028BF0026F2B5 /* Complication */,
 				FB11C5D71E03794600FE72D0 /* Support Files */,
 			);
 			path = "WatchKit App Extension";
 			sourceTree = "<group>";
 		};
-		FBA2D6991DBF9C4900728078 /* YOChartImageKit */ = {
-			isa = PBXGroup;
-			children = (
-				FBA2D69A1DBF9C4900728078 /* LICENSE */,
-				FBA2D69B1DBF9C4900728078 /* README.md */,
-				FBA2D69C1DBF9C4900728078 /* Source */,
-			);
-			path = YOChartImageKit;
-			sourceTree = "<group>";
-		};
-		FBA2D69C1DBF9C4900728078 /* Source */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Source;
-			sourceTree = "<group>";
-		};
-		FBA2D69D1DBF9C4900728078 /* YOChartImageKit */ = {
-			isa = PBXGroup;
-			children = (
-				FBA2D69E1DBF9C4900728078 /* YOBarChartImage.h */,
-				FBA2D69F1DBF9C4900728078 /* YOBarChartImage.m */,
-				FBA2D6A01DBF9C4900728078 /* YOChartImageKit.h */,
-				FBA2D6A11DBF9C4900728078 /* YODonutChartImage.h */,
-				FBA2D6A21DBF9C4900728078 /* YODonutChartImage.m */,
-				FBA2D6A31DBF9C4900728078 /* YOLineChartImage.h */,
-				FBA2D6A41DBF9C4900728078 /* YOLineChartImage.m */,
-			);
-			path = YOChartImageKit;
-			sourceTree = "<group>";
-		};
 		FBA2D6BF1DBF9DAA00728078 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				FB1CFF321DD0203D0018BD87 /* CloudKit.framework */,
 				FB1EA2C51DD0001F008CCFFD /* SystemConfiguration.framework */,
 				FBA2D6C01DBF9DAA00728078 /* HealthKit.framework */,
-				B591A31C10DA124D6D8DE591 /* Pods_HeartRate.framework */,
+				82AD0BBA65EE0367E4E67332 /* Pods_HRate.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -502,9 +492,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		FBA2D60C1DBF9B7300728078 /* HeartRate */ = {
+		FBA2D60C1DBF9B7300728078 /* HRate */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = FBA2D61F1DBF9B7300728078 /* Build configuration list for PBXNativeTarget "HeartRate" */;
+			buildConfigurationList = FBA2D61F1DBF9B7300728078 /* Build configuration list for PBXNativeTarget "HRate" */;
 			buildPhases = (
 				72B6A497AC7CE7C5D00B14E1 /* [CP] Check Pods Manifest.lock */,
 				FBA2D6091DBF9B7300728078 /* Sources */,
@@ -518,9 +508,9 @@
 			dependencies = (
 				FBA2D6901DBF9BD400728078 /* PBXTargetDependency */,
 			);
-			name = HeartRate;
+			name = HRate;
 			productName = HeartRate;
-			productReference = FBA2D60D1DBF9B7300728078 /* HeartRate.app */;
+			productReference = FBA2D60D1DBF9B7300728078 /* HRate.app */;
 			productType = "com.apple.product-type.application";
 		};
 		FBA2D6741DBF9BD300728078 /* WatchKit App */ = {
@@ -604,7 +594,7 @@
 					};
 				};
 			};
-			buildConfigurationList = FBA2D6081DBF9B7300728078 /* Build configuration list for PBXProject "HeartRate" */;
+			buildConfigurationList = FBA2D6081DBF9B7300728078 /* Build configuration list for PBXProject "HRate" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -618,7 +608,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				FBA2D60C1DBF9B7300728078 /* HeartRate */,
+				FBA2D60C1DBF9B7300728078 /* HRate */,
 				FBA2D6741DBF9BD300728078 /* WatchKit App */,
 				FBA2D6801DBF9BD300728078 /* WatchKit App Extension */,
 			);
@@ -630,12 +620,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				36C3C6CB29EF881D00E8A4DB /* REEJI-PinboGB.ttf in Resources */,
 				FBA2D61B1DBF9B7300728078 /* LaunchScreen.storyboard in Resources */,
 				FBA2D6181DBF9B7300728078 /* Assets.xcassets in Resources */,
 				3644E81229E29DB8005DDEA3 /* OpenSans-Bold.ttf in Resources */,
 				3644E81329E29DB8005DDEA3 /* OpenSans-Regular.ttf in Resources */,
 				3644E81129E29DB8005DDEA3 /* OpenSans-SemiBold.ttf in Resources */,
-				FBA2D6A51DBF9C4900728078 /* LICENSE in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -652,7 +642,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FBA2D6A61DBF9C4900728078 /* LICENSE in Resources */,
 				FBA2D68D1DBF9BD400728078 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -675,7 +664,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-HeartRate-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-HRate-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -688,7 +677,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-HeartRate/Pods-HeartRate-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-HRate/Pods-HRate-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
 				"${BUILT_PRODUCTS_DIR}/ESTMusicIndicator/ESTMusicIndicator.framework",
 				"${BUILT_PRODUCTS_DIR}/KDCircularProgress/KDCircularProgress.framework",
@@ -719,7 +708,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HeartRate/Pods-HeartRate-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HRate/Pods-HRate-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -729,7 +718,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FBA2D6A71DBF9C4900728078 /* README.md in Sources */,
 				369BD51A29E93E0100CB6B97 /* Toast.swift in Sources */,
 				36C3C69B29EDAB3900E8A4DB /* MusicPlayer.swift in Sources */,
 				369BD51529E93E0100CB6B97 /* Recorder.swift in Sources */,
@@ -758,7 +746,7 @@
 				36C3C69729ED835400E8A4DB /* AudioListViewModel.swift in Sources */,
 				369BD51429E93E0100CB6B97 /* TimeFormat.swift in Sources */,
 				369BD50129E93D9F00CB6B97 /* AudioListController.swift in Sources */,
-				369BD50329E93D9F00CB6B97 /* UIBinder.swift in Sources */,
+				369BD50329E93D9F00CB6B97 /* Binder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -768,15 +756,17 @@
 			files = (
 				FBA2D6891DBF9BD400728078 /* ExtensionDelegate.swift in Sources */,
 				FBA2D6B81DBF9C8C00728078 /* HeartRateController.swift in Sources */,
-				FBA2D6AC1DBF9C4900728078 /* YODonutChartImage.m in Sources */,
-				FBA2D6AA1DBF9C4900728078 /* YOBarChartImage.m in Sources */,
+				3670ACE629EFFB170026F2B5 /* PumpingController.swift in Sources */,
 				FBA2D6BD1DBF9C9600728078 /* WorkoutManager.swift in Sources */,
+				3670ACE429EFED100026F2B5 /* TimeFormat.swift in Sources */,
 				FBA2D6871DBF9BD400728078 /* InterfaceController.swift in Sources */,
+				3670ACF629F037F50026F2B5 /* NotificationManager.swift in Sources */,
 				FBA2D6B11DBF9C5700728078 /* WatchConnectorConstants.swift in Sources */,
-				FBA2D6A81DBF9C4900728078 /* README.md in Sources */,
+				3670ACE829EFFE110026F2B5 /* OSTimer.swift in Sources */,
 				FBA2D68B1DBF9BD400728078 /* ComplicationController.swift in Sources */,
 				FBA2D6C81DC054E200728078 /* WatchConnector.swift in Sources */,
-				FBA2D6AE1DBF9C4900728078 /* YOLineChartImage.m in Sources */,
+				3670ACF429F037AC0026F2B5 /* SSLineChartData.swift in Sources */,
+				3670ACF329F037AC0026F2B5 /* SSLineChart.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -912,15 +902,15 @@
 		};
 		FBA2D6201DBF9B7300728078 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F1E4B3415F67403294C4E323 /* Pods-HeartRate.debug.xcconfig */;
+			baseConfigurationReference = 6890F261DD9D9730BD9EF681 /* Pods-HRate.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = HeartRate/HeartRate.entitlements;
+				CODE_SIGN_ENTITLEMENTS = HeartRate/HRate.entitlements;
 				DEVELOPMENT_TEAM = F9E6VPNRYT;
 				INFOPLIST_FILE = HeartRate/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.kaoji.HeartRate;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kaoji.HRate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -934,15 +924,15 @@
 		};
 		FBA2D6211DBF9B7300728078 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7C8687C4BF25A918F7C2DC52 /* Pods-HeartRate.release.xcconfig */;
+			baseConfigurationReference = 0A5433B5CC772D99BA3A11AE /* Pods-HRate.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = HeartRate/HeartRate.entitlements;
+				CODE_SIGN_ENTITLEMENTS = HeartRate/HRate.entitlements;
 				DEVELOPMENT_TEAM = F9E6VPNRYT;
 				INFOPLIST_FILE = HeartRate/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.kaoji.HeartRate;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kaoji.HRate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -962,7 +952,7 @@
 				DEVELOPMENT_TEAM = F9E6VPNRYT;
 				INFOPLIST_FILE = "WatchKit App Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.kaoji.HeartRate.watchkitapp.watchkitextension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kaoji.HRate.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -981,7 +971,7 @@
 				DEVELOPMENT_TEAM = F9E6VPNRYT;
 				INFOPLIST_FILE = "WatchKit App Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.kaoji.HeartRate.watchkitapp.watchkitextension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kaoji.HRate.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -1000,7 +990,7 @@
 				DEVELOPMENT_TEAM = F9E6VPNRYT;
 				IBSC_MODULE = WatchKit_App_Extension;
 				INFOPLIST_FILE = "WatchKit App/Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = com.kaoji.HeartRate.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kaoji.HRate.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -1018,7 +1008,7 @@
 				DEVELOPMENT_TEAM = F9E6VPNRYT;
 				IBSC_MODULE = WatchKit_App_Extension;
 				INFOPLIST_FILE = "WatchKit App/Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = com.kaoji.HeartRate.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kaoji.HRate.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -1031,7 +1021,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		FBA2D6081DBF9B7300728078 /* Build configuration list for PBXProject "HeartRate" */ = {
+		FBA2D6081DBF9B7300728078 /* Build configuration list for PBXProject "HRate" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FBA2D61D1DBF9B7300728078 /* Debug */,
@@ -1040,7 +1030,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FBA2D61F1DBF9B7300728078 /* Build configuration list for PBXNativeTarget "HeartRate" */ = {
+		FBA2D61F1DBF9B7300728078 /* Build configuration list for PBXNativeTarget "HRate" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FBA2D6201DBF9B7300728078 /* Debug */,

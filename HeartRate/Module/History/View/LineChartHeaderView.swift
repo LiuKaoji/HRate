@@ -55,22 +55,22 @@ class LineChartHeaderView: UIView {
         
         return chart
     }()
-
+    
     init(height: CGFloat) {
         super.init(frame: .zero)
         backgroundColor = StyleConfig.backgroundColor
         setupView(height: height)
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     private func setupView(height: CGFloat) {
         addSubview(durationLabel)
         addSubview(chart)
         addSubview(bpmLable)
-
+        
         chart.snp.makeConstraints { make in
             make.bottom.equalToSuperview()
             make.height.equalTo(150)
@@ -87,7 +87,7 @@ class LineChartHeaderView: UIView {
             make.bottom.equalTo(chart.snp.top)
         }
     }
-
+    
     func updateHeight(_ height: CGFloat) {
         frame.size.height = height
     }

@@ -25,10 +25,11 @@
 	<key>NSHealthUpdateUsageDescription</key>
 	<string>我们需要写入您的心率数据以提供更好的分析结果</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>请允许录制音频以记录心率时刻</string>
+	<string>我们需要访问您的心率数据以记录心率时刻</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>OpenSans-Bold.ttf</string>
+		<string>REEJI-PinboGB.ttf</string>
 		<string>OpenSans-Semibold.ttf</string>
 		<string>OpenSans-Regular.ttf</string>
 	</array>

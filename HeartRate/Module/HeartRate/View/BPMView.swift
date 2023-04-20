@@ -25,6 +25,12 @@ class BPMView: UIView {
     let disposeBag = DisposeBag()
     
     // MARK: - UI Elements
+    lazy var titleLabel: Label = {
+        let label = Label(style: .appTitle, "HRate")
+        return label
+    }()
+    
+    // MARK: - UI Elements
     lazy var decibelLabel: Label = {
         let label = Label(style: .decibelHeading, "0")
         return label
@@ -114,6 +120,7 @@ class BPMView: UIView {
     private func setupView() {
         backgroundColor = StyleConfig.backgroundColor
         
+        addSubview(titleLabel)
         addSubview(progress)
         addSubview(verticalStack)
         addSubview(recordButton)
@@ -144,6 +151,11 @@ class BPMView: UIView {
             make.height.equalTo(self.frame.width / 1.2)
             make.centerX.equalToSuperview()
             make.centerY.equalToSuperview().dividedBy(Constants().isBig ? 1.9 : 1.5)
+        }
+        
+        titleLabel.snp.makeConstraints { make in
+            make.bottom.equalTo(progress.snp.top).offset(-12)
+            make.centerX.equalToSuperview()
         }
         
         verticalStack.snp.makeConstraints { (make) in

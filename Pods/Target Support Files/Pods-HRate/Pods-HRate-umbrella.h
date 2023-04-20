@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double Pods_HeartRateVersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_HeartRateVersionString[];
+FOUNDATION_EXPORT double Pods_HRateVersionNumber;
+FOUNDATION_EXPORT const unsigned char Pods_HRateVersionString[];
 
