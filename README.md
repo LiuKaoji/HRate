@@ -28,25 +28,28 @@
 
 ```mermaid
 sequenceDiagram
-    participant A as APP
-    participant BPMTracker
-    participant BPMViewModel
-    participant BPMView
-    participant WC as WatchConnector
-    participant WCSession
-    participant W as Watch
-
-    A->>WCSession: 初始化 (基于WCSession)
-    A->>W: 唤醒WatchApp
-    W->>WC: 检测到心率数据
-    WC->>WCSession: 使用WCSession进行通信
-    WCSession->>A: sendMessage (实时通信)
-    WCSession->>A: transferUserInfo (后台传输)
-    A->>BPMTracker: 接收到心率数据
-    BPMTracker->>BPMViewModel: 心率计算
-    BPMViewModel->>BPMView: 录音数据及心率数据关联
-    BPMView->>BPMView: 展示柱状图及心率数据
-    A->>A: 导出json及关联音频压缩包
+    participant iPhone as iPhone
+    participant AppleWatch as AppleWatch
+    participant HRateiPhone as HRate iPhone App
+    participant HRateAppleWatch as HRate AppleWatch App
+    participant HealthKitApp as HealthKit App
+    
+    iPhone->>HRateiPhone: 启动App，注册WCSession消息监听
+    iPhone->>HRateiPhone: 点击录制按钮
+    iPhone->>HRateAppleWatch: 唤醒HRate AppleWatch App
+    HRateAppleWatch->>iPhone: 唤醒成功
+    iPhone->>HRateiPhone: 开始录音
+    HRateAppleWatch->>HRateAppleWatch: 启动心率检测
+    HRateAppleWatch->>HRateAppleWatch: 显示心率数据
+    HRateAppleWatch->>HRateiPhone: 发送心率数据至iPhone
+    HealthKitApp->>HealthKitApp: 使用HealthKit检测心率
+    HealthKitApp->>HealthKitApp: 将心率数据进行图表展示
+    HealthKitApp->>HRateiPhone: 通过WCSession将心率发送至HRate iPhone App
+    HRateiPhone->>iPhone: 显示心率数据
+    HRateiPhone->>iPhone: 音频关联
+    iPhone->>HRateiPhone: 点击停止
+    iPhone->>HRateiPhone: 停止录音，保存心率数据
+    iPhone->>HRateiPhone: 发送消息关闭HRate AppleWatch App
 ```
   
 ### 引用
