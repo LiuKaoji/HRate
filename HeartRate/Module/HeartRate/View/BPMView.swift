@@ -31,8 +31,8 @@ class BPMView: UIView {
     }()
     
     // MARK: - UI Elements
-    lazy var decibelLabel: Label = {
-        let label = Label(style: .decibelHeading, "0")
+    lazy var nowLabel: Label = {
+        let label = Label(style: .nowBPMHeading, "0")
         return label
     }()
     
@@ -127,6 +127,7 @@ class BPMView: UIView {
         addSubview(historyButton)
         addSubview(containerForSmallDisplay)
         
+        verticalStack.addArrangedSubview(nowLabel)
         verticalStack.addArrangedSubview(timeLabel)
         verticalStack.addArrangedSubview(timeTitleLabel)
         
@@ -144,7 +145,7 @@ class BPMView: UIView {
     //MARK: - 约束
     private func setupLayout() {
         
-        verticalStack.setCustomSpacing(10, after: decibelLabel)
+        verticalStack.setCustomSpacing(10, after: nowLabel)
         
         progress.snp.makeConstraints { (make) in
             make.width.equalTo(self.frame.width / 1.2)
@@ -226,7 +227,7 @@ extension BPMView {
     func bindViewModel(to viewModel: BPMViewModel) {
         // 绑定 nowBPM
         viewModel.nowBPM
-            .bind(to: avgBar.nowBPMLabel.rx.text)
+            .bind(to: nowLabel.rx.text)
             .disposed(by: disposeBag)
         
         // 绑定 minBPM

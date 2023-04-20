@@ -52,6 +52,7 @@ class WatchConnector: NSObject, WCSessionDelegate {
     private var sessionActivationCompletionHandlers = [((WCSession) -> Void)]()
     
     
+    
     // MARK: - 函数
     
     /// 添加用于响应来自配对设备的消息和传输的用户信息的处理程序句柄。
@@ -136,7 +137,6 @@ class WatchConnector: NSObject, WCSessionDelegate {
         
         if activationState == .activated {
             DispatchQueue.main.async {
-                
                 self.sessionActivationCompletionHandlers.forEach { $0(session) }
                 self.sessionActivationCompletionHandlers.removeAll()
             }

@@ -13,9 +13,7 @@ class AvgMinMaxBar: UIView {
     lazy var avgBPMLabel = Label(style: .avgMinMax, "-")
     lazy var minBPMLabel = Label(style: .avgMinMax, "-")
     lazy var maxBPMLabel = Label(style: .avgMinMax, "-")
-    lazy var nowBPMLabel = Label(style: .avgMinMax, "-")
 
-    lazy var nowLabel = Label(style: .avgMinMax, "当前")
     lazy var avgLabel = Label(style: .avgMinMax, "平均")
     lazy var minLabel = Label(style: .avgMinMax, "最小")
     lazy var maxLabel = Label(style: .avgMinMax, "最大")
@@ -33,7 +31,6 @@ class AvgMinMaxBar: UIView {
         return s
     }()
     
-    lazy var nowStack = StackView(axis: .vertical)
     lazy var avgStack = StackView(axis: .vertical)
     lazy var minStack = StackView(axis: .vertical)
     lazy var maxStack = StackView(axis: .vertical)
@@ -44,13 +41,9 @@ class AvgMinMaxBar: UIView {
         
         addSubview(mainStack)
         
-        mainStack.addArrangedSubview(nowStack)
         mainStack.addArrangedSubview(avgStack)
         mainStack.addArrangedSubview(minStack)
         mainStack.addArrangedSubview(maxStack)
-        
-        nowStack.addArrangedSubview(nowBPMLabel)
-        nowStack.addArrangedSubview(nowLabel)
         
         avgStack.addArrangedSubview(avgBPMLabel)
         avgStack.addArrangedSubview(avgLabel)

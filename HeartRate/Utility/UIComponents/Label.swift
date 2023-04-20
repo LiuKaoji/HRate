@@ -14,7 +14,7 @@ class Label: UILabel {
         case heading
         case body
         case separator
-        case decibelHeading
+        case nowBPMHeading
         case timeTitle
         case time
         case avgMinMax
@@ -43,7 +43,7 @@ class Label: UILabel {
         case .separator:
             font = UIFont(name: "OpenSans-Regular", size: 12)
             self.text = "|"
-        case .decibelHeading:
+        case .nowBPMHeading:
             font = UIFont(name: "OpenSans-Bold", size: 50)
         case .timeTitle:
             font = UIFont(name: "OpenSans-SemiBold", size: 10)
