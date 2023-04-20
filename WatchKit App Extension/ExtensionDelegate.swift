@@ -23,8 +23,15 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
     // 处理来自 Watch App 的运动配置请求
     // 参数：workoutConfiguration 运动配置
     func handle(_ workoutConfiguration: HKWorkoutConfiguration) {
-        let root = WKExtension.shared().rootInterfaceController as! InterfaceController
-        root.startWorkout(with: workoutConfiguration)
+//        if let root = WKExtension.shared().rootInterfaceController {
+//            print("root class name: \(root.classForCoder)")
+//            (root as? InterfaceController)?.onClickAction()
+//        }else{
+//            print("root class was nil")
+//        }
+        
+        //多页的时候rootInterfaceController可能为空 为了解决这个bug暂时使用通知实现
+        NotificationManager.shared.postActionNotification()
     }
     
     // 处理后台刷新任务

@@ -33,6 +33,11 @@ class InterfaceController: WKInterfaceController {
     override func awake(withContext context: Any?) {
         super.awake(withContext: context)
         
+        // 模拟启动
+        let _ = NotificationManager.shared.subscribeToActionNotification(using: { [weak self] in
+            self?.onClickAction()
+        })
+
         messageHandler = WatchConnector.MessageHandler { [weak self] message in
             if message[.workoutStop] != nil {
                 self?.stopWorkout()
@@ -53,6 +58,9 @@ class InterfaceController: WKInterfaceController {
         stopHeartRateQuery()
         WatchConnector.shared.send([.workoutStop : true])
         workoutManager.stopWorkout()
+        self.actionImage.setImageNamed("start")
+        NotificationManager.shared.postStopNotification()
+        self.becomeCurrentPage()
     }
     
     // 开始读取心率
@@ -76,19 +84,6 @@ class InterfaceController: WKInterfaceController {
     private func handle(newHeartRateSamples samples: [HKQuantitySample]) {
         NotificationManager.shared.postSampleNotification(with: samples)
     }
-    
-    // MARK: - Actions
-    
-    // Start and stop button action
-    @IBAction func startStopButtonDidTap() {
-        if workoutManager.isWorkoutSessionRunning {
-            // 停止监听心率
-            stopWorkout()
-        } else {
-            // 开始监听心率
-            startWorkout()
-        }
-    }
 
     
     // 点击开始/停止
@@ -97,8 +92,6 @@ class InterfaceController: WKInterfaceController {
         if workoutManager.isWorkoutSessionRunning {
             // 停止监听心率
             stopWorkout()
-            self.actionImage.setImageNamed("start")
-            NotificationManager.shared.postStopNotification()
         } else {
             // 开始监听心率
             startWorkout { isStarted in
