@@ -12,7 +12,6 @@ import ESTMusicIndicator
 
 class ViewModel {
     
-    private static var calculator = BPMCalculator()
     private static var totalDuration: String = "00:00"
     public var audioEntity: AudioEntity?
     var currentIndex = 0 // 用于记录当前处理的BPMDescription索引
@@ -22,10 +21,10 @@ class ViewModel {
     var audioEntities = BehaviorRelay<[AudioEntity]>.init(value: PersistManager.shared.fetchAllAudios())
     let musicPlayer = MusicPlayer()
     var playTime:Observable<String>?
-    let bpmStatus:Observable<String>?
+    let bpmStatus:BehaviorRelay<String> = .init(value: "")
     let indicateState:BehaviorRelay<ESTMusicIndicatorViewState>? = .init(value: .paused)
     
-    let chartBPMData = BehaviorRelay<[Int16]>(value: [])
+    let chartBPMData = BehaviorRelay<[Int]>(value: [])
     let disposeBag = DisposeBag()
 
     init() {
@@ -41,17 +40,18 @@ class ViewModel {
         }
         
         // 更新心率显示文本
-        bpmStatus = ViewModel.calculator.nowBPM.asObservable().map {
-            "当前:\($0) 最大:\(ViewModel.calculator.maxBPM.value) 平均:\(ViewModel.calculator.avgBPM.value)"
-        }
+//        bpmStatus = ViewModel.calculator.nowBPM.asObservable().map {
+//            "当前:\($0) 最大:\(ViewModel.calculator.maxBPM.value) 平均:\(ViewModel.calculator.avgBPM.value)"
+//        }
         
         // 读取心率数据更新UI
-        musicPlayer.rx.currentTime.subscribe { [weak self] currentTimeStamp in
+        musicPlayer.rx.currentTime.subscribe { [weak self] event in
             guard let strongSelf = self, let audioEntity = strongSelf.audioEntity else { return }
-            
             
             // 取整或设置误差范围
             let tolerance: TimeInterval = 0.5
+            
+            let currentTimeStamp = event.element ?? 0
 
             // 从当前索引开始，查找符合条件的BPMDescription
             while strongSelf.currentIndex < audioEntity.bpms.count && abs(audioEntity.bpms[strongSelf.currentIndex].ts - currentTimeStamp) <= tolerance {
@@ -60,7 +60,11 @@ class ViewModel {
                 // 更新当前处理的索引
                 strongSelf.currentIndex += 1
                 // 将新的数据添加到计算器
-                ViewModel.calculator.addHeartRate(audioEntity.bpms[strongSelf.currentIndex].bpm)
+                if  strongSelf.currentIndex < audioEntity.bpms.count - 1{
+                    let bpmDesc = audioEntity.bpms[strongSelf.currentIndex]
+                    let displayString = "当前:\(bpmDesc.bpm) 最大:\(bpmDesc.max) 平均:\(bpmDesc.max)"
+                    strongSelf.bpmStatus.accept(displayString)
+                }
             }
         }.disposed(by: disposeBag)
         
@@ -74,8 +78,8 @@ class ViewModel {
             case .error:
                 return .stopped
             }
-        }.do { state in
-            self.indicateState?.accept(state)
+        }.do { [weak self] state in
+            self?.indicateState?.accept(state)
         }.subscribe()
         .disposed(by: disposeBag)
         
@@ -93,19 +97,16 @@ class ViewModel {
         let fileManager = FileManager.default
         let documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
         let audioURL = documentsDirectory.appendingPathComponent(entity.name!)
-        
-        // 启动播放
-        musicPlayer.play(url: audioURL)
-        
-        
+
         // 还原序列
         currentIndex = 0
         
         // 清空柱状图
         chartBPMData.accept([])
         
-        // 重置计算器
-        ViewModel.calculator.reset()
+        // 启动播放
+        musicPlayer.play(url: audioURL)
+        
     }
     
     

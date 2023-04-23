@@ -33,12 +33,10 @@ enum MonitorState: Equatable {
 class BPMTracker: NSObject {
     
     static let shared = BPMTracker()
-    
-    public let calculator = BPMCalculator()
+    public var workoutData = BehaviorRelay<WorkoutData?>(value: nil)
     public var state = BehaviorRelay<MonitorState>(value: .notStarted) // 当前心率监测器的状态
-    public var dataHandle = PublishSubject<(bpm: Int16, date: String)>() // 心率数据发布对象
     private var bpmAccess: Bool = false // 所有心率值的和
-    private var bpms: [Int16] = [] // 所有心率值
+    private var bpms: [Int] = [] // 所有心率值
     private var messageHandler: WatchConnector.MessageHandler? // Watch App 发送的消息处理对象
     private let healthStore = HKHealthStore() // HealthKit 存储库
     
@@ -69,34 +67,33 @@ class BPMTracker: NSObject {
     }
     
     // 处理 Watch App 发送的消息
-    private func handleMessage(_ message: [WatchConnector.MessageKey : Any]) {
-        // 如果消息包含当前心率值和记录时间，则进行以下操作
-        if let currentBPM = message[.heartRateIntergerValue] as? Int16,
-           let currentDate = message[.heartRateRecordDate] as? Date {
-            let dateStr = TimeFormat.shared.formatter.string(from: currentDate)
-            addHeartRate(currentBPM, dateStr) // 添加心率值
-            
-            state.accept(.running) // 将状态设置为正在运行
+    private func handleMessage(_ message: [WatchConnector.MessageKey: Any]) {
+        
+        if let transferData = message[.workoutData] as? Data {
+            do {
+                let unarchiver = try NSKeyedUnarchiver(forReadingFrom: transferData)
+                unarchiver.requiresSecureCoding = false
+                NSKeyedUnarchiver.setClass(WorkoutData.self, forClassName: "WatchKit_App_Extension.WorkoutData")
+                if let workData = try unarchiver.decodeTopLevelObject(forKey: NSKeyedArchiveRootObjectKey) as? WorkoutData {
+                    self.workoutData.accept(workData)
+                }
+            } catch {
+                print("解档 WorkoutData 时出错：", error)
+            }
         } else if message[.workoutStop] != nil { // 如果消息包含 workoutStop，则将状态设置为未开始
             state.accept(.notStarted)
         } else if message[.workoutStart] != nil { // 如果消息包含 workoutStart，则将状态设置为正在运行
             state.accept(.running)
         } else if let errorData = message[.workoutError] as? Data { // 如果消息包含 workoutError，则将状态设置为出现错误
-            if let error = NSKeyedUnarchiver.unarchiveObject(with: errorData) as? Error {
-                state.accept(.errorOccur(error))
+            
+            do {
+                if let error = try NSKeyedUnarchiver.unarchivedObject(ofClass: NSError.self, from: errorData) {
+                    state.accept(.errorOccur(error))
+                }
+            } catch {
+                print("解档错误时出错：", error)
             }
         }
-    }
-    
-    // 添加心率值并进行统计计算
-    func addHeartRate(_ bpm: Int16, _ date: String) {
-        calculator.addHeartRate(bpm)
-        //抛出数据以存储至数据库
-        dataHandle.onNext((bpm, date)) // 发布心率数据
-    }
-    
-    func reset() {
-        calculator.reset()
     }
 }
 

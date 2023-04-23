@@ -16,9 +16,9 @@ class PumpingController: WKInterfaceController {
     @IBOutlet weak var heartImageView: WKInterfaceImage!
     @IBOutlet weak var bpmLabel: WKInterfaceLabel!
     @IBOutlet weak var timeLabel: WKInterfaceLabel!
-    //lazy var bpmTimedController = BPMTimedImage.init(interfaceImage: heartImageView)
+    private let bpmCalculator = BPMCalculator()// 心率计算器
+   
     var lineChart: SSLineChart?
-    var bpmData: [Int] = []// 所有接收到的心率数据
     private var heartRate: Double = 0 {
         didSet {
            
@@ -50,7 +50,7 @@ class PumpingController: WKInterfaceController {
             self?.timer.reset()
             self?.timeLabel.setText("    训练时长: 00:00")
             self?.bpmLabel.setText("---")
-            self?.bpmData.removeAll()
+            self?.bpmCalculator.bpmData.removeAll()
             self?.updateBPMChartData()
             self?.heartImageView.setImage(.init(named: "heart"))
         })
@@ -68,17 +68,27 @@ class PumpingController: WKInterfaceController {
             let heartRateUnit = HKUnit.count().unitDivided(by: HKUnit.minute())
             let doubleValue = sample.quantity.doubleValue(for: heartRateUnit)
             let integerValue = Int(round(doubleValue))
-            let date = sample.startDate
-            
             // 发送心率至iPhone
-            WatchConnector.shared.send([
-                .heartRateIntergerValue : integerValue,
-                .heartRateRecordDate : date,
-            ])
+//            WatchConnector.shared.send([
+//                .bpmValue : integerValue,
+//                .bpmDate : date,
+//            ])
+            
+            self.bpmCalculator.addHeartRate(integerValue) { data in
+                do {
+                    let encodedData = try NSKeyedArchiver.archivedData(withRootObject: data, requiringSecureCoding: false)
+                    WatchConnector.shared.send([
+                        .workoutData : encodedData,
+                    ])
+                } catch {
+                    print("Error encoding WorkoutData:", error)
+                }
+                
+            }
             
             DispatchQueue.main.async { [self] in
                 guard index == samples.count - 1 else { return }
-                self.bpmData.append(integerValue)
+                self.bpmCalculator.bpmData.append(integerValue)
                 self.bpmLabel.setText("\(integerValue)")
                 self.updateBPMChartData()
                 //self.bpmTimedController.updateBPM(Double(integerValue))
@@ -110,10 +120,10 @@ class PumpingController: WKInterfaceController {
         data.lineColor = .white
         data.lineAlpha = 1
         data.lineWidth = 0.6
-        data.itemCount = bpmData.count
+        data.itemCount = bpmCalculator.bpmData.count
         data.getData = { [weak self] index in
-            guard let self = self, index <  bpmData.count  else { return 0 }
-            let yValue = self.bpmData[index]
+            guard let self = self, index <  bpmCalculator.bpmData.count  else { return 0 }
+            let yValue = self.bpmCalculator.bpmData[index]
             return CGFloat(yValue)
         }
 

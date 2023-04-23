@@ -1,5 +1,5 @@
 //
-//  StyleConfig.swift
+//  BPMViewConfig.swift
 //  HeartRate
 //
 //  Created by kaoji on 4/9/23.
@@ -9,7 +9,7 @@
 import Foundation
 import KDCircularProgress
 
-struct StyleConfig {
+struct BPMViewConfig {
     // 通用
     static let backgroundColor = UIColor(named: "BackgroundColor")
     

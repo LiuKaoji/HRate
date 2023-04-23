@@ -15,12 +15,8 @@ class BPMViewModel: NSObject {
     // MARK: - Properties
     // BPMTracker 相关属性
     private let tracker: BPMTracker
-    let nowBPM: Observable<String>        // 当前心率（可观察）
-    let minBPM: Observable<String>        // 最小心率（可观察）
-    let maxBPM: Observable<String>        // 最大心率（可观察）
-    let avgBPM: Observable<String>        // 平均心率（可观察）
-    let charData: Observable<[Int16]> // 图表数据（可观察）
-    let progress: Observable<Double>      // 心率百分比（可观察）
+    let charData: BehaviorRelay<[Int]> = .init(value: []) // 图表数据（可观察）
+    let workData: Observable<WorkoutData>  // 手表实时数据
 
     // Recorder 相关属性
     private let recoder: Recorder
@@ -38,9 +34,11 @@ class BPMViewModel: NSObject {
 
     // 历史按钮相关属性
     let historyButtonTapped = PublishSubject<Void>() // 历史按钮点击事件
-
+    let videoButtonTapped = PublishSubject<Void>() // 历史按钮点击事件
+    
     // 导航和错误处理相关属性
     var navigateToNextScreen: ((UIViewController) -> Void)? // 导航到下一个页面的闭包
+    var presentScreen: ((UIViewController) -> Void)? // 弹出页面闭包
     var trackerCauseError: ((Error) -> Void)? // 心率追踪器错误处理闭包
     
     // MARK: - 初始化
@@ -49,14 +47,7 @@ class BPMViewModel: NSObject {
         self.recoder = Recorder()
         
         recordButtonEnabled = recordButtonEnabledSubject.asObservable()
-        
-        nowBPM = tracker.calculator.nowBPM.asObservable().map { "\($0)" }
-        minBPM = tracker.calculator.minBPM.asObservable().map { "\($0)" }
-        maxBPM = tracker.calculator.maxBPM.asObservable().map { "\($0)" }
-        avgBPM = tracker.calculator.avgBPM.asObservable().map { "\($0)" }
-        progress = tracker.calculator.bpmPercent.asObservable().map { $0 }
-        charData = tracker.calculator.bpmData.asObservable().map { $0 }
-        
+        workData = tracker.workoutData.asObservable().filter { $0 != nil }.map { $0! }
         super.init()
         
         setupSubscriptions()
@@ -101,6 +92,11 @@ class BPMViewModel: NSObject {
         navigateToNextScreen?(list)
     }
     
+    private func handleVideoButtonTapped() {
+        let userInfo = UserInfoFormViewController()
+        presentScreen?(userInfo)
+    }
+    
     // MARK: - 订阅事件
     private func setupSubscriptions() {
         // 录制按钮点击事件
@@ -112,15 +108,23 @@ class BPMViewModel: NSObject {
 
         // 历史按钮
         historyButtonTapped
+            .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] in
                 self?.handleHistoryButtonTapped()
             })
             .disposed(by: disposeBag)
-
-        // 心率监听状态
-        tracker.state.subscribe { state in
-        }
-        .disposed(by: disposeBag)
+        
+        videoButtonTapped
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] in
+                self?.handleVideoButtonTapped()
+            })
+            .disposed(by: disposeBag)
+//
+//        // 心率监听状态
+//        tracker.state.subscribe { state in
+//        }
+//        .disposed(by: disposeBag)
 
         // 音频录制中
         recoder.recording.subscribe { [weak self](durationStr, decibel) in
@@ -138,18 +142,18 @@ class BPMViewModel: NSObject {
             }
             self?.audioET = nil
             self?.bpmArray.removeAll()
-            self?.tracker.reset()
         }
         .disposed(by: disposeBag)
 
         // 心率数据回调
-        tracker.dataHandle.subscribe { [weak self] (bpm: Int16, date: String) in
-            guard let stSelf = self, let isRecording = self?.recoder.isRecording, isRecording else { return }
-            var desc = BPMDescription()
-            desc.bpm = bpm
-            desc.date = date
-            desc.ts = stSelf.recoder.currentTime
-            stSelf.bpmArray.append(desc)
+        tracker.workoutData.filter { $0 != nil }.map { $0! }.subscribe { [weak self] data in
+            if let workData = data.element, let stSelf = self {
+                var desc = BPMDescription()
+                desc.set(with: workData)
+                desc.ts = stSelf.recoder.currentTime
+                stSelf.bpmArray.append(desc)
+                stSelf.charData.accept(workData.bpmData)
+            }
         }
         .disposed(by: disposeBag)
     }

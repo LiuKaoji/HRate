@@ -32,8 +32,8 @@ class LineChartHeaderView: UIView {
     
     lazy var chart: LineChartView = {
         let chart = LineChartView()
-        chart.noDataTextColor = StyleConfig.noDataTextColor
-        chart.noDataText = StyleConfig.noDataText2        
+        chart.noDataTextColor = BPMViewConfig.noDataTextColor
+        chart.noDataText = BPMViewConfig.noDataText2        
         chart.dragEnabled = false
         chart.pinchZoomEnabled = false
         chart.highlightPerTapEnabled = false
@@ -43,13 +43,13 @@ class LineChartHeaderView: UIView {
         chart.chartDescription.enabled = false
         
         chart.rightAxis.enabled = false
-        chart.leftAxis.labelTextColor = StyleConfig.labelTextColor
+        chart.leftAxis.labelTextColor = BPMViewConfig.labelTextColor
         
         chart.xAxis.labelPosition = .bottom
         chart.xAxis.drawLabelsEnabled = false
         
-        chart.leftAxis.axisMinimum = StyleConfig.axisMinimum
-        chart.leftAxis.axisMaximum = StyleConfig.axisMaximum
+        chart.leftAxis.axisMinimum = BPMViewConfig.axisMinimum
+        chart.leftAxis.axisMaximum = BPMViewConfig.axisMaximum
         
         chart.translatesAutoresizingMaskIntoConstraints = false
         
@@ -58,7 +58,7 @@ class LineChartHeaderView: UIView {
     
     init(height: CGFloat) {
         super.init(frame: .zero)
-        backgroundColor = StyleConfig.backgroundColor
+        backgroundColor = BPMViewConfig.backgroundColor
         setupView(height: height)
     }
     

@@ -43,8 +43,8 @@ class AudioListTableViewController: UIViewController {
         view.addSubview(tableView)
         self.navigationController?.navigationBar.barStyle = .black
         self.title = "录制历史"
-        view.backgroundColor = StyleConfig.backgroundColor
-        tableView.backgroundColor = StyleConfig.backgroundColor
+        view.backgroundColor = BPMViewConfig.backgroundColor
+        tableView.backgroundColor = BPMViewConfig.backgroundColor
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.snp.makeConstraints({ $0.top.left.bottom.right.equalToSuperview() })
         tableView.contentInset = UIEdgeInsets(top: viewModel.headerHeight.value, left: 0, bottom: 0, right: 0)
@@ -102,7 +102,7 @@ class AudioListTableViewController: UIViewController {
         
         viewModel.chartBPMData.bind(to: self.headerView.chart.rx.data).disposed(by: disposeBag)// 更新图表
         viewModel.playTime?.bind(to: self.headerView.durationLabel.rx.text).disposed(by: disposeBag)// 更新播放时长
-        viewModel.bpmStatus?.bind(to: self.headerView.bpmLable.rx.text).disposed(by: disposeBag)//更新心率
+        viewModel.bpmStatus.bind(to: self.headerView.bpmLable.rx.text).disposed(by: disposeBag)//更新心率
         viewModel.indicateState?.bind(to: self.indicatorBarButton.rx.state).disposed(by: disposeBag)//绑定音频指示器转态
         
     }

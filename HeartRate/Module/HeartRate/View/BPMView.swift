@@ -17,100 +17,106 @@ import RxSwift
 class BPMView: UIView {
     
     // MARK: - Properties
-       
-       let disposeBag = DisposeBag() // RxSwift资源清理工具
-       
-       // MARK: - UI Elements
-       
-       lazy var titleLabel: Label = { // 标题
-           let label = Label(style: .appTitle, "HRate")
-           return label
-       }()
-       
-       lazy var nowLabel: Label = { // 当前心率
-           let label = Label(style: .nowBPMHeading, "0")
-           return label
-       }()
-       
-       lazy var timeLabel: Label = { // 录制时间
-           let label = Label(style: .time, "00:00")
-           return label
-       }()
-       
-       lazy var timeTitleLabel: Label = { // 录制时间标题
-           let label = Label(style: .timeTitle, "时间")
-           return label
-       }()
-       
-       lazy var progress: KDCircularProgress = { // 心率进度条
-           let progress = KDCircularProgress(
-               frame: CGRect(x: 0, y: 0, width: self.frame.width / 1.2, height: self.frame.width / 1.2)
-           )
-           return progress
-       }()
-       
-       lazy var verticalStack: StackView = { // 竖直方向的StackView，包含当前心率、录制时间、录制时间标题
-           let stack = StackView(axis: .vertical)
-           return stack
-       }()
-       
-       lazy var avgBar: AvgMinMaxBar = { // 平均心率、最小心率、最大心率条形图
-           let bar = AvgMinMaxBar()
-           return bar
-       }()
-       
-       lazy var containerForSmallDisplay: UIView = { // 小屏幕显示容器
-           let view = UIView()
-           view.translatesAutoresizingMaskIntoConstraints = false
-           return view
-       }()
     
-      lazy var deviceView: DeviceView = { // 小屏幕显示容器
+    let disposeBag = DisposeBag() // RxSwift资源清理工具
+    
+    // MARK: - UI Elements
+    
+    lazy var titleLabel: Label = { // 标题
+        let label = Label(style: .appTitle, "HRate")
+        return label
+    }()
+    
+    lazy var nowLabel: Label = { // 当前心率
+        let label = Label(style: .nowBPMHeading, "0")
+        return label
+    }()
+    
+    lazy var timeLabel: Label = { // 录制时间
+        let label = Label(style: .time, "00:00")
+        return label
+    }()
+    
+    lazy var timeTitleLabel: Label = { // 录制时间标题
+        let label = Label(style: .timeTitle, "时间")
+        return label
+    }()
+    
+    lazy var progress: KDCircularProgress = { // 心率进度条
+        let progress = KDCircularProgress(
+            frame: CGRect(x: 0, y: 0, width: self.frame.width / 1.2, height: self.frame.width / 1.2)
+        )
+        return progress
+    }()
+    
+    lazy var verticalStack: StackView = { // 竖直方向的StackView，包含当前心率、录制时间、录制时间标题
+        let stack = StackView(axis: .vertical)
+        return stack
+    }()
+    
+    lazy var avgBar: AvgMinMaxBar = { // 平均心率、最小心率、最大心率条形图
+        let bar = AvgMinMaxBar()
+        return bar
+    }()
+    
+    lazy var containerForSmallDisplay: UIView = { // 小屏幕显示容器
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    lazy var deviceView: DeviceView = { // 小屏幕显示容器
         let view = DeviceView.init(frame: .zero)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
-       }()
+    }()
     
     
-       
-       lazy var chart: BarChartView = { // 心率历史记录图表
-           let chart = BarChartView()
-           chart.noDataTextColor = StyleConfig.noDataTextColor
-           chart.noDataText = StyleConfig.noDataText
-           
-           chart.dragEnabled = false
-           chart.pinchZoomEnabled = false
-           chart.highlightPerTapEnabled = false
-           chart.doubleTapToZoomEnabled = false
-           
-           chart.legend.enabled = false
-           chart.chartDescription.enabled = false
-           
-           chart.rightAxis.enabled = false
-           chart.leftAxis.labelTextColor = StyleConfig.labelTextColor
-           
-           chart.xAxis.labelPosition = .bottom
-           chart.xAxis.drawLabelsEnabled = false
-           
-           chart.leftAxis.axisMinimum = StyleConfig.axisMinimum
-           chart.leftAxis.axisMaximum = StyleConfig.axisMaximum
-           
-           chart.translatesAutoresizingMaskIntoConstraints = false
-           
-           return chart
-       }()
-       
-       lazy var recordButton: RecordButton = { // 录制按钮
-           let button = RecordButton.init(frame: .init(x: 0, y: 0, width: 80, height: 80), shutterType: .normal, buttonColor: .white)
-           return button
-       }()
-       
-       lazy var historyButton: UIButton = { // 历史记录按钮
-           let button = UIButton()
-           button.setImage(.init(named: "USB"), for: .normal)
-           return button
-       }()
-       
+    
+    lazy var chart: BarChartView = { // 心率历史记录图表
+        let chart = BarChartView()
+        chart.noDataTextColor = BPMViewConfig.noDataTextColor
+        chart.noDataText = BPMViewConfig.noDataText
+        
+        chart.dragEnabled = false
+        chart.pinchZoomEnabled = false
+        chart.highlightPerTapEnabled = false
+        chart.doubleTapToZoomEnabled = false
+        
+        chart.legend.enabled = false
+        chart.chartDescription.enabled = false
+        
+        chart.rightAxis.enabled = false
+        chart.leftAxis.labelTextColor = BPMViewConfig.labelTextColor
+        
+        chart.xAxis.labelPosition = .bottom
+        chart.xAxis.drawLabelsEnabled = false
+        
+        chart.leftAxis.axisMinimum = BPMViewConfig.axisMinimum
+        chart.leftAxis.axisMaximum = BPMViewConfig.axisMaximum
+        
+        chart.translatesAutoresizingMaskIntoConstraints = false
+        
+        return chart
+    }()
+    
+    lazy var recordButton: RecordButton = { // 录制按钮
+        let button = RecordButton.init(frame: .init(x: 0, y: 0, width: 80, height: 80), shutterType: .normal, buttonColor: .white)
+        return button
+    }()
+    
+    lazy var historyButton: UIButton = { // 历史记录按钮
+        let button = UIButton()
+        button.setImage(.init(named: "USB"), for: .normal)
+        return button
+    }()
+    
+    lazy var videoButton: UIButton = { // 录制视频按钮
+        let button = UIButton()
+        button.setImage(.init(named: "User"), for: .normal)
+        return button
+    }()
+    
     
     // MARK: - Initializer
     override init(frame: CGRect) {
@@ -123,12 +129,13 @@ class BPMView: UIView {
     }
     
     private func setupView() {
-        backgroundColor = StyleConfig.backgroundColor
+        backgroundColor = BPMViewConfig.backgroundColor
         
         addSubview(titleLabel)
         addSubview(progress)
         addSubview(verticalStack)
         addSubview(recordButton)
+        addSubview(videoButton)
         addSubview(historyButton)
         addSubview(containerForSmallDisplay)
         
@@ -206,6 +213,13 @@ class BPMView: UIView {
             make.bottom.equalToSuperview().offset(-34)
         }
         
+        
+        videoButton.snp.makeConstraints { (make) in
+            make.left.equalToSuperview().offset(15)
+            make.size.equalTo(80)
+            make.bottom.equalToSuperview().offset(-34)
+        }
+        
         deviceView.snp.makeConstraints { make in
             make.top.left.right.equalToSuperview()
             make.bottom.equalTo(recordButton.snp.top)
@@ -214,12 +228,12 @@ class BPMView: UIView {
     
     //MARK: - 圆环
     private func setupCircleView() {
-        progress.startAngle = StyleConfig.startAngle
-        progress.progressThickness = StyleConfig.progressThickness
-        progress.trackThickness = StyleConfig.trackThickness
-        progress.glowMode = StyleConfig.glowMode
-        progress.trackColor = StyleConfig.trackColor!
-        progress.set(colors: StyleConfig.progressColors[0], StyleConfig.progressColors[1], StyleConfig.progressColors[2])
+        progress.startAngle = BPMViewConfig.startAngle
+        progress.progressThickness = BPMViewConfig.progressThickness
+        progress.trackThickness = BPMViewConfig.trackThickness
+        progress.glowMode = BPMViewConfig.glowMode
+        progress.trackColor = BPMViewConfig.trackColor!
+        progress.set(colors: BPMViewConfig.progressColors[0], BPMViewConfig.progressColors[1], BPMViewConfig.progressColors[2])
         
         if Constants().screenSize.height <= 667 {
             progress.center = CGPoint(x: self.center.x, y: self.center.y / 1.9)
@@ -234,39 +248,22 @@ class BPMView: UIView {
 }
 
 extension BPMView {
-
+    
     func bindViewModel(to viewModel: BPMViewModel) {
-        // 绑定 nowBPM
-        viewModel.nowBPM
-            .bind(to: nowLabel.rx.text)
-            .disposed(by: disposeBag)
         
-        // 绑定 minBPM
-        viewModel.minBPM
-            .bind(to: avgBar.minBPMLabel.rx.text)
-            .disposed(by: disposeBag)
-        
-        // 绑定 maxBPM
-        viewModel.maxBPM
-            .bind(to: avgBar.maxBPMLabel.rx.text)
-            .disposed(by: disposeBag)
-        
-        // 绑定 avgBPM
-        viewModel.avgBPM
-            .bind(to: avgBar.avgBPMLabel.rx.text)
-            .disposed(by: disposeBag)
-        
+        viewModel.workData.bind(to: self.rx.workData).disposed(by: disposeBag)
+
         // 图表更新
         viewModel.charData.bind(to: chart.rx.data).disposed(by: disposeBag)
-        
-        // 心率进度更新
-        viewModel.progress.bind(to: progress.rx.progress).disposed(by: disposeBag)
         
         //更新录音时间
         viewModel.time.bind(to: timeLabel.rx.text).disposed(by: disposeBag)
         
         // 绑定 录音按钮
         recordButton.rx.tap.bind(to: viewModel.recordButtonTapped).disposed(by: disposeBag)
+        
+        // 绑定 录视频按钮
+        videoButton.rx.tap.bind(to: viewModel.videoButtonTapped).disposed(by: disposeBag)
         
         //绑定录音按钮是否可用
         viewModel.recordButtonEnabled.bind(to: recordButton.rx.isEnabled).disposed(by: disposeBag)

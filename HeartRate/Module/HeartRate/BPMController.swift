@@ -51,6 +51,11 @@ class BPMController: UIViewController {
         viewModel.navigateToNextScreen = { [weak self] vc in
             self?.navigationController?.pushViewController(vc, animated: true)
         }
+        
+        // 弹出页面窗口
+        viewModel.presentScreen = { [weak self] vc in
+            self?.present(vc, animated: true)
+        }
     }
 
 }

@@ -33,6 +33,12 @@ class WorkoutManager {
     // 当前健身会话的私有存储属性。
     private(set) var currentWorkoutSession: HKWorkoutSession?
     
+    // 一次锻炼记录
+    private(set) var currentWorkout: HKWorkout?
+
+    // 心率类型和单位
+    let heartRateType = HKObjectType.quantityType(forIdentifier: .heartRate)!
+    let heartRateUnit = HKUnit(from: "count/min")
     
     // MARK: - Public Methods
     
@@ -45,6 +51,19 @@ class WorkoutManager {
             let workoutSession = try HKWorkoutSession.init(healthStore: healthStore, configuration: configuration)
             workoutSession.startActivity(with: Date())
             currentWorkoutSession = workoutSession
+            
+            
+            // 创建 HKWorkout 对象并保存
+            let workout = HKWorkout(activityType: configuration.activityType, start: Date(), end: Date().addingTimeInterval(24 * 60 * 60))
+            healthStore.save(workout) { success, error in
+                if let error = error {
+                    print("Error saving workout: \(error.localizedDescription)")
+                } else {
+                    print("Workout saved successfully")
+                    self.currentWorkout = workout
+                }
+            }
+            
         } catch {
             throw error
         }
@@ -78,6 +97,30 @@ class WorkoutManager {
         guard let currentWorkoutSession = currentWorkoutSession else { return }
         currentWorkoutSession.end()
         self.currentWorkoutSession = nil
+        
+        // 结束 HKWorkout 对象并保存
+        if let workout = currentWorkout {
+            let endDate = Date()
+            
+            let updatedMetadata = workout.metadata?.merging([HKMetadataKeySyncVersion: workout.uuid.uuidString]) { _, new in new }
+            let updatedWorkout = HKWorkout(activityType: workout.workoutActivityType,
+                                           start: workout.startDate,
+                                           end: endDate,
+                                           workoutEvents: workout.workoutEvents,
+                                           totalEnergyBurned: workout.totalEnergyBurned,
+                                           totalDistance: workout.totalDistance,
+                                           device: workout.device,
+                                           metadata: updatedMetadata)
+            
+            healthStore.save(updatedWorkout) { success, error in
+                if let error = error {
+                    print("Error saving finished workout: \(error.localizedDescription)")
+                } else {
+                    print("Finished workout saved successfully")
+                    self.currentWorkout = nil
+                }
+            }
+        }
     }
     
     /// 创建并返回一个可用于流式传输指定类型健身数据的 HKAnchoredObjectQuery 对象。
@@ -127,5 +170,42 @@ class WorkoutManager {
         
         healthStore.execute(query)
     }
+    
+    // 保存心率
+    func saveHeartRateSample(_ heartRate: Int, at date: Date, completion: @escaping (Bool, Error?) -> Void) {
+        requestAuthorization {
+            let heartRateSample = HKQuantitySample(type: self.heartRateType, quantity: HKQuantity(unit: self.heartRateUnit, doubleValue: Double(heartRate)), start: date, end: date)
+            self.healthStore.save(heartRateSample) { success, error in
+                completion(success, error)
+            }
+        }
+    }
 
+    // 保存消耗卡路里
+    func saveCalorieSample(_ calories: Double, startDate: Date, endDate: Date, completion: @escaping (Bool, Error?) -> Void) {
+        requestAuthorization {
+            let energyBurnedType = HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!
+            let energyBurnedQuantity = HKQuantity(unit: HKUnit.kilocalorie(), doubleValue: calories)
+            let energyBurnedSample = HKQuantitySample(type: energyBurnedType, quantity: energyBurnedQuantity, start: startDate, end: endDate)
+
+            self.healthStore.save(energyBurnedSample) { success, error in
+                completion(success, error)
+            }
+        }
+    }
+    
+    /// 请求授权访问HealthKit数据
+    /// - Parameter handler: 授权成功后执行的闭包
+    private func requestAuthorization(_ handler: @escaping () -> Void) {
+        
+        let heartRateType = HKQuantityType.quantityType(forIdentifier: .heartRate)!
+        let readTypes = Set([heartRateType])
+        
+        healthStore.requestAuthorization(toShare: nil, read: readTypes) { success, error in
+            handler()
+            if let error = error {
+                print(error)
+            }
+        }
+    }
 }

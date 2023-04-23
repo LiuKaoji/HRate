@@ -99,7 +99,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let navigationBarAppearance = UINavigationBar.appearance()
         
         // 设置导航栏背景颜色
-        navigationBarAppearance.barTintColor = StyleConfig.backgroundColor
+        navigationBarAppearance.barTintColor = BPMViewConfig.backgroundColor
         
         // 设置导航栏标题字体和颜色
         navigationBarAppearance.titleTextAttributes = [

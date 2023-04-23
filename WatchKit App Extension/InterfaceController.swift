@@ -119,24 +119,23 @@ class InterfaceController: WKInterfaceController {
         // 使用闭包回调更新UI
         statusUpdate(true)
 
-//        do {
-//            try workoutManager.startWorkout(with: configuration ?? defaultWorkoutConfiguration)
-//
-//        } catch {
-//            print("Workout initial error:", error)
-//            let errorData = NSKeyedArchiver.archivedData(withRootObject: error)
-//            WatchConnector.shared.send([.workoutError : errorData])
-//        }
         
         workoutManager.startWorkoutAndFetchHeartRate(with: configuration ?? defaultWorkoutConfiguration) { samples, error in
-            if let error = error{
+            if let error = error {
                 print("Workout initial error:", error as Any)
-                let errorData = NSKeyedArchiver.archivedData(withRootObject: error)
-                WatchConnector.shared.send([.workoutError : errorData])
-            }else{
+                
+                // 使用新的方法替换已弃用的方法
+                do {
+                    let errorData = try NSKeyedArchiver.archivedData(withRootObject: error, requiringSecureCoding: false)
+                    WatchConnector.shared.send([.workoutError : errorData])
+                } catch {
+                    print("归档错误时出错：", error)
+                }
+                
+            } else {
                 WatchConnector.shared.send([.workoutStart : true])
                 self.startHeartRateQuery()
-                   
+
                 if WKExtension.shared().applicationState == .active {
                     WKInterfaceDevice.current().play(.start)
                 } else {
@@ -144,7 +143,7 @@ class InterfaceController: WKInterfaceController {
                         WKInterfaceDevice.current().play(.start)
                     }
                 }
-                
+
                 if let samples = samples {
                     self.handle(newHeartRateSamples: samples)
                 }

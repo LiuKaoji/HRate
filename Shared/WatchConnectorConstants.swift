@@ -8,11 +8,19 @@
 
 extension WatchConnector.MessageKey {
     
-    static let workoutStart = WatchConnector.MessageKey("Workout.start")
-    static let workoutStop = WatchConnector.MessageKey("Workout.stop")
-    static let workoutError = WatchConnector.MessageKey("Workout.error")
+    // 启动关闭
+    static let workoutStart = WatchConnector.MessageKey("Workout.start")//启动
+    static let workoutStop = WatchConnector.MessageKey("Workout.stop")//关闭
+    static let workoutError = WatchConnector.MessageKey("Workout.error")//失败
     
-    static let heartRateIntergerValue = WatchConnector.MessageKey("HeartRate.intergerValue")
-    static let heartRateRecordDate = WatchConnector.MessageKey("HeartRate.recordDate")
+    // 用户信息传输
+    static let workoutInfo = WatchConnector.MessageKey("Workout.info")
     
+    // 心率数据传输
+    static let workoutData = WatchConnector.MessageKey("Workout.data")
+    
+    
+    //心率及卡路里
+    static let bpmValue = WatchConnector.MessageKey("HeartRate.bpmValue")//心率当前值
+    static let bpmDate = WatchConnector.MessageKey("HeartRate.bpmDate")//心率记录日期
 }

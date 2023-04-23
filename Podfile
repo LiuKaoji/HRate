@@ -14,7 +14,7 @@ target 'HRate' do
   pod 'RxCocoa'
   pod 'Zip', '~> 2.1'
   pod 'ESTMusicIndicator'
-
+  pod 'Eureka'
 
 end
 

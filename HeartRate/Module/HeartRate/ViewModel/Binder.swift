@@ -16,7 +16,7 @@ import ESTMusicIndicator
 // MARK: - 主页UI绑定
 ///柱状图数据绑定
 extension Reactive where Base: BarChartView {
-    var data: Binder<[Int16]> {
+    var data: Binder<[Int]> {
         return Binder(base) { chartView, data in
             if data.count == 0 {
                 chartView.data = nil
@@ -34,8 +34,6 @@ extension Reactive where Base: BarChartView {
            chartView.barData?.setDrawValues(false)
         }
     }
-
-    
 }
 
 
@@ -57,6 +55,7 @@ extension Reactive where Base: BPMView {
                 view.recordButton.buttonState = .recording
                 view.recordButton.buttonColor = .red
                 view.historyButton.isHidden = true
+                view.videoButton.isHidden = true
             }
             
             func resetUI(){
@@ -65,6 +64,7 @@ extension Reactive where Base: BPMView {
                 view.recordButton.buttonState = .normal
                 view.recordButton.buttonColor = .white
                 view.historyButton.isHidden = false
+                view.videoButton.isHidden = false
             }
         }
     }
@@ -74,7 +74,7 @@ extension Reactive where Base: BPMView {
 // MARK: - 已录制UI绑定
 // 折线图数据绑定
 extension Reactive where Base: LineChartView {
-    var data: Binder<[Int16]> {
+    var data: Binder<[Int]> {
         return Binder(base) { chartView, data in
             if data.count == 0 {
                 chartView.data = nil
@@ -113,6 +113,21 @@ extension Reactive where Base: LineChartView {
         }
     }
 }
+
+
+// workoutData绑定: - 音频播放指示器状态
+extension Reactive where Base: BPMView {
+    var workData: Binder<WorkoutData> {
+        return Binder(base) { view, data in
+            view.nowLabel.text = "\(data.nowBPM)"
+            view.avgBar.minBPMLabel.text = "\(data.minBPM)"
+            view.avgBar.maxBPMLabel.text = "\(data.maxBPM)"
+            view.avgBar.avgBPMLabel.text = "\(data.avgBPM)"
+            view.progress.progress = data.bpmPercent
+        }
+    }
+}
+
 
 // 录制历史: - 音频播放指示器状态
 extension Reactive where Base: PlaybackIndicator {

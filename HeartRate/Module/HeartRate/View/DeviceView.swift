@@ -43,7 +43,7 @@ class DeviceView: UIView {
     
     // MARK: - Setup View
     private func setupView() {
-        backgroundColor = StyleConfig.backgroundColor
+        backgroundColor = BPMViewConfig.backgroundColor
         addSubview(imageView)
         addSubview(statusLabel)
         

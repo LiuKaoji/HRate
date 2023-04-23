@@ -10,9 +10,21 @@ import Foundation
 import WCDBSwift
 
 struct BPMDescription: Codable{
-    var bpm: Int16 = 0 // 心率
+    var bpm: Int = 0 // 心率
     var date: String? // 心率记录日期
     var ts: TimeInterval = 0 // 录音时间戳
+    var max: Int = 0   //最大心率
+    var min: Int = 0  //最小心率
+    var avg: Int = 0  //平均心率
+    var kcal: Int = 0 //总消耗
+    
+    mutating func set(with data: WorkoutData){
+        bpm = data.nowBPM
+        date = TimeFormat.shared.currentDateString()
+        max = data.maxBPM
+        min = data.maxBPM
+        kcal = Int(data.totalCalories)
+    }
 }
 
 // 记录一次训练过程的录音数据
