@@ -19,13 +19,16 @@
 		3670ACFC29F14D110026F2B5 /* DeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3670ACFA29F14CDE0026F2B5 /* DeviceView.swift */; };
 		3670AD0829F1829F0026F2B5 /* deviceGray.png in Resources */ = {isa = PBXBuildFile; fileRef = 3670AD0629F1829F0026F2B5 /* deviceGray.png */; };
 		3670AD0929F1829F0026F2B5 /* device.png in Resources */ = {isa = PBXBuildFile; fileRef = 3670AD0729F1829F0026F2B5 /* device.png */; };
-		3670AD0B29F188F30026F2B5 /* BPMTimedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3670AD0A29F188F30026F2B5 /* BPMTimedImage.swift */; };
 		3670AD4129F3F57A0026F2B5 /* InfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3670AD4029F3F57A0026F2B5 /* InfoController.swift */; };
 		3670AD4329F3FFC50026F2B5 /* UserEnitity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3670AD4229F3FFC50026F2B5 /* UserEnitity.swift */; };
 		3670AD4629F4CD7A0026F2B5 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3670AD4529F4CD7A0026F2B5 /* UserInfo.swift */; };
 		3670AD4829F4D4790026F2B5 /* WorkoutData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3670AD4729F4D4790026F2B5 /* WorkoutData.swift */; };
 		3670AD4A29F4D9DB0026F2B5 /* BPMCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3670AD4929F4D9DB0026F2B5 /* BPMCalculator.swift */; };
 		3670AD4B29F4DDAF0026F2B5 /* WorkoutData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3670AD4729F4D4790026F2B5 /* WorkoutData.swift */; };
+		3670AD4C29F4FC9A0026F2B5 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3670AD4529F4CD7A0026F2B5 /* UserInfo.swift */; };
+		3670AD5029F5182F0026F2B5 /* WCErrorParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3670AD4F29F5182F0026F2B5 /* WCErrorParser.swift */; };
+		3670AD5129F518E70026F2B5 /* WCErrorParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3670AD4F29F5182F0026F2B5 /* WCErrorParser.swift */; };
+		3670AD5429F51EDD0026F2B5 /* HRToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3670AD5229F51CCA0026F2B5 /* HRToast.swift */; };
 		369BD4EE29E93C7F00CB6B97 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369BD4ED29E93C7F00CB6B97 /* AppDelegate.swift */; };
 		369BD4F129E93CB300CB6B97 /* PersistManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369BD4F029E93CB300CB6B97 /* PersistManager.swift */; };
 		369BD50129E93D9F00CB6B97 /* AudioListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369BD4F429E93D9F00CB6B97 /* AudioListController.swift */; };
@@ -137,12 +140,13 @@
 		3670ACFA29F14CDE0026F2B5 /* DeviceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceView.swift; sourceTree = "<group>"; };
 		3670AD0629F1829F0026F2B5 /* deviceGray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = deviceGray.png; sourceTree = "<group>"; };
 		3670AD0729F1829F0026F2B5 /* device.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = device.png; sourceTree = "<group>"; };
-		3670AD0A29F188F30026F2B5 /* BPMTimedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPMTimedImage.swift; sourceTree = "<group>"; };
 		3670AD4029F3F57A0026F2B5 /* InfoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoController.swift; sourceTree = "<group>"; };
 		3670AD4229F3FFC50026F2B5 /* UserEnitity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEnitity.swift; sourceTree = "<group>"; };
 		3670AD4529F4CD7A0026F2B5 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		3670AD4729F4D4790026F2B5 /* WorkoutData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutData.swift; sourceTree = "<group>"; };
 		3670AD4929F4D9DB0026F2B5 /* BPMCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPMCalculator.swift; sourceTree = "<group>"; };
+		3670AD4F29F5182F0026F2B5 /* WCErrorParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WCErrorParser.swift; sourceTree = "<group>"; };
+		3670AD5229F51CCA0026F2B5 /* HRToast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HRToast.swift; sourceTree = "<group>"; };
 		369BD4ED29E93C7F00CB6B97 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		369BD4F029E93CB300CB6B97 /* PersistManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistManager.swift; sourceTree = "<group>"; };
 		369BD4F429E93D9F00CB6B97 /* AudioListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioListController.swift; sourceTree = "<group>"; };
@@ -247,13 +251,8 @@
 			isa = PBXGroup;
 			children = (
 				3670AD4429F4C9020026F2B5 /* Calculate */,
-				3670ACF029F037AC0026F2B5 /* Charts */,
-				FBA2D6BB1DBF9C9600728078 /* WorkoutManager.swift */,
-				3670ACE729EFFE110026F2B5 /* OSTimer.swift */,
 				3670ACE529EFFB170026F2B5 /* PumpingController.swift */,
 				FBA2D6861DBF9BD400728078 /* InterfaceController.swift */,
-				3670ACF529F037F50026F2B5 /* NotificationManager.swift */,
-				3670AD0A29F188F30026F2B5 /* BPMTimedImage.swift */,
 			);
 			name = UserInterface;
 			sourceTree = "<group>";
@@ -261,6 +260,7 @@
 		3670ACED29F028E30026F2B5 /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				3670AD6329F57E750026F2B5 /* Public */,
 				FBA2D6881DBF9BD400728078 /* ExtensionDelegate.swift */,
 				3670ACEC29F028CB0026F2B5 /* UserInterface */,
 			);
@@ -286,11 +286,23 @@
 			path = Calculate;
 			sourceTree = "<group>";
 		};
+		3670AD6329F57E750026F2B5 /* Public */ = {
+			isa = PBXGroup;
+			children = (
+				3670ACF029F037AC0026F2B5 /* Charts */,
+				3670ACF529F037F50026F2B5 /* NotificationManager.swift */,
+				FBA2D6BB1DBF9C9600728078 /* WorkoutManager.swift */,
+				3670ACE729EFFE110026F2B5 /* OSTimer.swift */,
+			);
+			name = Public;
+			sourceTree = "<group>";
+		};
 		369BD4E829E93B4100CB6B97 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
 				FBA2D6C61DC054E200728078 /* WatchConnector.swift */,
 				FBA2D6AF1DBF9C5700728078 /* WatchConnectorConstants.swift */,
+				3670AD4F29F5182F0026F2B5 /* WCErrorParser.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -393,6 +405,7 @@
 				369BD51129E93E0100CB6B97 /* Stack.swift */,
 				369BD51229E93E0100CB6B97 /* Toast.swift */,
 				369BD51329E93E0100CB6B97 /* RecordButton.swift */,
+				3670AD5229F51CCA0026F2B5 /* HRToast.swift */,
 			);
 			path = UIComponents;
 			sourceTree = "<group>";
@@ -784,9 +797,11 @@
 				36C3C6B329EEC0CA00E8A4DB /* PlaybackIndicator.swift in Sources */,
 				369BD51929E93E0100CB6B97 /* Stack.swift in Sources */,
 				36C3C69F29EE167500E8A4DB /* RxCastOrThrow.swift in Sources */,
+				3670AD5429F51EDD0026F2B5 /* HRToast.swift in Sources */,
 				3670AD4329F3FFC50026F2B5 /* UserEnitity.swift in Sources */,
 				369BD50729E93D9F00CB6B97 /* AudioEntity.swift in Sources */,
 				369BD4F129E93CB300CB6B97 /* PersistManager.swift in Sources */,
+				3670AD5129F518E70026F2B5 /* WCErrorParser.swift in Sources */,
 				369BD50529E93D9F00CB6B97 /* BPMTracker.swift in Sources */,
 				369BD4EE29E93C7F00CB6B97 /* AppDelegate.swift in Sources */,
 				369BD50929E93D9F00CB6B97 /* BPMViewConfig.swift in Sources */,
@@ -797,6 +812,7 @@
 				369BD51429E93E0100CB6B97 /* TimeFormat.swift in Sources */,
 				369BD50129E93D9F00CB6B97 /* AudioListController.swift in Sources */,
 				369BD50329E93D9F00CB6B97 /* Binder.swift in Sources */,
+				3670AD4C29F4FC9A0026F2B5 /* UserInfo.swift in Sources */,
 				3670AD4129F3F57A0026F2B5 /* InfoController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -813,13 +829,13 @@
 				3670ACE429EFED100026F2B5 /* TimeFormat.swift in Sources */,
 				FBA2D6871DBF9BD400728078 /* InterfaceController.swift in Sources */,
 				3670ACF629F037F50026F2B5 /* NotificationManager.swift in Sources */,
-				3670AD0B29F188F30026F2B5 /* BPMTimedImage.swift in Sources */,
 				FBA2D6B11DBF9C5700728078 /* WatchConnectorConstants.swift in Sources */,
 				3670ACE829EFFE110026F2B5 /* OSTimer.swift in Sources */,
 				FBA2D68B1DBF9BD400728078 /* ComplicationController.swift in Sources */,
 				FBA2D6C81DC054E200728078 /* WatchConnector.swift in Sources */,
 				3670ACF429F037AC0026F2B5 /* SSLineChartData.swift in Sources */,
 				3670AD4A29F4D9DB0026F2B5 /* BPMCalculator.swift in Sources */,
+				3670AD5029F5182F0026F2B5 /* WCErrorParser.swift in Sources */,
 				3670AD4629F4CD7A0026F2B5 /* UserInfo.swift in Sources */,
 				3670ACF329F037AC0026F2B5 /* SSLineChart.swift in Sources */,
 			);

@@ -80,7 +80,7 @@ class WatchConnector: NSObject, WCSessionDelegate {
     /// 获取已激活的 WCSession。如果当前会话尚未激活，则会先激活它。
     ///
     /// - parameter handler: 如果当前设备不支持 Watch Connectivity，则返回 nil。将从主队列中调用。
-    func fetchActivatedSession(handler: @escaping (WCSession) -> Void) {
+    func fetchActivatedSession(handler: @escaping (WCSession) -> Void, error: (() -> Void)? = nil) {
         
         activate()
         
@@ -88,6 +88,7 @@ class WatchConnector: NSObject, WCSessionDelegate {
             handler(defaultSession)
         } else {
             sessionActivationCompletionHandlers.append(handler)
+            error?()
         }
     }
     
@@ -104,6 +105,27 @@ class WatchConnector: NSObject, WCSessionDelegate {
             session.sendMessage(self.sessionMessage(for: message), replyHandler: nil)
         }
     }
+    
+    /// 向配对设备发送消息。如果配对设备不可达，则不会发送该消息。
+    ///
+    /// - parameter message: 要发送的消息
+    /// - parameter replyHandler: 成功发送消息后的处理程序。将从主队列调用。
+    /// - parameter errorHandler: 发送消息失败时的处理程序。将从主队列调用。
+    func sendWithReply(_ message: [MessageKey: Any], replyHandler: (() -> Void)?, errorHandler: ((String) -> Void)?) {
+        fetchActivatedSession { session in
+            guard session.isReachable else {
+                if let errorHandler = errorHandler {
+                    DispatchQueue.main.async {
+                        errorHandler(WCErrorParser.parseError(WCError.notReachable))
+                    }
+                }
+                return
+            }
+            session.sendMessage(self.sessionMessage(for: message), replyHandler: nil)
+            replyHandler?()
+        }
+    }
+
     
     /// 传输消息到配对设备。
     func transfer(_ message: [MessageKey : Any]) {

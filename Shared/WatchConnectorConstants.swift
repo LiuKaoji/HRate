@@ -14,7 +14,7 @@ extension WatchConnector.MessageKey {
     static let workoutError = WatchConnector.MessageKey("Workout.error")//失败
     
     // 用户信息传输
-    static let workoutInfo = WatchConnector.MessageKey("Workout.info")
+    static let workoutUserInfo = WatchConnector.MessageKey("Workout.userInfo")
     
     // 心率数据传输
     static let workoutData = WatchConnector.MessageKey("Workout.data")

@@ -71,7 +71,7 @@ class UserInfo: NSObject, NSSecureCoding {
     }
     
     // 如果没有加载到
-    static func load() -> UserInfo? {
+    static func loadFromCache() -> UserInfo? {
         if let userData = UserDefaults.standard.data(forKey: UserInfoKey) {
             do {
                 let userEntity = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [UserInfo.self], from: userData) as? UserInfo

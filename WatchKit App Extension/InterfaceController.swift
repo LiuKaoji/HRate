@@ -34,13 +34,15 @@ class InterfaceController: WKInterfaceController {
         super.awake(withContext: context)
         
         // 模拟启动
-        let _ = NotificationManager.shared.subscribeToActionNotification(using: { [weak self] in
+        let _ = NotificationManager.shared.handleSubscription(for: .action, action: .subscribe) { [weak self] _ in
             self?.startworkoutAction()
-        })
+        }
 
         messageHandler = WatchConnector.MessageHandler { [weak self] message in
             if message[.workoutStop] != nil {
                 self?.stopWorkout()
+            }else if message[.workoutUserInfo] != nil {
+                NotificationManager.shared.postNotification(.userInfo, object: message[.workoutUserInfo]!)
             }
         }
         WatchConnector.shared.addMessageHandler(messageHandler!)
@@ -59,7 +61,7 @@ class InterfaceController: WKInterfaceController {
         WatchConnector.shared.send([.workoutStop : true])
         workoutManager.stopWorkout()
         self.actionImage.setImageNamed("start")
-        NotificationManager.shared.postStopNotification()
+        NotificationManager.shared.postNotification(.stop)
         self.becomeCurrentPage()
     }
     
@@ -82,7 +84,7 @@ class InterfaceController: WKInterfaceController {
     
     // 接收新的心率
     private func handle(newHeartRateSamples samples: [HKQuantitySample]) {
-        NotificationManager.shared.postSampleNotification(with: samples)
+        NotificationManager.shared.postNotification(.sample, object: samples)
     }
 
     
@@ -103,8 +105,8 @@ class InterfaceController: WKInterfaceController {
         // 开始监听心率
         startWorkout { isStarted in
             self.actionImage.setImageNamed("stop")
-            NotificationManager.shared.postStartNotification()
-            NotificationManager.shared.postPageSwitchNotification(classType: PumpingController.classForCoder())
+            NotificationManager.shared.postNotification(.start)
+            NotificationManager.shared.postNotification(.pageSwitch, object:  PumpingController.classForCoder())
         }
     }
     

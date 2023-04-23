@@ -18,11 +18,7 @@ class BPMCalculator {
     public var bpmData: [Int] = [] // 所有实时心率 用于计算平均心率及表格显示
     public var totalCalories: Double = 0 //消耗卡路里
 
-    private var userInfo: UserInfo?{
-        get{
-            return UserInfo.load()//待优化 直接每次读取会有性能问题
-        }
-    }
+    private var userInfo: UserInfo? = UserInfo.loadFromCache()
     private var lastHeartRateUpdate: Date?
     
     func addHeartRate(_ bpm: Int, onUpdate: (WorkoutData) -> Void) {
@@ -61,6 +57,10 @@ class BPMCalculator {
 
         // 回调更新
         onUpdate(WorkoutData(date: Date(), nowBPM: nowBPM, minBPM: minBPM, maxBPM: maxBPM, avgBPM: avgBPM, bpmPercent: bpmPercent, totalCalories: totalCalories, bpmData: bpmData))
+    }
+    
+    func updateUserInfo(With info: UserInfo){
+        self.userInfo = info
     }
     
     func calculateCaloriesPerMinute(bpm: Int, userInfo: UserInfo, timeInterval: TimeInterval) -> Double {

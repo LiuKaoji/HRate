@@ -17,7 +17,7 @@ class UserInfoFormViewController: FormViewController {
         super.viewDidLoad()
         
         // 设置视图的背景颜色为半透明
-        view.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1.0)
+        view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.1)
         
         // 设置圆角边框
         let formView = UIView()
@@ -95,21 +95,13 @@ class UserInfoFormViewController: FormViewController {
         .onCellSelection { [weak self] _, _ in
             // 处理保存按钮点击事件，获取用户信息
             let formValues = self?.form.values() as? [String: Any]
-            let gender = formValues?["gender"] as? String ?? ""
+            let gender = ((formValues?["gender"] as? String ?? "") == "男" ? 0 : 1)
             let weight = formValues?["weight"] as? Int ?? 0
             let age = formValues?["age"] as? Int ?? 0
             let height = formValues?["height"] as? Int ?? 0
-            
-            // 保存用户信息
-            self?.persistManager.updateUserInfo(
-                gender: gender == "男" ? 0 : 1,
-                weight: weight,
-                age: age,
-                height: height
-            )
-            
-            // 关闭表单
-            self?.dismiss(animated: true, completion: nil)
+
+            let transferUser = UserInfo.init(gender: gender, weight: weight, age: age, height: height)
+            self?.save(With: transferUser)
         }
         
         +++ Section()
@@ -143,5 +135,33 @@ class UserInfoFormViewController: FormViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
             self?.tableView.setContentOffset(.zero, animated: true)
         }
+    }
+    
+    func save(With info: UserInfo){
+        
+        do {
+            
+            let encodedData = try NSKeyedArchiver.archivedData(withRootObject: info, requiringSecureCoding: false)
+            WatchConnector.shared?.sendWithReply([.workoutUserInfo: encodedData], replyHandler: { [weak self] in
+                // 保存用户信息
+                self?.persistManager.updateUserInfo(
+                    gender: info.gender,
+                    weight: info.weight,
+                    age: info.age,
+                    height: info.height
+                )
+                // 关闭表单
+                self?.dismiss(animated: true, completion: nil)
+                
+            }, errorHandler: { error in
+                print("send info error: \(error)")
+                HRToast(message: error, type: .error)
+            })
+            
+        }catch{
+            
+            HRToast(message: "用户数据打包失败", type: .error)
+        }
+        
     }
 }

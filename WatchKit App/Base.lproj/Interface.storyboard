@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="21701" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="AgC-eL-Hgc">
-    <device id="watch40"/>
+    <device id="watch38"/>
     <dependencies>
         <deployment identifier="watchOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="21615"/>
@@ -40,11 +40,19 @@
             <objects>
                 <controller identifier="PumpingControllerID" id="84v-th-GYm" customClass="PumpingController" customModule="WatchKit_App_Extension">
                     <items>
-                        <group width="136" height="87" alignment="left" layout="vertical" id="MDh-qN-inf">
+                        <group width="136" height="87" alignment="center" layout="vertical" id="MDh-qN-inf">
                             <items>
-                                <label width="76" height="22" alignment="left" text="    心率" id="1Nx-Q6-RsG">
-                                    <fontDescription key="font" type="system" pointSize="16"/>
-                                </label>
+                                <group width="1" alignment="left" id="klz-Qb-iHe">
+                                    <items>
+                                        <label width="55" height="22" alignment="left" text="    心率" id="1Nx-Q6-RsG">
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <fontDescription key="font" type="boldSystem" pointSize="16"/>
+                                        </label>
+                                        <label width="93" alignment="left" alpha="0.80000000000000004" text=" 0 千卡" textAlignment="left" id="ydn-PA-lGt">
+                                            <fontDescription key="font" type="system" pointSize="12"/>
+                                        </label>
+                                    </items>
+                                </group>
                                 <group width="128" height="65" alignment="left" id="YaJ-yx-LNi">
                                     <items>
                                         <group width="1" alignment="left" id="GdO-6L-nxv">
@@ -55,7 +63,7 @@
                                                             <items>
                                                                 <group width="83" height="43" alignment="left" id="1fw-qh-8K1">
                                                                     <items>
-                                                                        <label width="108" height="46" alignment="left" text="---" textAlignment="center" id="H5K-nT-dq2">
+                                                                        <label width="108" height="46" alignment="left" alpha="0.80000000000000004" text="---" textAlignment="center" id="H5K-nT-dq2">
                                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <fontDescription key="font" type="system" pointSize="50"/>
                                                                         </label>
@@ -64,7 +72,7 @@
                                                                 <group width="1" alignment="left" layout="vertical" id="bfT-hg-9tP">
                                                                     <items>
                                                                         <imageView width="19" height="17" alignment="left" image="heart" id="6pR-N1-SFr"/>
-                                                                        <label width="45" height="19" alignment="left" text="次/分" id="Ito-5K-TTb">
+                                                                        <label width="45" height="19" alignment="left" alpha="0.80000000000000004" text="次/分" id="Ito-5K-TTb">
                                                                             <color key="textColor" red="0.73433554292929293" green="0.1311597704141039" blue="0.15904619428634065" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                             <fontDescription key="font" type="system" pointSize="14"/>
                                                                         </label>
@@ -74,9 +82,10 @@
                                                         </group>
                                                         <group width="1" height="23" alignment="left" id="4EN-Sb-CFb">
                                                             <items>
-                                                                <label width="136" alignment="left" text="    训练时长: 00:00" textAlignment="left" id="ydn-PA-lGt">
-                                                                    <fontDescription key="font" type="system" pointSize="12"/>
-                                                                </label>
+                                                                <timer width="136" alignment="left" alpha="0.80000000000000004" textAlignment="center" previewedSeconds="0" id="KSi-0e-42C">
+                                                                    <fontDescription key="font" type="system" weight="medium" pointSize="13"/>
+                                                                    <calendarUnit key="units" minute="YES" second="YES"/>
+                                                                </timer>
                                                             </items>
                                                         </group>
                                                     </items>
@@ -88,7 +97,7 @@
                             </items>
                             <edgeInsets key="margins" left="0.0" right="2" top="0.0" bottom="0.0"/>
                         </group>
-                        <group width="136" height="77" alignment="left" layout="vertical" id="euT-uf-UOT">
+                        <group width="136" height="77" alignment="center" layout="vertical" id="euT-uf-UOT">
                             <items>
                                 <imageView width="136" height="64" alignment="left" id="z84-je-I1d">
                                     <color key="tintColor" name="BackgroundColor"/>
@@ -99,12 +108,13 @@
                     <connections>
                         <outlet property="bpmLabel" destination="H5K-nT-dq2" id="UN1-ia-pa1"/>
                         <outlet property="heartImageView" destination="6pR-N1-SFr" id="JRd-En-CW6"/>
+                        <outlet property="kcalLabel" destination="ydn-PA-lGt" id="Tpm-ft-Aon"/>
                         <outlet property="lineCharImage" destination="z84-je-I1d" id="qgQ-vl-AaL"/>
-                        <outlet property="timeLabel" destination="ydn-PA-lGt" id="sTN-IS-TkA"/>
+                        <outlet property="timerLabel" destination="KSi-0e-42C" id="5o2-VP-P24"/>
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="415.29756097560977" y="-47.749003984063741"/>
+            <point key="canvasLocation" x="414" y="-49"/>
         </scene>
     </scenes>
     <color key="tintColor" red="0.0" green="0.47843137254901957" blue="1" alpha="1" colorSpace="calibratedRGB"/>

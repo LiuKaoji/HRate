@@ -15,52 +15,18 @@ class PumpingController: WKInterfaceController {
     @IBOutlet weak var lineCharImage: WKInterfaceImage!
     @IBOutlet weak var heartImageView: WKInterfaceImage!
     @IBOutlet weak var bpmLabel: WKInterfaceLabel!
-    @IBOutlet weak var timeLabel: WKInterfaceLabel!
+    @IBOutlet weak var kcalLabel: WKInterfaceLabel!
+    @IBOutlet weak var timerLabel: WKInterfaceTimer!
     private let bpmCalculator = BPMCalculator()// 心率计算器
-   
     var lineChart: SSLineChart?
-    private var heartRate: Double = 0 {
-        didSet {
-           
-        }
-    }
-    
-    private lazy var timer: OSTimer = OSTimer.init { seconds in
-        // 文本显示
-        self.timeLabel.setText("    训练时长: \(TimeFormat.formatTimeInterval(seconds: TimeInterval(seconds)))")
-    }
     
     override func awake(withContext context: Any?) {
         super.awake(withContext: context)
         generateGraphImage()
-        
-        //处理开始事件
-        let _ = NotificationManager.shared.subscribeToStartNotification { [weak self] in
-            self?.timer.start()
-        }
-        
-        // 处理心率数据
-        let _ = NotificationManager.shared.subscribeToSampleNotification(using: { [weak self] samples in
-            self?.handleWorkoutSamples(with: samples)
-        })
-        
-        //处理结束事件
-        let _ = NotificationManager.shared.subscribeToStopNotification(using: { [weak self] in
-            self?.timer.stop()
-            self?.timer.reset()
-            self?.timeLabel.setText("    训练时长: 00:00")
-            self?.bpmLabel.setText("---")
-            self?.bpmCalculator.bpmData.removeAll()
-            self?.updateBPMChartData()
-            self?.heartImageView.setImage(.init(named: "heart"))
-        })
-        
-        //处理跳转事件事件
-        let _ = NotificationManager.shared.subscribeToPageSwitchNotification(forClass: self.classForCoder) { _ in
-            self.becomeCurrentPage()
-        }
+        handleSubscriptions()
     }
     
+    //MARK: - 处理心率数据
     func handleWorkoutSamples(with samples: [HKQuantitySample]){
         let samples: [HKQuantitySample] = samples// 获取您的样本数据
         
@@ -68,11 +34,6 @@ class PumpingController: WKInterfaceController {
             let heartRateUnit = HKUnit.count().unitDivided(by: HKUnit.minute())
             let doubleValue = sample.quantity.doubleValue(for: heartRateUnit)
             let integerValue = Int(round(doubleValue))
-            // 发送心率至iPhone
-//            WatchConnector.shared.send([
-//                .bpmValue : integerValue,
-//                .bpmDate : date,
-//            ])
             
             self.bpmCalculator.addHeartRate(integerValue) { data in
                 do {
@@ -84,18 +45,18 @@ class PumpingController: WKInterfaceController {
                     print("Error encoding WorkoutData:", error)
                 }
                 
-            }
-            
-            DispatchQueue.main.async { [self] in
-                guard index == samples.count - 1 else { return }
-                self.bpmCalculator.bpmData.append(integerValue)
-                self.bpmLabel.setText("\(integerValue)")
-                self.updateBPMChartData()
-                //self.bpmTimedController.updateBPM(Double(integerValue))
+                DispatchQueue.main.async { [self] in
+                    guard index == samples.count - 1 else { return }
+                    self.bpmCalculator.bpmData.append(integerValue)
+                    self.bpmLabel.setText("\(integerValue)")
+                    self.updateBPMChartData()
+                    self.kcalLabel.setText("\(String.init(format: "%.1f", data.totalCalories))千卡")
+                }
             }
         }
     }
     
+    //MARK: - 处理心率曲线图案
     func generateGraphImage() {
         lineChart = SSLineChart()
         lineChart?.chartMargin = 14
@@ -108,7 +69,7 @@ class PumpingController: WKInterfaceController {
         lineChart?.yLabelHeight = 0
         lineChart?.yLabelColor =  UIColor.white
         lineChart?.xLabelColor =  UIColor.white
-
+        
         lineChart?.setGradientColor(colors: [.red, .orange], position: .topDown)
         
         updateBPMChartData()
@@ -126,9 +87,55 @@ class PumpingController: WKInterfaceController {
             let yValue = self.bpmCalculator.bpmData[index]
             return CGFloat(yValue)
         }
-
+        
         lineChart?.chartData = [data]
         let img = lineChart?.drawImage()
         lineCharImage.setImage(img)
     }
+    
+    // 将处理订阅事件
+    func handleSubscriptions() {
+        // 处理开始事件
+        let _ = NotificationManager.shared.handleSubscription(for: .start, action: .subscribe) { [weak self] _ in
+            self?.timerLabel.start()
+        }
+        
+        // 处理心率数据
+        let _ = NotificationManager.shared.handleSubscription(for: .sample, action: .subscribe) { [weak self] samples in
+            if let samples = samples as? [HKQuantitySample] {
+                self?.handleWorkoutSamples(with: samples)
+            }
+        }
+        
+        //处理结束事件
+        let _ = NotificationManager.shared.handleSubscription(for: .stop, action: .subscribe) { [weak self] _ in
+            self?.timerLabel.stop()
+            self?.bpmCalculator.bpmData.removeAll()
+        }
+        
+        //处理跳转事件事件
+        let _ = NotificationManager.shared.handleSubscription(for: .pageSwitch, action: .subscribe) { [weak self] classCoder in
+            if ((classCoder as? PumpingController.Type) != nil) {
+                self?.becomeCurrentPage()
+            }
+        }
+        
+        //更新用户信息
+        let _ = NotificationManager.shared.handleSubscription(for: .userInfo, action: .subscribe) { [weak self] data in
+            if let data = data as? Data {
+                do {
+                    let unarchiver = try NSKeyedUnarchiver(forReadingFrom: data)
+                    unarchiver.requiresSecureCoding = false
+                    NSKeyedUnarchiver.setClass(WorkoutData.self, forClassName: "HRate.UserInfo")
+                    if let userInfo = try unarchiver.decodeTopLevelObject(forKey: NSKeyedArchiveRootObjectKey) as? UserInfo {
+                        UserInfo.save(userInfo)
+                        self?.bpmCalculator.updateUserInfo(With: userInfo)
+                    }
+                } catch {
+                    print("解档 WorkoutData 时出错：", error)
+                }
+            }
+        }
+    }
+
 }
