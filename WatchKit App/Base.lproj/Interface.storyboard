@@ -55,9 +55,9 @@
                                 </group>
                                 <group width="128" height="65" alignment="left" id="YaJ-yx-LNi">
                                     <items>
-                                        <group width="1" alignment="left" id="GdO-6L-nxv">
+                                        <group width="1" height="77" alignment="left" id="GdO-6L-nxv">
                                             <items>
-                                                <group width="136" height="62" alignment="left" layout="vertical" id="9QA-eH-afS">
+                                                <group width="136" height="80" alignment="left" layout="vertical" id="9QA-eH-afS">
                                                     <items>
                                                         <group width="123" height="43" alignment="left" id="Ruc-bi-qOp">
                                                             <items>
@@ -80,10 +80,13 @@
                                                                 </group>
                                                             </items>
                                                         </group>
-                                                        <group width="1" height="23" alignment="left" id="4EN-Sb-CFb">
+                                                        <group width="1" height="23" alignment="left" alpha="0.80000000000000004" id="4EN-Sb-CFb">
                                                             <items>
-                                                                <timer width="136" alignment="left" alpha="0.80000000000000004" textAlignment="center" previewedSeconds="0" id="KSi-0e-42C">
-                                                                    <fontDescription key="font" type="system" weight="medium" pointSize="13"/>
+                                                                <label width="82" height="17" alignment="left" alpha="0.80000000000000004" text="训练时间:" textAlignment="center" id="JkR-dL-pQR">
+                                                                    <fontDescription key="font" type="system" weight="medium" pointSize="14"/>
+                                                                </label>
+                                                                <timer width="54" height="19" alignment="left" alpha="0.80000000000000004" textAlignment="left" previewedSeconds="0" id="KSi-0e-42C">
+                                                                    <fontDescription key="font" type="system" weight="medium" pointSize="16"/>
                                                                     <calendarUnit key="units" minute="YES" second="YES"/>
                                                                 </timer>
                                                             </items>
