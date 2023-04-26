@@ -1,6 +1,6 @@
 //
 //  StretchyHeaderView.swift
-//  HeartRate
+//  HRate
 //
 //  Created by kaoji on 4/17/23.
 //  Copyright © 2023 kaoji. All rights reserved.
@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import Charts
 
-class LineChartHeaderView: UIView {
+class AEChartView: UIView {
     
     
     lazy var durationLabel: UILabel = {
@@ -58,7 +58,7 @@ class LineChartHeaderView: UIView {
     
     init(height: CGFloat) {
         super.init(frame: .zero)
-        backgroundColor = BPMViewConfig.backgroundColor
+        backgroundColor = .clear
         setupView(height: height)
     }
     
@@ -86,9 +86,5 @@ class LineChartHeaderView: UIView {
             make.left.equalToSuperview().offset(30)
             make.bottom.equalTo(chart.snp.top)
         }
-    }
-    
-    func updateHeight(_ height: CGFloat) {
-        frame.size.height = height
     }
 }

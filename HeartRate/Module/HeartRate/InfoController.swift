@@ -32,7 +32,7 @@ class UserInfoFormViewController: FormViewController {
             formView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             formView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             formView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            formView.heightAnchor.constraint(equalToConstant: 400)
+            formView.heightAnchor.constraint(equalToConstant: 410)
         ])
         
         // 将表格视图添加到 formView 中

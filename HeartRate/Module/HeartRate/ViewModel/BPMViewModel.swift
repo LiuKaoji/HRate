@@ -1,6 +1,6 @@
 //
 //  BPMViewModel.swift
-//  HeartRate
+//  HRate
 //
 //  Created by kaoji on 4/14/23.
 //  Copyright © 2023 kaoji. All rights reserved.
@@ -40,6 +40,8 @@ class BPMViewModel: NSObject {
     var navigateToNextScreen: ((UIViewController) -> Void)? // 导航到下一个页面的闭包
     var presentScreen: ((UIViewController) -> Void)? // 弹出页面闭包
     var trackerCauseError: ((Error) -> Void)? // 心率追踪器错误处理闭包
+    
+   
     
     // MARK: - 初始化
     override init() {
@@ -88,7 +90,7 @@ class BPMViewModel: NSObject {
     }
     
     private func handleHistoryButtonTapped() {
-        let list = AudioListTableViewController()
+        let list = AEPlayerController()
         navigateToNextScreen?(list)
     }
     

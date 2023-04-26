@@ -1,6 +1,6 @@
 //
 //  UIBinder.swift
-//  HeartRate
+//  HRate
 //
 //  Created by kaoji on 4/14/23.
 //  Copyright © 2023 kaoji. All rights reserved.
@@ -134,6 +134,15 @@ extension Reactive where Base: PlaybackIndicator {
     var state: Binder<ESTMusicIndicatorViewState> {
         return Binder(base) { view, state in
             view.updateMusicIndicatorState(state: state)
+        }
+    }
+}
+
+// 录制历史: - 绑定FFT数据
+extension Reactive where Base: SpectrumView {
+    var spectrum: Binder<[Float]> {
+        return Binder(base) { view, spectrum in
+            view.updateSpectrum(with: spectrum)
         }
     }
 }

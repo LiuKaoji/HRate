@@ -1,6 +1,6 @@
 //
 //  Recorder.swift
-//  HeartRate
+//  HRate
 //
 //  Created by kaoji on 4/8/23.
 //  Copyright © 2023 kaoji. All rights reserved.
@@ -85,12 +85,17 @@ class Recorder: NSObject, AVAudioRecorderDelegate {
         let settings: [String: Any] = [
             AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
             AVSampleRateKey: 44100,
-            AVNumberOfChannelsKey: 2,
-            AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
+            AVEncoderBitRateKey: 256000,
+            AVNumberOfChannelsKey: 2
         ]
-        recorder = try? AVAudioRecorder(url: url, settings: settings)
-        recorder?.delegate = self
-        recorder?.isMeteringEnabled = true
+        
+        do{
+            recorder = try AVAudioRecorder(url: url, settings: settings)
+            recorder?.delegate = self
+            recorder?.isMeteringEnabled = true
+        }catch{
+            print("recorder init fail: \(error.localizedDescription)")
+        }
     }
     
     // 请求录音权限

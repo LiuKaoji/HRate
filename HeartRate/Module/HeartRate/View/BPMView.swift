@@ -1,6 +1,6 @@
 //
 //  Recordself.swift
-//  HeartRate
+//  HRate
 //
 //  Created by kaoji on 4/9/23.
 //  Copyright © 2023 kaoji. All rights reserved.

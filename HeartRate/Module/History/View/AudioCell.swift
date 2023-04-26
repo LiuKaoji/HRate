@@ -1,6 +1,6 @@
 //
 //  AudioCell.swift
-//  HeartRate
+//  HRate
 //
 //  Created by kaoji on 4/17/23.
 //  Copyright © 2023 kaoji. All rights reserved.
@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import ESTMusicIndicator
 
 class AudioCell: UITableViewCell{
     
@@ -18,19 +19,24 @@ class AudioCell: UITableViewCell{
     private let durationLabel = UILabel()
     private let sizeLabel = UILabel()
     
+    private let musicIndicator = ESTMusicIndicatorView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+   
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
         setupConstraints()
-
-        // 设置背景颜色
-        let backgroundView = UIView()
-        backgroundView.backgroundColor = unselectedBackgroundViewColor
-        self.backgroundView = backgroundView
-        
-        // 设置选中背景颜色
+        backgroundColor = .clear
+//        // 设置背景颜色
+//        let backgroundView = UIView()
+//        backgroundView.backgroundColor = unselectedBackgroundViewColor
+//        self.backgroundView = backgroundView
+//
+        musicIndicator.tintColor = UIColor(named: "ColorCircleOne")!
+        musicIndicator.state = .stopped
+//        // 设置选中背景颜色
         let selectedBackgroundView = UIView()
-        selectedBackgroundView.backgroundColor = selectedBackgroundViewColor
+        selectedBackgroundView.backgroundColor = UIColor.black
         self.selectedBackgroundView = selectedBackgroundView
     }
     
@@ -54,12 +60,21 @@ class AudioCell: UITableViewCell{
         sizeLabel.font = .systemFont(ofSize: 14)
         sizeLabel.textColor = .white.withAlphaComponent(0.7)
         contentView.addSubview(sizeLabel)
+        
+        // Add musicIndicator to contentView
+        contentView.addSubview(musicIndicator)
     }
+
     
     private func setupConstraints() {
-        nameLabel.snp.makeConstraints { make in
+        musicIndicator.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.leading.equalToSuperview().offset(8)
+        }
+        
+        nameLabel.snp.remakeConstraints { make in
             make.top.equalToSuperview().offset(8)
-            make.leading.equalToSuperview().offset(16)
+            make.leading.equalTo(musicIndicator.snp.trailing).offset(8)
         }
         
         dateLabel.snp.makeConstraints { make in
@@ -79,11 +94,14 @@ class AudioCell: UITableViewCell{
         }
     }
     
-    func configure(with audioEntity: AudioEntity) {
+    func configure(with audioEntity: AudioEntity, isPlaying: Bool) {
         nameLabel.text = audioEntity.name
         dateLabel.text = audioEntity.date
         durationLabel.text = audioEntity.duration
         sizeLabel.text = audioEntity.size
     }
-
+    
+    func updateMusicIndicator(isPlaying: Bool) {
+            musicIndicator.state = isPlaying ? .playing : .stopped
+    }
 }

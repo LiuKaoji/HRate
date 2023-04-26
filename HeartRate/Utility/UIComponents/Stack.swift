@@ -1,6 +1,6 @@
 //
 //  Stack.swift
-//  HeartRate
+//  HRate
 //
 //  Created by kaoji on 11/20/21.
 //

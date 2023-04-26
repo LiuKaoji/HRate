@@ -1,6 +1,6 @@
 //
 //  BPMViewConfig.swift
-//  HeartRate
+//  HRate
 //
 //  Created by kaoji on 4/9/23.
 //  Copyright © 2023 kaoji. All rights reserved.
@@ -35,6 +35,6 @@ struct BPMViewConfig {
     static let axisMaximum: Double = 210.0
     static let noDataTextColor = UIColor.white
     static let noDataText = "佩戴手表再点击检测心率"
-    static let noDataText2 = "暂无数据, 当有数据时，图表将显示在此处"
+    static let noDataText2 = "当前音频位置无心率数据"
     static let labelTextColor = UIColor.white
 }

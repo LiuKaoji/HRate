@@ -1,6 +1,6 @@
 //
 //  RxMusicPlayerDelegate.swift
-//  HeartRate
+//  HRate
 //
 //  Created by kaoji on 4/18/23.
 //  Copyright © 2023 kaoji. All rights reserved.
