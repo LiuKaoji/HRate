@@ -48,8 +48,6 @@
 		3670ACE429EFED100026F2B5 /* TimeFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369BD50B29E93E0100CB6B97 /* TimeFormat.swift */; };
 		3670ACE629EFFB170026F2B5 /* PumpingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3670ACE529EFFB170026F2B5 /* PumpingController.swift */; };
 		3670ACE829EFFE110026F2B5 /* OSTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3670ACE729EFFE110026F2B5 /* OSTimer.swift */; };
-		3670ACF329F037AC0026F2B5 /* SSLineChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3670ACF129F037AC0026F2B5 /* SSLineChart.swift */; };
-		3670ACF429F037AC0026F2B5 /* SSLineChartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3670ACF229F037AC0026F2B5 /* SSLineChartData.swift */; };
 		3670ACF629F037F50026F2B5 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3670ACF529F037F50026F2B5 /* NotificationManager.swift */; };
 		3670ACFC29F14D110026F2B5 /* DeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3670ACFA29F14CDE0026F2B5 /* DeviceView.swift */; };
 		3670AD0829F1829F0026F2B5 /* deviceGray.png in Resources */ = {isa = PBXBuildFile; fileRef = 3670AD0629F1829F0026F2B5 /* deviceGray.png */; };
@@ -213,8 +211,6 @@
 		366A18AA29FE759C00742718 /* PumpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpView.swift; sourceTree = "<group>"; };
 		3670ACE529EFFB170026F2B5 /* PumpingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpingController.swift; sourceTree = "<group>"; };
 		3670ACE729EFFE110026F2B5 /* OSTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTimer.swift; sourceTree = "<group>"; };
-		3670ACF129F037AC0026F2B5 /* SSLineChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SSLineChart.swift; sourceTree = "<group>"; };
-		3670ACF229F037AC0026F2B5 /* SSLineChartData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SSLineChartData.swift; sourceTree = "<group>"; };
 		3670ACF529F037F50026F2B5 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		3670ACFA29F14CDE0026F2B5 /* DeviceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceView.swift; sourceTree = "<group>"; };
 		3670AD0629F1829F0026F2B5 /* deviceGray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = deviceGray.png; sourceTree = "<group>"; };
@@ -520,15 +516,6 @@
 			name = Application;
 			sourceTree = "<group>";
 		};
-		3670ACF029F037AC0026F2B5 /* Charts */ = {
-			isa = PBXGroup;
-			children = (
-				3670ACF129F037AC0026F2B5 /* SSLineChart.swift */,
-				3670ACF229F037AC0026F2B5 /* SSLineChartData.swift */,
-			);
-			path = Charts;
-			sourceTree = "<group>";
-		};
 		3670AD4429F4C9020026F2B5 /* Calculate */ = {
 			isa = PBXGroup;
 			children = (
@@ -542,7 +529,6 @@
 		3670AD6329F57E750026F2B5 /* Public */ = {
 			isa = PBXGroup;
 			children = (
-				3670ACF029F037AC0026F2B5 /* Charts */,
 				3670ACF529F037F50026F2B5 /* NotificationManager.swift */,
 				FBA2D6BB1DBF9C9600728078 /* WorkoutManager.swift */,
 				3670ACE729EFFE110026F2B5 /* OSTimer.swift */,
@@ -1222,7 +1208,6 @@
 				36151EC229FF62B80092AABF /* Color.swift in Sources */,
 				FBA2D68B1DBF9BD400728078 /* ComplicationController.swift in Sources */,
 				FBA2D6C81DC054E200728078 /* WatchConnector.swift in Sources */,
-				3670ACF429F037AC0026F2B5 /* SSLineChartData.swift in Sources */,
 				36151ED12A00DC7C0092AABF /* PumpIndicator.swift in Sources */,
 				36151ECF2A00DC5A0092AABF /* PumpZonesView.swift in Sources */,
 				36151ECB2A00DC170092AABF /* PumpDescriptionView.swift in Sources */,
@@ -1230,7 +1215,6 @@
 				3670AD5029F5182F0026F2B5 /* WCErrorParser.swift in Sources */,
 				36151EC72A0000D40092AABF /* Toast.swift in Sources */,
 				3670AD4629F4CD7A0026F2B5 /* UserInfo.swift in Sources */,
-				3670ACF329F037AC0026F2B5 /* SSLineChart.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
