@@ -7,11 +7,7 @@
 //
 
 import Foundation
-import UIKit
-import SnapKit
-import RxCocoa
-import RxSwift
-
+import AEAudio
 class PlayListView: UIView, UITableViewDelegate {
     private var backgroundView: UIView!
     private var containerView: UIView!
@@ -34,7 +30,7 @@ class PlayListView: UIView, UITableViewDelegate {
     }
 
     required init?(coder: NSCoder) {
-        self.viewModel = AudioPlayerViewModel(audioEntities: [])
+        self.viewModel = AudioPlayerViewModel()
         super.init(coder: coder)
     }
 
@@ -186,6 +182,7 @@ class PlayListView: UIView, UITableViewDelegate {
     }
     
    @objc func show() {
+        SpectrumView.isEnable = false
         guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
         window.addSubview(self)
         self.frame = window.bounds
@@ -207,6 +204,7 @@ class PlayListView: UIView, UITableViewDelegate {
             self.containerView.transform = CGAffineTransform(translationX: 0, y: height)
         }) { _ in
             self.removeFromSuperview()
+            SpectrumView.isEnable = true
         }
     }
 }

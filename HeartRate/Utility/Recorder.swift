@@ -8,7 +8,6 @@
 
 import Foundation
 import AVFoundation
-import RxSwift
 
 enum RecorderState {
     case ready
@@ -65,10 +64,9 @@ class Recorder: NSObject, AVAudioRecorderDelegate {
     
     // 设置录音器
     public func setupRecorder(identify: String) {
+        
         self.identify = identify
         let session = AVAudioSession.sharedInstance()
-        try? session.setCategory(.playAndRecord, mode: .default, options: .allowBluetoothA2DP)
-        try? session.setActive(true, options: .notifyOthersOnDeactivation)
         
         // 检查录音权限
         switch session.recordPermission {
@@ -189,4 +187,23 @@ class Recorder: NSObject, AVAudioRecorderDelegate {
         }
         return String(format: "%4.2f %@", convertedValue, tokens[multiplyFactor])
     }
+    
+    // MARK: - Close and Reinitialize Recorder
+    func closeAndStopRecorder() {
+        // 停止录音
+        stopRecording()
+
+        // 释放资源
+        releaseResources()
+    }
+
+    func reinitializeAndStartRecorder() {
+        // 重新设置录音器
+        setupRecorder(identify: TimeFormat.shared.currentDateString())
+    }
+    
+    func releaseResources() {
+        recorder = nil
+    }
+
 }

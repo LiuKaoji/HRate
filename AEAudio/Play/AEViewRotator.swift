@@ -19,7 +19,7 @@ class AEViewRotator {
         self.rotateSpeed = rotateSpeed
     }
     
-    func start() {
+    public func start() {
         isRunning = true
         timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
             guard let self = self else { return }
@@ -28,7 +28,7 @@ class AEViewRotator {
         }
     }
     
-    func pause() {
+    public func pause() {
         isRunning = false
         timer?.invalidate()
         timer = nil

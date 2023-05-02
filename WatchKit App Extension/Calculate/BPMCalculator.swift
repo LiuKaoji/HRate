@@ -7,19 +7,21 @@
 //
 
 import Foundation
+import Combine
+import SwiftUI
 
-class BPMCalculator {
+class BPMCalculator: ObservableObject {
     
-    public var nowBPM: Int = 0 // 实时心率
-    public var minBPM: Int = 0 // 最低心率
-    public var maxBPM: Int = 0 // 最高心率
-    public var avgBPM: Int = 0 // 平均心率
-    public var bpmPercent: Double = 0 // 心率占比 0-220区间
-    public var bpmData: [Int] = [] // 所有实时心率 用于计算平均心率及表格显示
-    public var totalCalories: Double = 0 //消耗卡路里
+    @Published public var nowBPM: Int = 0 // 实时心率
+    @Published public var minBPM: Int = 0 // 最低心率
+    @Published public var maxBPM: Int = 0 // 最高心率
+    @Published public var avgBPM: Int = 0 // 平均心率
+    @Published public var bpmPercent: Double = 0 // 心率占比 0-220区间
+    @Published public var bpmData: [Int] = [] // 所有实时心率 用于计算平均心率及表格显示
+    @Published public var totalCalories: Double = 0 //消耗卡路里
 
     private var userInfo: UserInfo? = UserInfo.loadFromCache()
-    private var lastHeartRateUpdate: Date?
+     var lastHeartRateUpdate: Date?
     
     func addHeartRate(_ bpm: Int, onUpdate: (WorkoutData) -> Void) {
         
@@ -85,5 +87,6 @@ class BPMCalculator {
         avgBPM = 0
         bpmData = []
         totalCalories = 0
+        bpmData.removeAll()
     }
 }

@@ -10,7 +10,7 @@ import UIKit
 import HealthKit
 import CoreData
 import BackgroundTasks
-
+import MediaPlayer
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,11 +19,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var recordVC: BPMController = BPMController()
 
     func applicationDidFinishLaunching(_ application: UIApplication) {
+        
+        //注册控制中心显示歌曲信息
+        registerRemoteControlCenterEvent()
+        AudioLibraryManager.shared.requestAuthorization { state in
+            
+        }
+        
         // 创建一个窗口并设置根视图控制器
         window = UIWindow.init(frame: UIScreen.main.bounds)
         window?.backgroundColor = .black
         window?.rootViewController = UINavigationController.init(rootViewController: recordVC)
         window?.makeKeyAndVisible()
+
+    }
+    
+    func registerRemoteControlCenterEvent(){
+          let commandCenter = MPRemoteCommandCenter.shared()
+          commandCenter.playCommand.isEnabled = true
+          commandCenter.pauseCommand.isEnabled = true
+          commandCenter.stopCommand.isEnabled = true
+          commandCenter.nextTrackCommand.isEnabled = true
+          commandCenter.previousTrackCommand.isEnabled = true
+          commandCenter.changePlaybackPositionCommand.isEnabled = true
     }
 
     // 申请访问健康数据的权限

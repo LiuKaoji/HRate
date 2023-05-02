@@ -90,7 +90,7 @@ class AEPlayerView: UIView {
     
     private static func createBackButton() -> UIButton {
         let backButton = UIButton(type: .system)
-        backButton.setImage(UIImage(named: "backLight"), for: .normal)
+        backButton.setImage(R.image.backLight()!, for: .normal)
         backButton.tintColor = .white
         return backButton
     }
@@ -107,7 +107,7 @@ class AEPlayerView: UIView {
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.masksToBounds = true
-        imageView.image = UIImage.init(contentsOfFile: Bundle.main.path(forResource: "background", ofType: "jpg")!)
+        imageView.image = R.image.backgroundJpg()
         return imageView
     }
     

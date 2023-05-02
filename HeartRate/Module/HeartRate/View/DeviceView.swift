@@ -15,7 +15,7 @@ class DeviceView: UIView {
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         // 添加大图
-        imageView.image = UIImage(named: "device")
+        imageView.image = R.image.device()
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()

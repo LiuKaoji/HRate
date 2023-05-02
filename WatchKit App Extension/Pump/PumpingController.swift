@@ -8,21 +8,19 @@
 
 import WatchKit
 import HealthKit
+import SwiftUI
+
 
 // 该类 主要展示心率状态
-class PumpingController: WKInterfaceController {
-    
-    @IBOutlet weak var lineCharImage: WKInterfaceImage!
-    @IBOutlet weak var heartImageView: WKInterfaceImage!
-    @IBOutlet weak var bpmLabel: WKInterfaceLabel!
-    @IBOutlet weak var kcalLabel: WKInterfaceLabel!
-    @IBOutlet weak var timerLabel: WKInterfaceTimer!
+class PumpingController: WKHostingController<PumpView> {
+    override var body: PumpView {
+        return PumpView(bpmCalculator: bpmCalculator, timerManager: timer)
+    }
     private let bpmCalculator = BPMCalculator()// 心率计算器
-    var lineChart: SSLineChart?
+    private let timer = TimerManager()// 心率计算器
     
     override func awake(withContext context: Any?) {
         super.awake(withContext: context)
-        generateGraphImage()
         handleSubscriptions()
     }
     
@@ -48,56 +46,17 @@ class PumpingController: WKInterfaceController {
                 DispatchQueue.main.async { [self] in
                     guard index == samples.count - 1 else { return }
                     self.bpmCalculator.bpmData.append(integerValue)
-                    self.bpmLabel.setText("\(integerValue)")
-                    self.updateBPMChartData()
-                    self.kcalLabel.setText("\(String.init(format: "%.1f", data.totalCalories))千卡")
+                    ////////////self.bpmLabel.setText("\(integerValue)")
                 }
             }
         }
-    }
-    
-    //MARK: - 处理心率曲线图案
-    func generateGraphImage() {
-        lineChart = SSLineChart()
-        lineChart?.chartMargin = 14
-        lineChart?.yLabelFormat = "%1.0f"
-        lineChart?.xLabels = (1...5).map{ $0.description }
-        lineChart?.yFixedValueMax = 205
-        lineChart?.yFixedValueMin = 60
-        lineChart?.yLabels = ["60", "135", "205"]
-        lineChart?.xLabelWidth = 15.0
-        lineChart?.yLabelHeight = 0
-        lineChart?.yLabelColor =  UIColor.white
-        lineChart?.xLabelColor =  UIColor.white
-        
-        lineChart?.setGradientColor(colors: [.red, .orange], position: .topDown)
-        
-        updateBPMChartData()
-    }
-    
-    func updateBPMChartData(){
-        
-        let data = SSLineChartData()
-        data.lineColor = .white
-        data.lineAlpha = 1
-        data.lineWidth = 0.6
-        data.itemCount = bpmCalculator.bpmData.count
-        data.getData = { [weak self] index in
-            guard let self = self, index <  bpmCalculator.bpmData.count  else { return 0 }
-            let yValue = self.bpmCalculator.bpmData[index]
-            return CGFloat(yValue)
-        }
-        
-        lineChart?.chartData = [data]
-        let img = lineChart?.drawImage()
-        lineCharImage.setImage(img)
     }
     
     // 将处理订阅事件
     func handleSubscriptions() {
         // 处理开始事件
         let _ = NotificationManager.shared.handleSubscription(for: .start, action: .subscribe) { [weak self] _ in
-            self?.timerLabel.start()
+            self?.timer.start()
         }
         
         // 处理心率数据
@@ -109,8 +68,8 @@ class PumpingController: WKInterfaceController {
         
         //处理结束事件
         let _ = NotificationManager.shared.handleSubscription(for: .stop, action: .subscribe) { [weak self] _ in
-            self?.timerLabel.stop()
-            self?.bpmCalculator.bpmData.removeAll()
+            self?.bpmCalculator.reset()
+            self?.timer.stop()
         }
         
         //处理跳转事件事件
@@ -126,7 +85,7 @@ class PumpingController: WKInterfaceController {
                 do {
                     let unarchiver = try NSKeyedUnarchiver(forReadingFrom: data)
                     unarchiver.requiresSecureCoding = false
-                    NSKeyedUnarchiver.setClass(WorkoutData.self, forClassName: "HRate.UserInfo")
+                    NSKeyedUnarchiver.setClass(UserInfo.self, forClassName: "HRate.UserInfo")
                     if let userInfo = try unarchiver.decodeTopLevelObject(forKey: NSKeyedArchiveRootObjectKey) as? UserInfo {
                         UserInfo.save(userInfo)
                         self?.bpmCalculator.updateUserInfo(With: userInfo)

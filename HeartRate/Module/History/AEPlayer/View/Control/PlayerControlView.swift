@@ -46,7 +46,7 @@ class PlayerControlsView: UIView {
         playPauseButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         playPauseButton.transform = CGAffineTransform(scaleX: 2.0, y: 2.0)
         
-        slider.setThumbImage(UIImage.init(named: "thumb"), for: .normal)
+        slider.setThumbImage(R.image.thumb()!, for: .normal)
         slider.tintColor = .white
         
 

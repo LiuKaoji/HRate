@@ -7,8 +7,6 @@
 //
 
 import Foundation
-import RxSwift
-import RxCocoa
 import Charts
 
 class BPMViewModel: NSObject {
@@ -34,10 +32,10 @@ class BPMViewModel: NSObject {
 
     // 历史按钮相关属性
     let historyButtonTapped = PublishSubject<Void>() // 历史按钮点击事件
-    let videoButtonTapped = PublishSubject<Void>() // 历史按钮点击事件
+    let userInfoButtonTapped = PublishSubject<Void>() // 历史按钮点击事件
     
     // 导航和错误处理相关属性
-    var navigateToNextScreen: ((UIViewController) -> Void)? // 导航到下一个页面的闭包
+    var navigateToPlayScreen: (() -> Void)? // 导航到下一个页面的闭包
     var presentScreen: ((UIViewController) -> Void)? // 弹出页面闭包
     var trackerCauseError: ((Error) -> Void)? // 心率追踪器错误处理闭包
     
@@ -90,11 +88,10 @@ class BPMViewModel: NSObject {
     }
     
     private func handleHistoryButtonTapped() {
-        let list = AEPlayerController()
-        navigateToNextScreen?(list)
+        navigateToPlayScreen?()
     }
     
-    private func handleVideoButtonTapped() {
+    private func handleuserInfoButtonTapped() {
         let userInfo = UserInfoFormViewController()
         presentScreen?(userInfo)
     }
@@ -116,10 +113,10 @@ class BPMViewModel: NSObject {
             })
             .disposed(by: disposeBag)
         
-        videoButtonTapped
+        userInfoButtonTapped
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] in
-                self?.handleVideoButtonTapped()
+                self?.handleuserInfoButtonTapped()
             })
             .disposed(by: disposeBag)
 //
@@ -159,5 +156,19 @@ class BPMViewModel: NSObject {
         }
         .disposed(by: disposeBag)
     }
+    
+    // MARK: - Close and Reinitialize Recorder
+    func closeRecorder() {
+        // 关闭录音机
+        recoder.closeAndStopRecorder()
+    }
+
+    func reinitializeRecorder() {
+        // 重新初始化录音机
+        recoder.reinitializeAndStartRecorder()
+    }
+    
+    
+
 }
 

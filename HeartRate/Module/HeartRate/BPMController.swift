@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import Charts
+import AVFAudio
 
 class BPMController: UIViewController {
     
@@ -24,10 +25,13 @@ class BPMController: UIViewController {
     private lazy var bpmView = BPMView(frame: UIScreen.main.bounds)
 
     // MARK: - Lifecycle
-
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
+        DispatchQueue.global().async {
+            self.switchToRecordMode()
+            self.viewModel.reinitializeRecorder()
+        }
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -48,8 +52,15 @@ class BPMController: UIViewController {
         bpmView.bindViewModel(to: viewModel)
         
         // 跳转到下一个视图
-        viewModel.navigateToNextScreen = { [weak self] vc in
-            self?.navigationController?.pushViewController(vc, animated: true)
+        viewModel.navigateToPlayScreen = { [weak self]  in
+            DispatchQueue.global().async {
+                self?.viewModel.closeRecorder()
+                self?.switchToPlaybackMode()
+                DispatchQueue.main.async {
+                    let list = AEPlayerController()
+                    self?.navigationController?.pushViewController(list, animated: true)
+                }
+            }
         }
         
         // 弹出页面窗口
@@ -58,4 +69,24 @@ class BPMController: UIViewController {
         }
     }
 
+    func switchToRecordMode() {
+        do {
+            try AVAudioSession.sharedInstance().setActive(false)
+            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, options: [.defaultToSpeaker])
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch let error {
+            print("Error switching to record mode: \(error.localizedDescription)")
+        }
+    }
+
+
+    func switchToPlaybackMode() {
+        do {
+            try AVAudioSession.sharedInstance().setActive(false)
+            try AVAudioSession.sharedInstance().setCategory(.playback)
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch let error {
+            print("Error switching to playback mode: \(error.localizedDescription)")
+        }
+    }
 }

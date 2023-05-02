@@ -7,6 +7,9 @@ PODS:
   - Eureka (5.4.0)
   - KDCircularProgress (1.5.4)
   - OptimizedSQLCipher (1.2.2)
+  - R.swift (5.4.0):
+    - R.swift.Library (~> 5.3.0)
+  - R.swift.Library (5.3.0)
   - RxCocoa (6.5.0):
     - RxRelay (= 6.5.0)
     - RxSwift (= 6.5.0)
@@ -27,6 +30,7 @@ DEPENDENCIES:
   - ESTMusicIndicator
   - Eureka
   - KDCircularProgress
+  - R.swift (~> 5.0)
   - RxCocoa
   - RxSwift
   - SnapKit
@@ -39,6 +43,8 @@ SPEC REPOS:
     - Eureka
     - KDCircularProgress
     - OptimizedSQLCipher
+    - R.swift
+    - R.swift.Library
     - RxCocoa
     - RxRelay
     - RxSwift
@@ -64,6 +70,8 @@ SPEC CHECKSUMS:
   Eureka: fadaa9fa3d6e402d3c60f78f24edf3d7bafc9c29
   KDCircularProgress: 98200c6b8e85d22bc04eb644721d3b1e12b0686b
   OptimizedSQLCipher: 92a1bf5cc94139e1da49de9c883ff9891bcd2a37
+  R.swift: c533450b0f7dc494e0993f5f1a1db925d84c3006
+  R.swift.Library: 0fc583cb55a99e28901299cc451614cad1161962
   RxCocoa: 94f817b71c07517321eb4f9ad299112ca8af743b
   RxRelay: 1de1523e604c72b6c68feadedd1af3b1b4d0ecbd
   RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
@@ -73,6 +81,6 @@ SPEC CHECKSUMS:
   WCDBSwift: 6687dc2d4bebce2b237017ca367730f5f8409e67
   Zip: b3fef584b147b6e582b2256a9815c897d60ddc67
 
-PODFILE CHECKSUM: 8cccc7276e394c2cbfc0b4aa2133c884cb5807ed
+PODFILE CHECKSUM: 2a5459134d6380d034d6e1dafe4b765e6a4713a8
 
 COCOAPODS: 1.12.0

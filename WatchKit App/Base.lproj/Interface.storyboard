@@ -4,7 +4,6 @@
     <dependencies>
         <deployment identifier="watchOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="21615"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
     </dependencies>
     <scenes>
         <!--HRate-->
@@ -29,102 +28,22 @@
                     </items>
                     <connections>
                         <outlet property="actionImage" destination="sAF-Vm-s3d" id="fCJ-fj-dmh"/>
-                        <segue destination="84v-th-GYm" kind="relationship" relationship="nextPage" id="4u9-Bd-iZc"/>
+                        <segue destination="6JQ-bX-yLu" kind="relationship" relationship="nextPage" id="te1-ve-3KO"/>
                     </connections>
                 </controller>
             </objects>
             <point key="canvasLocation" x="-27" y="-47"/>
         </scene>
-        <!--PumpingControllerID-->
-        <scene sceneID="blS-nH-rCG">
+        <!--Pumping Controller-->
+        <scene sceneID="SXm-60-AVA">
             <objects>
-                <controller identifier="PumpingControllerID" id="84v-th-GYm" customClass="PumpingController" customModule="WatchKit_App_Extension">
-                    <items>
-                        <group width="136" height="91" alignment="center" layout="vertical" id="MDh-qN-inf">
-                            <items>
-                                <group width="1" alignment="left" id="klz-Qb-iHe">
-                                    <items>
-                                        <label width="44" height="22" alignment="left" text="心率" textAlignment="left" id="1Nx-Q6-RsG">
-                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <fontDescription key="font" type="boldSystem" pointSize="16"/>
-                                        </label>
-                                        <label width="93" height="22" alignment="left" alpha="0.80000000000000004" text=" 0 千卡" textAlignment="left" id="ydn-PA-lGt">
-                                            <fontDescription key="font" type="system" pointSize="12"/>
-                                        </label>
-                                    </items>
-                                </group>
-                                <group width="128" height="65" alignment="left" id="YaJ-yx-LNi">
-                                    <items>
-                                        <group width="1" height="77" alignment="left" id="GdO-6L-nxv">
-                                            <items>
-                                                <group width="136" height="80" alignment="left" layout="vertical" id="9QA-eH-afS">
-                                                    <items>
-                                                        <group width="123" height="43" alignment="left" id="Ruc-bi-qOp">
-                                                            <items>
-                                                                <group width="83" height="43" alignment="left" id="1fw-qh-8K1">
-                                                                    <items>
-                                                                        <label width="108" height="46" alignment="left" alpha="0.80000000000000004" text="---" textAlignment="left" id="H5K-nT-dq2">
-                                                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                            <fontDescription key="font" type="system" pointSize="50"/>
-                                                                        </label>
-                                                                    </items>
-                                                                </group>
-                                                                <group width="1" alignment="left" layout="vertical" id="bfT-hg-9tP">
-                                                                    <items>
-                                                                        <imageView width="19" height="17" alignment="left" image="heart" id="6pR-N1-SFr"/>
-                                                                        <label width="45" height="19" alignment="left" alpha="0.80000000000000004" text="次/分" id="Ito-5K-TTb">
-                                                                            <color key="textColor" red="0.73433554292929293" green="0.1311597704141039" blue="0.15904619428634065" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                                            <fontDescription key="font" type="system" pointSize="14"/>
-                                                                        </label>
-                                                                    </items>
-                                                                </group>
-                                                            </items>
-                                                        </group>
-                                                        <group width="1" height="23" alignment="left" alpha="0.80000000000000004" id="4EN-Sb-CFb">
-                                                            <items>
-                                                                <label width="47" height="17" alignment="left" alpha="0.80000000000000004" text="计时:" textAlignment="center" id="JkR-dL-pQR">
-                                                                    <fontDescription key="font" type="system" weight="medium" pointSize="14"/>
-                                                                </label>
-                                                                <timer width="96" height="19" alignment="left" alpha="0.80000000000000004" textAlignment="left" previewedSeconds="0" id="KSi-0e-42C">
-                                                                    <fontDescription key="font" type="system" weight="medium" pointSize="16"/>
-                                                                </timer>
-                                                            </items>
-                                                        </group>
-                                                    </items>
-                                                </group>
-                                            </items>
-                                        </group>
-                                    </items>
-                                </group>
-                            </items>
-                            <edgeInsets key="margins" left="0.0" right="2" top="0.0" bottom="0.0"/>
-                        </group>
-                        <group width="136" height="74" alignment="center" layout="vertical" id="euT-uf-UOT">
-                            <items>
-                                <imageView width="136" height="79" alignment="left" id="z84-je-I1d">
-                                    <color key="tintColor" name="BackgroundColor"/>
-                                </imageView>
-                            </items>
-                        </group>
-                    </items>
-                    <connections>
-                        <outlet property="bpmLabel" destination="H5K-nT-dq2" id="UN1-ia-pa1"/>
-                        <outlet property="heartImageView" destination="6pR-N1-SFr" id="JRd-En-CW6"/>
-                        <outlet property="kcalLabel" destination="ydn-PA-lGt" id="Tpm-ft-Aon"/>
-                        <outlet property="lineCharImage" destination="z84-je-I1d" id="qgQ-vl-AaL"/>
-                        <outlet property="timerLabel" destination="KSi-0e-42C" id="5o2-VP-P24"/>
-                    </connections>
-                </controller>
+                <hostingController id="6JQ-bX-yLu" customClass="PumpingController" customModule="WatchKit_App_Extension"/>
             </objects>
-            <point key="canvasLocation" x="414" y="-49"/>
+            <point key="canvasLocation" x="576" y="-160"/>
         </scene>
     </scenes>
     <color key="tintColor" red="0.0" green="0.47843137254901957" blue="1" alpha="1" colorSpace="calibratedRGB"/>
     <resources>
-        <image name="heart" width="30" height="24.5"/>
         <image name="start" width="60" height="60"/>
-        <namedColor name="BackgroundColor">
-            <color red="0.047058823529411764" green="0.14901960784313725" blue="0.29803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
     </resources>
 </document>

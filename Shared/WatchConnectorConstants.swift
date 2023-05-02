@@ -20,7 +20,7 @@ extension WatchConnector.MessageKey {
     static let workoutData = WatchConnector.MessageKey("Workout.data")
     
     
-    //心率及卡路里
-    static let bpmValue = WatchConnector.MessageKey("HeartRate.bpmValue")//心率当前值
-    static let bpmDate = WatchConnector.MessageKey("HeartRate.bpmDate")//心率记录日期
+//    //心率及卡路里
+//    static let bpmValue = WatchConnector.MessageKey("HeartRate.bpmValue")//心率当前值
+//    static let bpmDate = WatchConnector.MessageKey("HeartRate.bpmDate")//心率记录日期
 }

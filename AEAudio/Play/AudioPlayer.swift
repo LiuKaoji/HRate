@@ -1,24 +1,27 @@
 //
-//  AEPlayer.swift
-//  HRate
+//  AudioPlayer.swift
+//  AEAudio
 //
-//  Created by kaoji on 2021/07/25.
+//  Created by kaoji on 4/28/23.
+//  Copyright © 2023 Jonny. All rights reserved.
 //
 
+import Foundation
 import Foundation
 import AVFoundation
 import Accelerate
 import UIKit
+import MediaPlayer
 
 @objc public protocol AudioPlayable: AnyObject {
-    @objc optional func player(_ player: AEPlayer, didChangedStatus status: AEPlayerStatus)
-    @objc optional func player(_ player: AEPlayer, didUpdateCurrentTime currentTime: TimeInterval)
-    @objc optional func player(_ player: AEPlayer, didUpdateTotalTime total: TimeInterval)
-    @objc optional func player(_ player: AEPlayer, didUpdatefrequencyData data: [Float])
-    @objc optional func player(_ player: AEPlayer, didUpdateAudioFileInfo info: String)
+    @objc optional func player(_ player: AudioPlayer, didChangeStatus status: AudioPlayerStatus)
+    @objc optional func player(_ player: AudioPlayer, didUpdateTime currentTime: TimeInterval)
+    @objc optional func player(_ player: AudioPlayer, didUpdateDuration duration: TimeInterval)
+    @objc optional func player(_ player: AudioPlayer, didUpdateFrequencyData data: [Float])
+    @objc optional func player(_ player: AudioPlayer, didUpdateAudioInfo info: AudioInfo)
 }
 
-@objc public class AEPlayer: NSObject {
+@objc public class AudioPlayer: NSObject {
     private var isAppActive = true
     
     public  var totalTime: TimeInterval = .zero
@@ -30,18 +33,18 @@ import UIKit
     private var audioPlayerNodeTimer: Timer?
     private var currentAudioFramePosition: AVAudioFramePosition = 0
     private var totalAudioFrameLength: AVAudioFramePosition = 0
-    private let fftSize: Int = 2048
+    private let fftSize: Int = 1024 * 4
     private var fftSetup: FFTSetup?
-    public var analyzer: RealtimeAnalyzer!
+    public var analyzer: AudioAnalyzer!
     
-    public static let shared = AEPlayer()
+    public static let shared = AudioPlayer()
     public weak var delegate: AudioPlayable?
     
     public let defaultSampleRate: Double = 44100
     
-    public var status: AEPlayerStatus = .idle {
+    public var status: AudioPlayerStatus = .idle {
         didSet {
-            delegate?.player?(self, didChangedStatus: status)
+            delegate?.player?(self, didChangeStatus: status)
         }
     }
     
@@ -76,29 +79,20 @@ import UIKit
         setupEngine()
         pitchEnabled = false
         fftSetup = vDSP_create_fftsetup(vDSP_Length(log2(Float(fftSize))), FFTRadix(kFFTRadix2))
-        configureAudioSession()
         NotificationCenter.default.addObserver(self, selector: #selector(appDidEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(appWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
         
     }
     
-    func configureAudioSession() {
-        do {
-            try AVAudioSession.sharedInstance().setCategory(.playback, options: .allowBluetoothA2DP)
-            try AVAudioSession.sharedInstance().setActive(true)
-        } catch let error {
-            print("Error configuring audio session: \(error.localizedDescription)")
-        }
-    }
-    
     deinit {
+        clearNowPlayingInfoCenter()
         NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.willEnterForegroundNotification, object: nil)
     }
 }
 
 // MARK: private
-private extension AEPlayer {
+private extension AudioPlayer {
     func setupEngine() {
         audioEngine.attach(audioPlayerNode)
         audioEngine.attach(timePitchNode)
@@ -108,7 +102,7 @@ private extension AEPlayer {
             audioEngine.connect(nodes[count], to: nodes[count + 1], format: format)
         }
         
-        analyzer = RealtimeAnalyzer(fftSize: fftSize)
+        analyzer = AudioAnalyzer(fftSize: fftSize)
         
         audioEngine.mainMixerNode.installTap(onBus: 0, bufferSize: AVAudioFrameCount(fftSize), format: audioEngine.mainMixerNode.outputFormat(forBus: 0)) { [weak self] buffer, _ in
             guard let strongSelf = self else { return }
@@ -121,7 +115,7 @@ private extension AEPlayer {
             DispatchQueue.global(qos: .userInitiated).async {
                 if strongSelf.isAppActive {
                     let spectra = strongSelf.analyzer.analyse(with: buffer)
-                    strongSelf.delegate?.player?(strongSelf, didUpdatefrequencyData: spectra)
+                    strongSelf.delegate?.player?(strongSelf, didUpdateFrequencyData: spectra)
                 }
             }
         }
@@ -140,22 +134,10 @@ private extension AEPlayer {
         
         let totalTime = Double(totalAudioFrameLength) / defaultSampleRate
         self.totalTime = totalTime
-        delegate?.player?(self, didUpdateTotalTime: totalTime)
+        delegate?.player?(self, didUpdateDuration: duration)
         
-        updateAudioFileInfo()
-        
-    }
-    
-    func updateAudioFileInfo() {
-        guard let sourceFile = sourceFile else { return }
-        let fileSize = sourceFile.length
-        let sampleRate = sourceFile.fileFormat.sampleRate
-        let bitRate = UInt32(sourceFile.processingFormat.streamDescription.pointee.mBitsPerChannel)
-        let channelCount = sourceFile.fileFormat.channelCount
-        let channelInfo = channelCount == 1 ? "mono" : "stereo"
-        
-        let info = String(format: "%dkbps %.1fKHz %@", bitRate, sampleRate/1000, channelInfo)
-        delegate?.player?(self, didUpdateAudioFileInfo: info)
+        let info = AudioInfo.init(url: url)
+        delegate?.player?(self, didUpdateAudioInfo: info)
     }
     
     func scheduleFile() {
@@ -169,7 +151,7 @@ private extension AEPlayer {
         do {
             try audioEngine.start()
         } catch {
-            print(AEPlayerError.audioEngineError.message)
+            print(AudioPlayerError.audioEngineError.message)
             return
         }
         audioPlayerNode.play()
@@ -182,7 +164,8 @@ private extension AEPlayer {
         }
         
         let currentTime = Double(currentAudioFramePosition) / defaultSampleRate
-        delegate?.player?(self, didUpdateCurrentTime: currentTime)
+        delegate?.player?(self, didUpdateTime: currentTime)
+        MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = currentTime
     }
     
     func addAudioPlayerNodeTimer() {
@@ -196,7 +179,7 @@ private extension AEPlayer {
 }
 
 // MARK: public
-extension AEPlayer {
+extension AudioPlayer {
     public func play(with url: URL) {
         if status != .stopped {
             stop()
@@ -233,9 +216,7 @@ extension AEPlayer {
         guard let sourceFile = sourceFile else {
             return
         }
-        
-        
-        
+    
         let wasPlaying = audioPlayerNode.isPlaying
         audioPlayerNode.stop()
         
@@ -247,7 +228,7 @@ extension AEPlayer {
         let startingFrame = AVAudioFramePosition(seekToTime * sourceFile.fileFormat.sampleRate)
         let frameCount = AVAudioFrameCount(sourceFile.length - startingFrame)
         
-        // Check if there are any frames left to schedule
+        // 检查是否还有frame可以调度
         if frameCount > 0 {
             audioPlayerNode.scheduleSegment(
                 sourceFile,
@@ -293,5 +274,53 @@ extension AEPlayer {
     
     @objc private func appWillEnterForeground() {
         isAppActive = true
+    }
+    
+    func updateNowPlayingInfoCenter(title: String) {
+        let nowPlayingInfo: [String: Any] = [
+            MPMediaItemPropertyTitle: title, // 此处可以替换为实际音频标题
+            MPMediaItemPropertyArtist: "HRate", // 此处可以替换为实际音频作者
+            MPMediaItemPropertyPlaybackDuration: duration,
+            MPNowPlayingInfoPropertyElapsedPlaybackTime: currentTime,
+            MPNowPlayingInfoPropertyPlaybackRate: status == .playing ? 1.0 : 0.0
+        ]
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
+    }
+
+    func setupRemoteCommandCenter() {
+        let commandCenter = MPRemoteCommandCenter.shared()
+
+        commandCenter.playCommand.addTarget { [unowned self] _ in
+            self.resume()
+            return .success
+        }
+
+        commandCenter.pauseCommand.addTarget { [unowned self] _ in
+            self.pause()
+            return .success
+        }
+
+        commandCenter.nextTrackCommand.addTarget { [unowned self] _ in
+            self.skipForward(seconds: 15) // 你可以自定义跳跃的秒数
+            return .success
+        }
+
+        commandCenter.previousTrackCommand.addTarget { [unowned self] _ in
+            self.skipBackward(seconds: 15) // 你可以自定义跳跃的秒数
+            return .success
+        }
+        
+        commandCenter.changePlaybackPositionCommand.addTarget { [unowned self] event in
+            if let event = event as? MPChangePlaybackPositionCommandEvent {
+                self.seek(to: event.positionTime)
+                return .success
+            }
+            return .commandFailed
+        }
+
+    }
+
+    func clearNowPlayingInfoCenter() {
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = nil
     }
 }

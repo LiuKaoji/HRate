@@ -15,9 +15,9 @@ class AudioCell: UITableViewCell{
     private let selectedBackgroundViewColor = BPMViewConfig.backgroundColor!.withAlphaComponent(0.3)
     private let unselectedBackgroundViewColor = BPMViewConfig.backgroundColor!.withAlphaComponent(0.7)
     private let nameLabel = UILabel()
-    private let dateLabel = UILabel()
+   // private let dateLabel = UILabel()
     private let durationLabel = UILabel()
-    private let sizeLabel = UILabel()
+    //private let sizeLabel = UILabel()
     
     private let musicIndicator = ESTMusicIndicatorView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
    
@@ -32,7 +32,7 @@ class AudioCell: UITableViewCell{
 //        backgroundView.backgroundColor = unselectedBackgroundViewColor
 //        self.backgroundView = backgroundView
 //
-        musicIndicator.tintColor = UIColor(named: "ColorCircleOne")!
+        musicIndicator.tintColor = R.color.colorCircleOne()!
         musicIndicator.state = .stopped
 //        // 设置选中背景颜色
         let selectedBackgroundView = UIView()
@@ -49,17 +49,17 @@ class AudioCell: UITableViewCell{
         nameLabel.textColor = .white.withAlphaComponent(0.9)
         contentView.addSubview(nameLabel)
         
-        dateLabel.font = .systemFont(ofSize: 14)
-        dateLabel.textColor = .white.withAlphaComponent(0.7)
-        contentView.addSubview(dateLabel)
-        
+//        dateLabel.font = .systemFont(ofSize: 14)
+//        dateLabel.textColor = .white.withAlphaComponent(0.7)
+//        contentView.addSubview(dateLabel)
+//
         durationLabel.font = .systemFont(ofSize: 14)
         durationLabel.textColor = .white.withAlphaComponent(0.7)
         contentView.addSubview(durationLabel)
         
-        sizeLabel.font = .systemFont(ofSize: 14)
-        sizeLabel.textColor = .white.withAlphaComponent(0.7)
-        contentView.addSubview(sizeLabel)
+//        sizeLabel.font = .systemFont(ofSize: 14)
+//        sizeLabel.textColor = .white.withAlphaComponent(0.7)
+//        contentView.addSubview(sizeLabel)
         
         // Add musicIndicator to contentView
         contentView.addSubview(musicIndicator)
@@ -73,32 +73,32 @@ class AudioCell: UITableViewCell{
         }
         
         nameLabel.snp.remakeConstraints { make in
-            make.top.equalToSuperview().offset(8)
+            make.centerY.equalToSuperview()
             make.leading.equalTo(musicIndicator.snp.trailing).offset(8)
         }
         
-        dateLabel.snp.makeConstraints { make in
-            make.top.equalTo(nameLabel.snp.bottom).offset(4)
-            make.leading.equalTo(nameLabel)
-            make.bottom.equalToSuperview().offset(-8)
-        }
-        
+//        dateLabel.snp.makeConstraints { make in
+//            make.top.equalTo(nameLabel.snp.bottom).offset(4)
+//            make.leading.equalTo(nameLabel)
+//            make.bottom.equalToSuperview().offset(-8)
+//        }
+//
         durationLabel.snp.makeConstraints { make in
             make.trailing.equalToSuperview().offset(-16)
             make.centerY.equalTo(nameLabel)
         }
         
-        sizeLabel.snp.makeConstraints { make in
-            make.trailing.equalTo(durationLabel)
-            make.centerY.equalTo(dateLabel)
-        }
+//        sizeLabel.snp.makeConstraints { make in
+//            make.trailing.equalTo(durationLabel)
+//            make.centerY.equalTo(dateLabel)
+//        }
     }
     
     func configure(with audioEntity: AudioEntity, isPlaying: Bool) {
         nameLabel.text = audioEntity.name
-        dateLabel.text = audioEntity.date
+        //dateLabel.text = audioEntity.date
         durationLabel.text = audioEntity.duration
-        sizeLabel.text = audioEntity.size
+        //sizeLabel.text = audioEntity.size
     }
     
     func updateMusicIndicator(isPlaying: Bool) {

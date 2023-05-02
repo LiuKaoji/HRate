@@ -6,10 +6,7 @@
 //  Copyright © 2023 kaoji. All rights reserved.
 //
 
-import Foundation
 import AVFoundation
-import RxSwift
-import RxCocoa
 
 open class RxMusicPlayerDelegate: DelegateProxy<MusicPlayer, MusicPlayerDelegate>, DelegateProxyType, MusicPlayerDelegate {
     

@@ -9,9 +9,6 @@
 import Foundation
 import KDCircularProgress
 import Charts
-import SnapKit
-import RxCocoa
-import RxSwift
 
 
 class BPMView: UIView {
@@ -71,8 +68,6 @@ class BPMView: UIView {
         return view
     }()
     
-    
-    
     lazy var chart: BarChartView = { // 心率历史记录图表
         let chart = BarChartView()
         chart.noDataTextColor = BPMViewConfig.noDataTextColor
@@ -107,13 +102,13 @@ class BPMView: UIView {
     
     lazy var historyButton: UIButton = { // 历史记录按钮
         let button = UIButton()
-        button.setImage(.init(named: "USB"), for: .normal)
+        button.setImage(R.image.usB(), for: .normal)
         return button
     }()
     
-    lazy var videoButton: UIButton = { // 录制视频按钮
+    lazy var userInfoButton: UIButton = { // 录制视频按钮
         let button = UIButton()
-        button.setImage(.init(named: "User"), for: .normal)
+        button.setImage(R.image.user(), for: .normal)
         return button
     }()
     
@@ -135,7 +130,7 @@ class BPMView: UIView {
         addSubview(progress)
         addSubview(verticalStack)
         addSubview(recordButton)
-        addSubview(videoButton)
+        addSubview(userInfoButton)
         addSubview(historyButton)
         addSubview(containerForSmallDisplay)
         
@@ -214,7 +209,7 @@ class BPMView: UIView {
         }
         
         
-        videoButton.snp.makeConstraints { (make) in
+        userInfoButton.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(15)
             make.size.equalTo(80)
             make.bottom.equalToSuperview().offset(-34)
@@ -263,7 +258,7 @@ extension BPMView {
         recordButton.rx.tap.bind(to: viewModel.recordButtonTapped).disposed(by: disposeBag)
         
         // 绑定 录视频按钮
-        videoButton.rx.tap.bind(to: viewModel.videoButtonTapped).disposed(by: disposeBag)
+        userInfoButton.rx.tap.bind(to: viewModel.userInfoButtonTapped).disposed(by: disposeBag)
         
         //绑定录音按钮是否可用
         viewModel.recordButtonEnabled.bind(to: recordButton.rx.isEnabled).disposed(by: disposeBag)

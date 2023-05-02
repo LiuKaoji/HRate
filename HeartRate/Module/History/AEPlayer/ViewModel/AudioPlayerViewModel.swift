@@ -7,15 +7,13 @@
 //
 
 import Foundation
-import RxSwift
-import RxCocoa
-import UIKit
+import AEAudio
 
 class AudioPlayerViewModel {
     
     private var bpmIndex: Int = 0
-    private let playImage = UIImage.init(named: "play")!.withRenderingMode(.alwaysOriginal)
-    private let pauseImage = UIImage.init(named: "pause")!.withRenderingMode(.alwaysOriginal)
+    private let playImage = R.image.play()!.withRenderingMode(.alwaysOriginal)
+    private let pauseImage = R.image.pause()!.withRenderingMode(.alwaysOriginal)
     
     // Inputs
     let playPauseButtonTapped = PublishSubject<Void>()
@@ -49,10 +47,11 @@ class AudioPlayerViewModel {
     public let audioEntities = BehaviorRelay<[AudioEntity]>(value: [])
     public let currentIndex = BehaviorRelay<Int>(value: 0)
     private var disposeBag = DisposeBag()
-    private var player: AEPlayer
+    private var player: AudioPlayer
     
-    init(audioEntities: [AudioEntity], player: AEPlayer = AEPlayer.shared) {
-        self.audioEntities.accept(audioEntities)
+    init(player: AudioPlayer = AudioPlayer.shared) {
+        let audios = AudioLibraryManager.shared.fetchMediaItems()
+        self.audioEntities.accept(audios)
         self.player = player
         
         // 绑定事件
@@ -103,7 +102,9 @@ class AudioPlayerViewModel {
             .bind(to: fftData)
             .disposed(by: disposeBag)
         
-        reactivePlayer.info
+        reactivePlayer.info.map({ info ->String in
+            "\(info.sampleRate)"
+        })
             .bind(to: fileInfo)
             .disposed(by: disposeBag)
         
@@ -111,7 +112,7 @@ class AudioPlayerViewModel {
         reactivePlayer.currentTime
             .subscribe(onNext: { [weak self] currentTimeStamp in
                 guard let self = self else { return }
-                
+                guard audioEntities.value.count > 0 else{return}
                 let bpms = self.audioEntities.value[self.currentIndex.value].bpms
                 // 取整或设置误差范围
                 let tolerance: TimeInterval = 0.5
@@ -220,8 +221,7 @@ class AudioPlayerViewModel {
         guard currentIndex.value < audioEntities.value.count - 1 else { return }
         let entity = audioEntities.value[currentIndex.value]
         title.accept(entity.name ?? "标题")
-        let audioURL = entity.audioURL()
-        player.play(with: audioURL)
+        player.play(with: entity.audioURL())
     }
     
     func removeAudioEntity(at index: Int) {
@@ -250,8 +250,7 @@ class AudioPlayerViewModel {
             }
             
             currentIndex.accept(index)
-            let audioURL = audioEntity.audioURL()
-            player.play(with: audioURL)
+            player.play(with: audioEntity.audioURL())
         } else {
             print("音频未找到")
         }

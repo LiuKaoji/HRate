@@ -7,11 +7,10 @@
 //
 
 import Foundation
-import RxSwift
-import RxCocoa
 import Charts
 import KDCircularProgress
 import ESTMusicIndicator
+import AEAudio
 
 // MARK: - 主页UI绑定
 ///柱状图数据绑定
@@ -55,7 +54,7 @@ extension Reactive where Base: BPMView {
                 view.recordButton.buttonState = .recording
                 view.recordButton.buttonColor = .red
                 view.historyButton.isHidden = true
-                view.videoButton.isHidden = true
+                view.userInfoButton.isHidden = true
             }
             
             func resetUI(){
@@ -64,7 +63,7 @@ extension Reactive where Base: BPMView {
                 view.recordButton.buttonState = .normal
                 view.recordButton.buttonColor = .white
                 view.historyButton.isHidden = false
-                view.videoButton.isHidden = false
+                view.userInfoButton.isHidden = false
             }
         }
     }

@@ -8,8 +8,6 @@
 
 import Foundation
 import HealthKit
-import RxSwift
-import RxCocoa
 
 
 // 监听心率的状态

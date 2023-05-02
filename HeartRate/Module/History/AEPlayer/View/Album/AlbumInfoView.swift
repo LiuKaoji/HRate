@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import SnapKit
+import AEAudio
 
 class AlbumInfoView: UIView {
     let albumView = createAlbumView()
@@ -16,8 +17,6 @@ class AlbumInfoView: UIView {
     
     lazy var titleLabel: UILabel = createLabel(fontSize: 18, alignment: .left)
     lazy var infoLabel: UILabel = createLabel(fontSize: 13, alignment: .left)
-    
-    lazy var rotator = AEViewRotator.init(view: self.albumView.imageView)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -70,17 +69,5 @@ class AlbumInfoView: UIView {
         let view = SpectrumView()
         view.backgroundColor = .clear
         return view
-    }
-    
-    func startRotate(){
-        rotator.start()
-    }
-    
-    func pauseRotate(){
-        rotator.pause()
-    }
-    
-    func resumeRotate(){
-        rotator.resume()
     }
 }

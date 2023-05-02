@@ -11,18 +11,18 @@ import KDCircularProgress
 
 struct BPMViewConfig {
     // 通用
-    static let backgroundColor = UIColor(named: "BackgroundColor")
+    static let backgroundColor = R.color.backgroundColor()
     
     // 进度
     static let startAngle: CGFloat = -270
     static let progressThickness: CGFloat = 0.6
     static let trackThickness: CGFloat = 0.7
     static let glowMode: KDCircularProgressGlowMode = .noGlow
-    static let trackColor = UIColor(named: "BackgroundColorTabBar")
+    static let trackColor = R.color.backgroundColorTabBar()
     static let progressColors: [UIColor] = [
-        UIColor(named: "ColorCircleThree")!,
-        UIColor(named: "ColorCircleTwo")!,
-        UIColor(named: "ColorCircleOne")!
+        R.color.colorCircleThree()!,
+        R.color.colorCircleTwo()!,
+        R.color.colorCircleOne()!,
     ]
     static let progressSizeDivisor: CGFloat = 1.2
     

@@ -32,7 +32,7 @@ class InterfaceController: WKInterfaceController {
     // 界面处理
     override func awake(withContext context: Any?) {
         super.awake(withContext: context)
-        
+        self.setTitle("")
         // 模拟启动
         let _ = NotificationManager.shared.handleSubscription(for: .action, action: .subscribe) { [weak self] _ in
             self?.startworkoutAction()

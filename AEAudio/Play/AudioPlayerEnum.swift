@@ -1,13 +1,14 @@
 //
-//  AEPlayerEnums.swift
-//  BeatRider
+//  AudioPlayerEnum.swift
+//  AEAudio
 //
-//  Created by kaoji on 4/24/23.
+//  Created by kaoji on 4/28/23.
+//  Copyright © 2023 Jonny. All rights reserved.
 //
 
 import Foundation
 
-@objc public enum AEPlayerStatus: Int {
+@objc public enum AudioPlayerStatus: Int {
     case idle = 0
     case prepared
     case playing
@@ -16,7 +17,7 @@ import Foundation
     case errorOccured
 }
 
-@objc public enum AEPlayerError: Int {
+@objc public enum AudioPlayerError: Int {
     case audioFileError = 0
     case audioEngineError
     case audioPlayerError
@@ -43,3 +44,4 @@ import Foundation
         }
     }
 }
+

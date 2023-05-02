@@ -7,13 +7,9 @@
 //
 
 import Foundation
-import UIKit
-import RxSwift
-import RxCocoa
-
 class AEPlayerController: UIViewController {
 
-    private var viewModel = AudioPlayerViewModel(audioEntities: PersistManager.shared.fetchAllAudios())
+    private var viewModel = AudioPlayerViewModel()
     private let disposeBag = DisposeBag()
 
     private lazy var playerView = AEPlayerView()
@@ -125,9 +121,9 @@ class AEPlayerController: UIViewController {
         viewModel.isRotating.asDriver()
             .drive(onNext: { [weak self] isRotating in
                 if isRotating {
-                    self?.playerView.albumInfoView.startRotate()
+                    self?.playerView.albumInfoView.albumView.imageView.startRotate()
                 } else {
-                    self?.playerView.albumInfoView.pauseRotate()
+                    self?.playerView.albumInfoView.albumView.imageView.pauseRotate()
                 }
             })
             .disposed(by: disposeBag)
