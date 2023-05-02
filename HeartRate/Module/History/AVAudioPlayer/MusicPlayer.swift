@@ -80,9 +80,9 @@ import AVFoundation
     
     private func startTimer() {
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
-            guard let self = self else { return }
-            let currentTime = self.player?.currentTime ?? 0
-            self.delegate?.audioPlayer?(self, didUpdateCurrentTime: currentTime)
+            guard let strongSelf = self else { return }
+            let currentTime = strongSelf.player?.currentTime ?? 0
+            strongSelf.delegate?.audioPlayer?(strongSelf, didUpdateCurrentTime: currentTime)
         }
     }
     

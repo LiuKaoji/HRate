@@ -137,31 +137,31 @@ class PlayListView: UIView, UITableViewDelegate {
         
         viewModel.audioEntities
             .bind(to: tableView.rx.items(cellIdentifier: "AudioCell", cellType: AudioCell.self)) { [weak self] (row, element, cell) in
-                guard let self = self else { return }
-                cell.configure(with: element, isPlaying: (row == self.viewModel.currentIndex.value))
-                cell.updateMusicIndicator(isPlaying: (row == self.viewModel.currentIndex.value))
+                guard let strongSelf = self else { return }
+                cell.configure(with: element, isPlaying: (row == strongSelf.viewModel.currentIndex.value))
+                cell.updateMusicIndicator(isPlaying: (row == strongSelf.viewModel.currentIndex.value))
             }
             .disposed(by: disposeBag)
         
         viewModel.audioEntities
                .subscribe(onNext: { [weak self] audioEntities in
-                   guard let self = self else { return }
-                   self.headerView.configure(fileCount: audioEntities.count, description: "音频与心率及消耗关联.")
+                   guard let strongSelf = self else { return }
+                   strongSelf.headerView.configure(fileCount: audioEntities.count, description: "音频与心率及消耗关联.")
                })
                .disposed(by: disposeBag)
         
         viewModel.audioEntities
                 .subscribe(onNext: { [weak self] audioEntities in
-                    guard let self = self else { return }
-                    self.headerView.configure(fileCount: audioEntities.count, description: "音频与心率及消耗关联.")
+                    guard let strongSelf = self else { return }
+                    strongSelf.headerView.configure(fileCount: audioEntities.count, description: "音频与心率及消耗关联.")
                     
                     // Show empty label when there are no files
                     if audioEntities.count == 0 {
-                        self.tableView.setEmptyStateViewVisible(true)
-                        tableView.separatorStyle = .none
+                        strongSelf.tableView.setEmptyStateViewVisible(true)
+                        strongSelf.tableView.separatorStyle = .none
                     } else {
-                        self.tableView.setEmptyStateViewVisible(false)
-                        tableView.separatorStyle = .singleLine
+                        strongSelf.tableView.setEmptyStateViewVisible(false)
+                        strongSelf.tableView.separatorStyle = .singleLine
                     }
                 })
                 .disposed(by: disposeBag)

@@ -22,9 +22,9 @@ class AEViewRotator {
     public func start() {
         isRunning = true
         timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
-            guard let self = self else { return }
-            self.rotateAngle += self.rotateSpeed
-            self.view.transform = CGAffineTransform(rotationAngle: self.rotateAngle)
+            guard let strongSelf = self else { return }
+            strongSelf.rotateAngle += strongSelf.rotateSpeed
+            strongSelf.view.transform = CGAffineTransform(rotationAngle: strongSelf.rotateAngle)
         }
     }
     

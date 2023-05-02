@@ -18,8 +18,11 @@ import Accelerate
     private let realp: UnsafeMutablePointer<Float>// 实数的指针
     private let imagp: UnsafeMutablePointer<Float>// 虚数的指针
     private var fftLength: vDSP_Length // FFT 长度
-    public var startFrequency: Float = 100 //起始频率
-    public var endFrequency: Float = 1200 //截止频率
+    public var startFrequency: Float = 80 //起始频率
+    public var endFrequency: Float = 4000 //截止频率
+    //人耳在音乐和人声频率范围上通常较为敏感。音乐和人声的频率范围通常在大约80赫兹（Hz）至4000赫兹（4千赫兹，kHz）之间。在这个范围内，人类对声音的感知特别敏锐。
+
+
     
     private var frequencyBands: Int {
         get{

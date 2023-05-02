@@ -52,7 +52,7 @@ class AudioPlayerViewModel {
     init(player: AudioPlayer = AudioPlayer.shared) {
         //let audios = AudioLibraryManager.shared.fetchMediaItems()
         let audio = PersistManager.shared.fetchAllAudios()
-        self.audioEntities.accept(audios)
+        self.audioEntities.accept(audio)
         self.player = player
         
         // 绑定事件
@@ -112,23 +112,23 @@ class AudioPlayerViewModel {
         // 读取心率数据更新UI
         reactivePlayer.currentTime
             .subscribe(onNext: { [weak self] currentTimeStamp in
-                guard let self = self else { return }
-                guard audioEntities.value.count > 0 else{return}
-                let bpms = self.audioEntities.value[self.currentIndex.value].bpms
+                guard let strongSelf = self else { return }
+                guard strongSelf.audioEntities.value.count > 0 else{return}
+                let bpms = strongSelf.audioEntities.value[strongSelf.currentIndex.value].bpms
                 // 取整或设置误差范围
                 let tolerance: TimeInterval = 0.5
                 
                 // 从当前索引开始，查找符合条件的BPMDescription
-                while self.bpmIndex < bpms.count && abs(bpms[self.bpmIndex].ts - currentTimeStamp) <= tolerance {
+                while strongSelf.bpmIndex < bpms.count && abs(bpms[strongSelf.bpmIndex].ts - currentTimeStamp) <= tolerance {
                     // 将BPM值添加到chartBPMData数组中
-                    self.chartBPMData.accept(self.chartBPMData.value + [bpms[self.bpmIndex].bpm])
+                    strongSelf.chartBPMData.accept(strongSelf.chartBPMData.value + [bpms[strongSelf.bpmIndex].bpm])
                     // 更新当前处理的索引
-                    self.bpmIndex += 1
+                    strongSelf.bpmIndex += 1
                     // 将新的数据添加到计算器
-                    if  self.bpmIndex < bpms.count - 1{
-                        let bpmDesc = bpms[self.bpmIndex]
+                    if  strongSelf.bpmIndex < bpms.count - 1{
+                        let bpmDesc = bpms[strongSelf.bpmIndex]
                         let displayString = "当前:\(bpmDesc.bpm) 最大:\(bpmDesc.max) 平均:\(bpmDesc.max) 消耗: \(bpmDesc.kcal)kcal"
-                        self.bpmInfo.accept(displayString)
+                        strongSelf.bpmInfo.accept(displayString)
                     }
                 }
             })
@@ -141,11 +141,11 @@ class AudioPlayerViewModel {
         // 播放暂停按钮点击事件
         playPauseButtonTapped
             .subscribe(onNext: { [weak self] in
-                guard let self = self else { return }
-                if self.player.status == .playing {
-                    self.player.pause()
+                guard let strongSelf = self else { return }
+                if strongSelf.player.status == .playing {
+                    strongSelf.player.pause()
                 } else {
-                    self.player.resume()
+                    strongSelf.player.resume()
                 }
             })
             .disposed(by: disposeBag)
@@ -153,20 +153,20 @@ class AudioPlayerViewModel {
         // 上一首按钮点击事件
         previousButtonTapped
             .subscribe(onNext: { [weak self] in
-                guard let self = self else { return }
-                let newIndex = max(self.currentIndex.value - 1, 0)
-                self.currentIndex.accept(newIndex)
-                self.playCurrentIndex()
+                guard let strongSelf = self else { return }
+                let newIndex = max(strongSelf.currentIndex.value - 1, 0)
+                strongSelf.currentIndex.accept(newIndex)
+                strongSelf.playCurrentIndex()
             })
             .disposed(by: disposeBag)
         
         // 下一首按钮点击事件
         nextButtonTapped
             .subscribe(onNext: { [weak self] in
-                guard let self = self else { return }
-                let newIndex = min(self.currentIndex.value + 1, self.audioEntities.value.count - 1)
-                self.currentIndex.accept(newIndex)
-                self.playCurrentIndex()
+                guard let strongSelf = self else { return }
+                let newIndex = min(strongSelf.currentIndex.value + 1, strongSelf.audioEntities.value.count - 1)
+                strongSelf.currentIndex.accept(newIndex)
+                strongSelf.playCurrentIndex()
             })
             .disposed(by: disposeBag)
         
@@ -187,31 +187,31 @@ class AudioPlayerViewModel {
         // 播放进度滑块值改变事件
         sliderValueChanged
             .subscribe(onNext: { [weak self] value in
-                guard let self = self else { return }
-                self.sliderValue.accept(value)
-                let seekToTime = Double(value) * self.player.duration
-                let formattedTime = self.formatTimeInterval(seconds: seekToTime)
-                self.currentTime.accept(formattedTime)
+                guard let strongSelf = self else { return }
+                strongSelf.sliderValue.accept(value)
+                let seekToTime = Double(value) * strongSelf.player.duration
+                let formattedTime = strongSelf.formatTimeInterval(seconds: seekToTime)
+                strongSelf.currentTime.accept(formattedTime)
             })
             .disposed(by: disposeBag)
         
         // 播放进度滑块触摸按下事件
         sliderTouchDown
             .subscribe(onNext: { [weak self] in
-                guard let self = self else { return }
-                self.isDragging.accept(true)
+                guard let strongSelf = self else { return }
+                strongSelf.isDragging.accept(true)
             })
             .disposed(by: disposeBag)
         
         // 播放进度滑块触摸抬起事件
         sliderTouchUp
             .subscribe(onNext: { [weak self] in
-                guard let self = self else { return }
-                self.isDragging.accept(false)
-                let seekToTime = Double(self.sliderValue.value) * self.player.duration
-                self.player.seek(to: seekToTime)
-                if self.player.status != .playing {
-                    self.player.resume()
+                guard let strongSelf = self else { return }
+                strongSelf.isDragging.accept(false)
+                let seekToTime = Double(strongSelf.sliderValue.value) * strongSelf.player.duration
+                strongSelf.player.seek(to: seekToTime)
+                if strongSelf.player.status != .playing {
+                    strongSelf.player.resume()
                 }
             })
             .disposed(by: disposeBag)

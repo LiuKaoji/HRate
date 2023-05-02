@@ -36,7 +36,7 @@ import UIKit
             SpectrumView.barNumbers = numberOfBars
 
             // 按照bar的数量取数据的前四分之一四次
-            let halfBars = numberOfBars / 1
+            let halfBars = numberOfBars / 2
             let halfSpectra = Array(spectra.prefix(halfBars))
 
             var combinedSpectra = halfSpectra + halfSpectra
@@ -52,8 +52,8 @@ import UIKit
 
                 // 连接处数值处理
                 combinedSpectra[halfBars - 1 - i] *= progress
-//                combinedSpectra[halfBars + i] *= progress
-//                combinedSpectra[halfBars * 2 - 1 - i] *= progress
+                combinedSpectra[halfBars + i] *= progress
+                combinedSpectra[halfBars * 2 - 1 - i] *= progress
             }
 
             DispatchQueue.main.async {

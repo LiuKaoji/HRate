@@ -40,8 +40,8 @@ class AEPlayerController: UIViewController {
     func playListAction(){
         
         viewModel.showAudioList = { [weak self] in
-            guard let self  = self else { return }
-            let playList = PlayListViewController.init(viewModel: viewModel)
+            guard let strongSelf  = self else { return }
+            let playList = PlayListViewController.init(viewModel: strongSelf.viewModel)
             playList.show()
         }
     }
