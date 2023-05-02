@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import ESTMusicIndicator
+import AEAudio
 
 class PlaybackIndicator: UIBarButtonItem {
     private var musicIndicator: ESTMusicIndicatorView!

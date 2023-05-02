@@ -9,7 +9,6 @@
 import Foundation
 import Charts
 import KDCircularProgress
-import ESTMusicIndicator
 import AEAudio
 
 // MARK: - 主页UI绑定

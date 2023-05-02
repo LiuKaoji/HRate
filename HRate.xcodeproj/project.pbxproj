@@ -83,6 +83,8 @@
 		36A8B4542A0119270065B48F /* UIButton + Extra.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A8B4532A0119270065B48F /* UIButton + Extra.swift */; };
 		36A8B4BC2A0172AC0065B48F /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36A8B4BB2A0172AC0065B48F /* MetalKit.framework */; };
 		36A8B4BE2A0172BC0065B48F /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36A8B4BD2A0172BC0065B48F /* Metal.framework */; };
+		36A8B4C92A0180B50065B48F /* ESTMusicIndicatorContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A8B4C52A01803C0065B48F /* ESTMusicIndicatorContentView.swift */; };
+		36A8B4CA2A0180B50065B48F /* ESTMusicIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A8B4C62A01803C0065B48F /* ESTMusicIndicatorView.swift */; };
 		36C3C69529ED82D400E8A4DB /* LineChartHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C3C69429ED82D400E8A4DB /* LineChartHeaderView.swift */; };
 		36C3C69929ED845800E8A4DB /* AudioCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C3C69829ED845800E8A4DB /* AudioCell.swift */; };
 		36C3C69B29EDAB3900E8A4DB /* MusicPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C3C69A29EDAB3900E8A4DB /* MusicPlayer.swift */; };
@@ -246,6 +248,8 @@
 		36A8B4532A0119270065B48F /* UIButton + Extra.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton + Extra.swift"; sourceTree = "<group>"; };
 		36A8B4BB2A0172AC0065B48F /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/iOSSupport/System/Library/Frameworks/MetalKit.framework; sourceTree = DEVELOPER_DIR; };
 		36A8B4BD2A0172BC0065B48F /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/Library/Frameworks/Metal.framework; sourceTree = DEVELOPER_DIR; };
+		36A8B4C52A01803C0065B48F /* ESTMusicIndicatorContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ESTMusicIndicatorContentView.swift; sourceTree = "<group>"; };
+		36A8B4C62A01803C0065B48F /* ESTMusicIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ESTMusicIndicatorView.swift; sourceTree = "<group>"; };
 		36C3C69429ED82D400E8A4DB /* LineChartHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartHeaderView.swift; sourceTree = "<group>"; };
 		36C3C69829ED845800E8A4DB /* AudioCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCell.swift; sourceTree = "<group>"; };
 		36C3C69A29EDAB3900E8A4DB /* MusicPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayer.swift; sourceTree = "<group>"; };
@@ -416,6 +420,7 @@
 		364EA5F729FB59D00072C792 /* AEAudio */ = {
 			isa = PBXGroup;
 			children = (
+				36A8B4CB2A0180BA0065B48F /* 3rd */,
 				364EA61D29FB85790072C792 /* Utils */,
 				364EA60429FB626C0072C792 /* Record */,
 				364EA60329FB62660072C792 /* Play */,
@@ -657,6 +662,15 @@
 				3670AD5229F51CCA0026F2B5 /* HRToast.swift */,
 			);
 			path = UIComponents;
+			sourceTree = "<group>";
+		};
+		36A8B4CB2A0180BA0065B48F /* 3rd */ = {
+			isa = PBXGroup;
+			children = (
+				36A8B4C52A01803C0065B48F /* ESTMusicIndicatorContentView.swift */,
+				36A8B4C62A01803C0065B48F /* ESTMusicIndicatorView.swift */,
+			);
+			path = 3rd;
 			sourceTree = "<group>";
 		};
 		36AEE4FF29F77A5500EA2159 /* AEPlayer */ = {
@@ -1050,7 +1064,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				$SRCROOT/HeartRate/Resources/R.swift/R.generated.swift,
+				"$SRCROOT/HeartRate/Resources/R.swift/R.generated.swift",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1130,6 +1144,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				364EA62329FB8A400072C792 /* AudioRecorder.swift in Sources */,
+				36A8B4CA2A0180B50065B48F /* ESTMusicIndicatorView.swift in Sources */,
 				364EA60229FB5CD30072C792 /* AudioInfo.swift in Sources */,
 				364EA61F29FB858F0072C792 /* AudioTime.swift in Sources */,
 				364EA61329FB74720072C792 /* AudioBar.swift in Sources */,
@@ -1138,6 +1153,7 @@
 				364EA61A29FB7C3D0072C792 /* SpectrumView.swift in Sources */,
 				364EA61829FB7C1C0072C792 /* AudioAnalyzer.swift in Sources */,
 				364EA61C29FB807B0072C792 /* AudioPlayerEnum.swift in Sources */,
+				36A8B4C92A0180B50065B48F /* ESTMusicIndicatorContentView.swift in Sources */,
 				364EA61529FB7B050072C792 /* AudioPlayer.swift in Sources */,
 				364EA62E29FE0BC20072C792 /* AEViewRotator.swift in Sources */,
 				36A8B44E2A0105D40065B48F /* OSTimer.swift in Sources */,
