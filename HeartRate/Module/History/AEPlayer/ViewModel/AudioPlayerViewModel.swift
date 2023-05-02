@@ -50,7 +50,8 @@ class AudioPlayerViewModel {
     private var player: AudioPlayer
     
     init(player: AudioPlayer = AudioPlayer.shared) {
-        let audios = AudioLibraryManager.shared.fetchMediaItems()
+        //let audios = AudioLibraryManager.shared.fetchMediaItems()
+        let audio = PersistManager.shared.fetchAllAudios()
         self.audioEntities.accept(audios)
         self.player = player
         

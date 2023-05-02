@@ -120,7 +120,7 @@ extension BPMTracker{
                 }
             }
         }error: {
-            HRToast(message: "无法与Apple Watch建立通讯...", type: .error)
+            HRToast(message: "请确保配对手表已连接...", type: .warning)
         }
     }
     
