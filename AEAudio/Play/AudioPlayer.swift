@@ -30,7 +30,7 @@ import MediaPlayer
     private let audioEngine = AVAudioEngine()
     private let audioPlayerNode = AVAudioPlayerNode()
     private let timePitchNode = AVAudioUnitTimePitch()
-    private var audioPlayerNodeTimer: Timer?
+    private var audioPlayerNodeTimer: OSTimer?
     private var currentAudioFramePosition: AVAudioFramePosition = 0
     private var totalAudioFrameLength: AVAudioFramePosition = 0
     private let fftSize: Int = 1024 * 4
@@ -169,12 +169,10 @@ private extension AudioPlayer {
     }
     
     func addAudioPlayerNodeTimer() {
-        audioPlayerNodeTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(updateAudioPlayerNodeValue), userInfo: nil, repeats: true)
-    }
-    
-    func disableOfflineRendering() {
-        audioPlayerNode.stop()
-        audioEngine.stop()
+        audioPlayerNodeTimer = OSTimer.init(loop: 1.0, timerCallback: { _ in
+            self.updateAudioPlayerNodeValue()
+        })
+        audioPlayerNodeTimer?.start()
     }
 }
 
@@ -248,7 +246,7 @@ extension AudioPlayer {
     }
     
     public func pause() {
-        audioPlayerNodeTimer?.invalidate()
+        audioPlayerNodeTimer?.stop()
         audioEngine.pause()
         audioPlayerNode.pause()
         
@@ -256,7 +254,7 @@ extension AudioPlayer {
     }
     
     public func stop() {
-        audioPlayerNodeTimer?.invalidate()
+        audioPlayerNodeTimer?.stop()
         
         audioEngine.stop()
         audioEngine.reset()

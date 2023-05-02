@@ -255,10 +255,10 @@ extension BPMView {
         viewModel.time.bind(to: timeLabel.rx.text).disposed(by: disposeBag)
         
         // 绑定 录音按钮
-        recordButton.rx.tap.bind(to: viewModel.recordButtonTapped).disposed(by: disposeBag)
+        recordButton.rxTapClosure().bind(to: viewModel.recordButtonTapped).disposed(by: disposeBag)
         
         // 绑定 录视频按钮
-        userInfoButton.rx.tap.bind(to: viewModel.userInfoButtonTapped).disposed(by: disposeBag)
+        userInfoButton.rxTapClosure().bind(to: viewModel.userInfoButtonTapped).disposed(by: disposeBag)
         
         //绑定录音按钮是否可用
         viewModel.recordButtonEnabled.bind(to: recordButton.rx.isEnabled).disposed(by: disposeBag)
@@ -267,7 +267,7 @@ extension BPMView {
         viewModel.isRecording.bind(to: self.rx.isRecording).disposed(by: disposeBag)
         
         // 绑定 历史按钮点击事件
-        historyButton.rx.tap .bind(to: viewModel.historyButtonTapped).disposed(by: disposeBag)
+        historyButton.rxTapClosure().bind(to: viewModel.historyButtonTapped).disposed(by: disposeBag)
         
         viewModel.isRecording.bind(to: self.deviceView.rx.isHidden).disposed(by: disposeBag)
     }

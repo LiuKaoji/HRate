@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double ESTMusicIndicatorVersionNumber;
-FOUNDATION_EXPORT const unsigned char ESTMusicIndicatorVersionString[];
+FOUNDATION_EXPORT double NSObject_RxVersionNumber;
+FOUNDATION_EXPORT const unsigned char NSObject_RxVersionString[];
 

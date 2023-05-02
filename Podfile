@@ -12,8 +12,8 @@ target 'HRate' do
   pod 'WCDBSwift'
   pod 'RxSwift'
   pod 'RxCocoa'
+  pod 'NSObject+Rx'
   pod 'Zip', '~> 2.1'
-  pod 'ESTMusicIndicator'
   pod 'Eureka'
   pod 'R.swift', '~> 5.0'  # https://github.com/mac-cain13/R.swift
 

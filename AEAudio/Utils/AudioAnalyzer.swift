@@ -12,7 +12,7 @@ import Accelerate
 
 @objc public class AudioAnalyzer: NSObject {
     
-    public static var drawBands: Int = 0 //用于描绘动画的频带数量
+    public static var drawBands: Int = 220 //用于描绘动画的频带数量
     private var fftSize: Int
     private let fftSetup: FFTSetup
     private let realp: UnsafeMutablePointer<Float>// 实数的指针

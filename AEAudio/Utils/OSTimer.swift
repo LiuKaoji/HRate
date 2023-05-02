@@ -12,14 +12,16 @@ class OSTimer {
     private var timer: Timer?
     private(set) var secondsElapsed: Int = 0
     private var timerCallback: ((Int) -> Void)?
+    private var loop: TimeInterval = 0.1
 
-    init(timerCallback: ((Int) -> Void)?) {
+    init(loop: TimeInterval,timerCallback: ((Int) -> Void)?) {
+        self.loop = loop
         self.timerCallback = timerCallback
     }
 
     func start() {
         if timer == nil {
-            timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(timerTick), userInfo: nil, repeats: true)
+            timer = Timer.scheduledTimer(timeInterval: self.loop, target: self, selector: #selector(timerTick), userInfo: nil, repeats: true)
         }
     }
 

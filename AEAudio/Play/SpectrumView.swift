@@ -57,7 +57,13 @@ import UIKit
             }
 
             DispatchQueue.main.async {
-                for index in 0..<combinedSpectra.count {
+//                for index in 0..<combinedSpectra.count {
+//                    let value = combinedSpectra[index]
+//                    let normalizedValue = CGFloat(value) / CGFloat(maxValue)
+//                    let height = self.minimumBarHeight + normalizedValue * (self.maximumBarHeight - self.minimumBarHeight)
+//                    self.updateSpectrumLayer(at: index, height: height)
+//                }
+                for index in stride(from: 0, to: combinedSpectra.count, by: 1) {
                     let value = combinedSpectra[index]
                     let normalizedValue = CGFloat(value) / CGFloat(maxValue)
                     let height = self.minimumBarHeight + normalizedValue * (self.maximumBarHeight - self.minimumBarHeight)

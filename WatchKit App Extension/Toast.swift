@@ -13,7 +13,6 @@ enum ToastType {
     case success, error, warning
 }
 
-
 struct ToastView: View {
     let message: String
     let type: ToastType

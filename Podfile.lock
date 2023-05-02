@@ -3,9 +3,10 @@ PODS:
     - Charts/Core (= 4.1.0)
   - Charts/Core (4.1.0):
     - SwiftAlgorithms (~> 1.0)
-  - ESTMusicIndicator (0.2.0)
   - Eureka (5.4.0)
   - KDCircularProgress (1.5.4)
+  - "NSObject+Rx (5.2.2)":
+    - RxSwift (~> 6.2)
   - OptimizedSQLCipher (1.2.2)
   - R.swift (5.4.0):
     - R.swift.Library (~> 5.3.0)
@@ -27,9 +28,9 @@ PODS:
 
 DEPENDENCIES:
   - Charts (from `https://github.com/danielgindi/Charts.git`, branch `master`)
-  - ESTMusicIndicator
   - Eureka
   - KDCircularProgress
+  - "NSObject+Rx"
   - R.swift (~> 5.0)
   - RxCocoa
   - RxSwift
@@ -39,9 +40,9 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - ESTMusicIndicator
     - Eureka
     - KDCircularProgress
+    - "NSObject+Rx"
     - OptimizedSQLCipher
     - R.swift
     - R.swift.Library
@@ -66,9 +67,9 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Charts: 354f86803d11d9c35de280587fef50d1af063978
-  ESTMusicIndicator: 80a123b51a7de3caa44dc91829b9619185dad0f6
   Eureka: fadaa9fa3d6e402d3c60f78f24edf3d7bafc9c29
   KDCircularProgress: 98200c6b8e85d22bc04eb644721d3b1e12b0686b
+  "NSObject+Rx": 61cf1f7306a73dcef8b36649198af0813ec18dfd
   OptimizedSQLCipher: 92a1bf5cc94139e1da49de9c883ff9891bcd2a37
   R.swift: c533450b0f7dc494e0993f5f1a1db925d84c3006
   R.swift.Library: 0fc583cb55a99e28901299cc451614cad1161962
@@ -81,6 +82,6 @@ SPEC CHECKSUMS:
   WCDBSwift: 6687dc2d4bebce2b237017ca367730f5f8409e67
   Zip: b3fef584b147b6e582b2256a9815c897d60ddc67
 
-PODFILE CHECKSUM: 2a5459134d6380d034d6e1dafe4b765e6a4713a8
+PODFILE CHECKSUM: 87a2a01d3b819803e1a4c5e01b407e42682bf64b
 
 COCOAPODS: 1.12.0

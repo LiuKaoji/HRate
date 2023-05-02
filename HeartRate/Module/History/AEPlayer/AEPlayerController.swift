@@ -48,27 +48,27 @@ class AEPlayerController: UIViewController {
 
     private func setupBindings() {
         // 播放暂停按钮
-        playerView.controlsView.playPauseButton.rx.tap
+        playerView.controlsView.playPauseButton.rxTapClosure()
             .bind(to: viewModel.playPauseButtonTapped)
             .disposed(by: disposeBag)
         
         // 上一首按钮
-        playerView.controlsView.prevButton.rx.tap
+        playerView.controlsView.prevButton.rxTapClosure()
             .bind(to: viewModel.previousButtonTapped)
             .disposed(by: disposeBag)
         
         // 下一首按钮
-        playerView.controlsView.nextButton.rx.tap
+        playerView.controlsView.nextButton.rxTapClosure()
             .bind(to: viewModel.nextButtonTapped)
             .disposed(by: disposeBag)
         
         // 循环按钮
-        playerView.controlsView.loopButton.rx.tap
+        playerView.controlsView.loopButton.rxTapClosure()
             .bind(to: viewModel.loopButtonTapped)
             .disposed(by: disposeBag)
         
         // 播放列表按钮
-        playerView.controlsView.playlistButton.rx.tap
+        playerView.controlsView.playlistButton.rxTapClosure()
             .bind(to: viewModel.playlistButtonTapped)
             .disposed(by: disposeBag)
         
@@ -129,15 +129,15 @@ class AEPlayerController: UIViewController {
             .disposed(by: disposeBag)
         
         
-        playerView.backButton.rx.tap
-            .subscribe(onNext: { [weak self] _ in
+        playerView.backButton.rxTapClosure()
+            .subscribe(onNext: { [weak self]  in
                 self?.viewModel.stopAndReleaseMemory()
                 self?.navigationController?.popViewController(animated: true)
             })
             .disposed(by: disposeBag)
         
-        playerView.shareButton.rx.tap
-            .subscribe(onNext: { [weak self] _ in
+        playerView.shareButton.rxTapClosure()
+            .subscribe(onNext: { [weak self]  in
                 guard let self = self, self.viewModel.audioEntities.value.count > 0  else { return }
                 let audio  = self.viewModel.audioEntities.value[self.viewModel.currentIndex.value]
                 BPMExporter.exportAndShare(audioEntity: audio, viewController: self)

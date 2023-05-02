@@ -47,7 +47,6 @@
 		366A18AB29FE759C00742718 /* PumpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366A18AA29FE759C00742718 /* PumpView.swift */; };
 		3670ACE429EFED100026F2B5 /* TimeFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369BD50B29E93E0100CB6B97 /* TimeFormat.swift */; };
 		3670ACE629EFFB170026F2B5 /* PumpingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3670ACE529EFFB170026F2B5 /* PumpingController.swift */; };
-		3670ACE829EFFE110026F2B5 /* OSTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3670ACE729EFFE110026F2B5 /* OSTimer.swift */; };
 		3670ACF629F037F50026F2B5 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3670ACF529F037F50026F2B5 /* NotificationManager.swift */; };
 		3670ACFC29F14D110026F2B5 /* DeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3670ACFA29F14CDE0026F2B5 /* DeviceView.swift */; };
 		3670AD0829F1829F0026F2B5 /* deviceGray.png in Resources */ = {isa = PBXBuildFile; fileRef = 3670AD0629F1829F0026F2B5 /* deviceGray.png */; };
@@ -80,6 +79,11 @@
 		369BD51929E93E0100CB6B97 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369BD51129E93E0100CB6B97 /* Stack.swift */; };
 		369BD51A29E93E0100CB6B97 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369BD51229E93E0100CB6B97 /* Toast.swift */; };
 		369BD51B29E93E0100CB6B97 /* RecordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369BD51329E93E0100CB6B97 /* RecordButton.swift */; };
+		36A8B44E2A0105D40065B48F /* OSTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3670ACE729EFFE110026F2B5 /* OSTimer.swift */; };
+		36A8B4522A0112DF0065B48F /* UIButton + NoRepeat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A8B4512A0112DF0065B48F /* UIButton + NoRepeat.swift */; };
+		36A8B4542A0119270065B48F /* UIButton + Extra.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A8B4532A0119270065B48F /* UIButton + Extra.swift */; };
+		36A8B4BC2A0172AC0065B48F /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36A8B4BB2A0172AC0065B48F /* MetalKit.framework */; };
+		36A8B4BE2A0172BC0065B48F /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36A8B4BD2A0172BC0065B48F /* Metal.framework */; };
 		36C3C69529ED82D400E8A4DB /* LineChartHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C3C69429ED82D400E8A4DB /* LineChartHeaderView.swift */; };
 		36C3C69929ED845800E8A4DB /* AudioCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C3C69829ED845800E8A4DB /* AudioCell.swift */; };
 		36C3C69B29EDAB3900E8A4DB /* MusicPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C3C69A29EDAB3900E8A4DB /* MusicPlayer.swift */; };
@@ -240,6 +244,10 @@
 		369BD51129E93E0100CB6B97 /* Stack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
 		369BD51229E93E0100CB6B97 /* Toast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		369BD51329E93E0100CB6B97 /* RecordButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordButton.swift; sourceTree = "<group>"; };
+		36A8B4512A0112DF0065B48F /* UIButton + NoRepeat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton + NoRepeat.swift"; sourceTree = "<group>"; };
+		36A8B4532A0119270065B48F /* UIButton + Extra.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton + Extra.swift"; sourceTree = "<group>"; };
+		36A8B4BB2A0172AC0065B48F /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/iOSSupport/System/Library/Frameworks/MetalKit.framework; sourceTree = DEVELOPER_DIR; };
+		36A8B4BD2A0172BC0065B48F /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/Library/Frameworks/Metal.framework; sourceTree = DEVELOPER_DIR; };
 		36C3C69429ED82D400E8A4DB /* LineChartHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartHeaderView.swift; sourceTree = "<group>"; };
 		36C3C69829ED845800E8A4DB /* AudioCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCell.swift; sourceTree = "<group>"; };
 		36C3C69A29EDAB3900E8A4DB /* MusicPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayer.swift; sourceTree = "<group>"; };
@@ -283,6 +291,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				36A8B4BE2A0172BC0065B48F /* Metal.framework in Frameworks */,
+				36A8B4BC2A0172AC0065B48F /* MetalKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -442,6 +452,7 @@
 		364EA61D29FB85790072C792 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				3670ACE729EFFE110026F2B5 /* OSTimer.swift */,
 				364EA61E29FB858F0072C792 /* AudioTime.swift */,
 				364EA62029FB859C0072C792 /* AudioSession.swift */,
 				364EA61729FB7C1C0072C792 /* AudioAnalyzer.swift */,
@@ -531,7 +542,6 @@
 			children = (
 				3670ACF529F037F50026F2B5 /* NotificationManager.swift */,
 				FBA2D6BB1DBF9C9600728078 /* WorkoutManager.swift */,
-				3670ACE729EFFE110026F2B5 /* OSTimer.swift */,
 				36151EC62A0000D40092AABF /* Toast.swift */,
 			);
 			name = Public;
@@ -632,6 +642,8 @@
 				369BD50C29E93E0100CB6B97 /* Recorder.swift */,
 				369BD50D29E93E0100CB6B97 /* UIComponents */,
 				36C4581429F925EE00A06819 /* UITableView+emptyState.swift */,
+				36A8B4512A0112DF0065B48F /* UIButton + NoRepeat.swift */,
+				36A8B4532A0119270065B48F /* UIButton + Extra.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -809,6 +821,8 @@
 		FBA2D6BF1DBF9DAA00728078 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				36A8B4BD2A0172BC0065B48F /* Metal.framework */,
+				36A8B4BB2A0172AC0065B48F /* MetalKit.framework */,
 				FB1EA2C51DD0001F008CCFFD /* SystemConfiguration.framework */,
 				FBA2D6C01DBF9DAA00728078 /* HealthKit.framework */,
 				82AD0BBA65EE0367E4E67332 /* Pods_HRate.framework */,
@@ -1039,7 +1053,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				$SRCROOT/HeartRate/Resources/R.swift/R.generated.swift,
+				"$SRCROOT/HeartRate/Resources/R.swift/R.generated.swift",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1075,9 +1089,9 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-HRate/Pods-HRate-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
-				"${BUILT_PRODUCTS_DIR}/ESTMusicIndicator/ESTMusicIndicator.framework",
 				"${BUILT_PRODUCTS_DIR}/Eureka/Eureka.framework",
 				"${BUILT_PRODUCTS_DIR}/KDCircularProgress/KDCircularProgress.framework",
+				"${BUILT_PRODUCTS_DIR}/NSObject+Rx/NSObject_Rx.framework",
 				"${BUILT_PRODUCTS_DIR}/OptimizedSQLCipher/sqlcipher.framework",
 				"${BUILT_PRODUCTS_DIR}/R.swift.Library/Rswift.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
@@ -1092,9 +1106,9 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ESTMusicIndicator.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Eureka.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KDCircularProgress.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NSObject_Rx.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/sqlcipher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Rswift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
@@ -1129,6 +1143,7 @@
 				364EA61C29FB807B0072C792 /* AudioPlayerEnum.swift in Sources */,
 				364EA61529FB7B050072C792 /* AudioPlayer.swift in Sources */,
 				364EA62E29FE0BC20072C792 /* AEViewRotator.swift in Sources */,
+				36A8B44E2A0105D40065B48F /* OSTimer.swift in Sources */,
 				364EA62F29FE0BC20072C792 /* AERotateImageView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1142,6 +1157,7 @@
 				36C3C69B29EDAB3900E8A4DB /* MusicPlayer.swift in Sources */,
 				3670ACFC29F14D110026F2B5 /* DeviceView.swift in Sources */,
 				3668664029F7823A009136B9 /* AEPlayerView.swift in Sources */,
+				36A8B4542A0119270065B48F /* UIButton + Extra.swift in Sources */,
 				36C4580D29F8FB4F00A06819 /* PlayListController.swift in Sources */,
 				369BD51529E93E0100CB6B97 /* Recorder.swift in Sources */,
 				369BD51729E93E0100CB6B97 /* AvgMinMaxBar.swift in Sources */,
@@ -1161,6 +1177,7 @@
 				36C4580F29F8FB6600A06819 /* PlayListView.swift in Sources */,
 				369BD51929E93E0100CB6B97 /* Stack.swift in Sources */,
 				36C3C69F29EE167500E8A4DB /* RxCastOrThrow.swift in Sources */,
+				36A8B4522A0112DF0065B48F /* UIButton + NoRepeat.swift in Sources */,
 				3670AD5429F51EDD0026F2B5 /* HRToast.swift in Sources */,
 				3670AD4329F3FFC50026F2B5 /* UserEnitity.swift in Sources */,
 				3668665329F7B79F009136B9 /* PlayerControlView.swift in Sources */,
@@ -1204,7 +1221,6 @@
 				3670ACF629F037F50026F2B5 /* NotificationManager.swift in Sources */,
 				36151EC92A00D5800092AABF /* Timer.swift in Sources */,
 				FBA2D6B11DBF9C5700728078 /* WatchConnectorConstants.swift in Sources */,
-				3670ACE829EFFE110026F2B5 /* OSTimer.swift in Sources */,
 				36151EC229FF62B80092AABF /* Color.swift in Sources */,
 				FBA2D68B1DBF9BD400728078 /* ComplicationController.swift in Sources */,
 				FBA2D6C81DC054E200728078 /* WatchConnector.swift in Sources */,
