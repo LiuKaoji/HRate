@@ -8,7 +8,6 @@
 
 import Foundation
 import UIKit
-import ESTMusicIndicator
 
 class AudioCell: UITableViewCell{
     

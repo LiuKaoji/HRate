@@ -80,7 +80,6 @@
 		369BD51A29E93E0100CB6B97 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369BD51229E93E0100CB6B97 /* Toast.swift */; };
 		369BD51B29E93E0100CB6B97 /* RecordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369BD51329E93E0100CB6B97 /* RecordButton.swift */; };
 		36A8B44E2A0105D40065B48F /* OSTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3670ACE729EFFE110026F2B5 /* OSTimer.swift */; };
-		36A8B4522A0112DF0065B48F /* UIButton + NoRepeat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A8B4512A0112DF0065B48F /* UIButton + NoRepeat.swift */; };
 		36A8B4542A0119270065B48F /* UIButton + Extra.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A8B4532A0119270065B48F /* UIButton + Extra.swift */; };
 		36A8B4BC2A0172AC0065B48F /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36A8B4BB2A0172AC0065B48F /* MetalKit.framework */; };
 		36A8B4BE2A0172BC0065B48F /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36A8B4BD2A0172BC0065B48F /* Metal.framework */; };
@@ -244,7 +243,6 @@
 		369BD51129E93E0100CB6B97 /* Stack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
 		369BD51229E93E0100CB6B97 /* Toast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		369BD51329E93E0100CB6B97 /* RecordButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordButton.swift; sourceTree = "<group>"; };
-		36A8B4512A0112DF0065B48F /* UIButton + NoRepeat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton + NoRepeat.swift"; sourceTree = "<group>"; };
 		36A8B4532A0119270065B48F /* UIButton + Extra.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton + Extra.swift"; sourceTree = "<group>"; };
 		36A8B4BB2A0172AC0065B48F /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/iOSSupport/System/Library/Frameworks/MetalKit.framework; sourceTree = DEVELOPER_DIR; };
 		36A8B4BD2A0172BC0065B48F /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/Library/Frameworks/Metal.framework; sourceTree = DEVELOPER_DIR; };
@@ -642,7 +640,6 @@
 				369BD50C29E93E0100CB6B97 /* Recorder.swift */,
 				369BD50D29E93E0100CB6B97 /* UIComponents */,
 				36C4581429F925EE00A06819 /* UITableView+emptyState.swift */,
-				36A8B4512A0112DF0065B48F /* UIButton + NoRepeat.swift */,
 				36A8B4532A0119270065B48F /* UIButton + Extra.swift */,
 			);
 			path = Utility;
@@ -1053,7 +1050,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$SRCROOT/HeartRate/Resources/R.swift/R.generated.swift",
+				$SRCROOT/HeartRate/Resources/R.swift/R.generated.swift,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1177,7 +1174,6 @@
 				36C4580F29F8FB6600A06819 /* PlayListView.swift in Sources */,
 				369BD51929E93E0100CB6B97 /* Stack.swift in Sources */,
 				36C3C69F29EE167500E8A4DB /* RxCastOrThrow.swift in Sources */,
-				36A8B4522A0112DF0065B48F /* UIButton + NoRepeat.swift in Sources */,
 				3670AD5429F51EDD0026F2B5 /* HRToast.swift in Sources */,
 				3670AD4329F3FFC50026F2B5 /* UserEnitity.swift in Sources */,
 				3668665329F7B79F009136B9 /* PlayerControlView.swift in Sources */,
