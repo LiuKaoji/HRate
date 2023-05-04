@@ -33,8 +33,8 @@ class BPMExporter {
         let audioURL = documentsDirectory.appendingPathComponent(audioEntity.name!)
         filesToShare.append(audioURL)
         
-        if let zipFileURL = createZipFromFiles(fileURLs: filesToShare, name: "BPMExport - \(audioEntity.name!).zip") {
-            shareFilesWithAirDrop(zipFileURL: zipFileURL, viewController: viewController)
+        if let fileURL = createZipFromFiles(fileURLs: filesToShare, name: "BPMExport - \(audioEntity.name!).zip") {
+            shareFilesWithAirDrop(fileURL: fileURL, viewController: viewController)
         } else {
             print("Error creating ZIP file.")
         }
@@ -62,19 +62,19 @@ class BPMExporter {
         let zipFileName = name
         let fileManager = FileManager.default
         let tempDirectoryURL = FileManager.default.temporaryDirectory
-        let zipFileURL = tempDirectoryURL.appendingPathComponent(zipFileName)
+        let fileURL = tempDirectoryURL.appendingPathComponent(zipFileName)
         
-        if fileManager.fileExists(atPath: zipFileURL.path){
+        if fileManager.fileExists(atPath: fileURL.path){
             do {
-                try fileManager.removeItem(at: zipFileURL)
+                try fileManager.removeItem(at: fileURL)
             } catch {
                 // Ignore error
             }
         }
         
         do {
-            try Zip.zipFiles(paths: fileURLs, zipFilePath: zipFileURL, password: nil, progress: nil)
-            return zipFileURL
+            try Zip.zipFiles(paths: fileURLs, zipFilePath: fileURL, password: nil, progress: nil)
+            return fileURL
         } catch {
             print("Error zipping files: \(error)")
             return nil
@@ -82,10 +82,11 @@ class BPMExporter {
     }
     
     // AirDrop投送
-    private static func shareFilesWithAirDrop(zipFileURL: URL, viewController: UIViewController) {
-        let activityViewController = UIActivityViewController(activityItems: [zipFileURL], applicationActivities: nil)
+    public static func shareFilesWithAirDrop(fileURL: URL, viewController: UIViewController) {
+        let activityViewController = UIActivityViewController(activityItems: [fileURL], applicationActivities: nil)
         BPMExporter.activityViewController = activityViewController
         activityViewController.excludedActivityTypes = [.assignToContact, .saveToCameraRoll, .openInIBooks, .markupAsPDF]
         viewController.present(activityViewController, animated: true, completion: nil)
     }
+    
 }

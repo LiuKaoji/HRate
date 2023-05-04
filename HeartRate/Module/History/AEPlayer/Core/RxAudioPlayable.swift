@@ -84,4 +84,10 @@ extension Reactive where Base: AudioPlayer {
         }
     }
 
+    public var fail: Observable<AudioPlayerError> {
+        delegate.methodInvoked(#selector(AudioPlayable.player(_:didFailWithError:))).map { a in
+            let value = try castOrThrow(AudioPlayerError.self, a[1])
+            return value
+        }
+    }
 }

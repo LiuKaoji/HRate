@@ -10,6 +10,18 @@ import Foundation
 import UIKit
 import SnapKit
 
+class NoHighlightButton: UIButton {
+    override var isHighlighted: Bool {
+        get {
+            return super.isHighlighted
+        }
+        set {
+            // Do nothing, effectively disabling the highlight effect
+        }
+    }
+}
+
+
 class PlayerControlsView: UIView {
     
     lazy var currentTimeLabel: UILabel = createLabel(text: "00:00", fontSize: 13, alignment: .center)
@@ -83,10 +95,11 @@ class PlayerControlsView: UIView {
         return label
     }
     
-    private func createButton(name: String) -> UIButton {
+    private func createButton(name: String) -> NoHighlightButton {
         let buttonImage = UIImage(named: name)?.withRenderingMode(.alwaysOriginal)
-        let button = UIButton(type: .system)
+        let button = NoHighlightButton(type: .system)
         button.setImage(buttonImage, for: .normal)
+        button.isHighlighted = false
         button.imageView?.contentMode = .scaleAspectFit
         return button
     }

@@ -8,11 +8,12 @@
 
 import AVFoundation
 import MediaPlayer
+import AVFAudio
 
 @objc public class AudioInfo: NSObject {
     @objc public enum URLType: Int {
         case local
-        case remote
+        case remote //占位数据
         case iPodMediaLibrary
     }
     
@@ -24,7 +25,11 @@ import MediaPlayer
     @objc public var url: URL
     @objc public var isValid: Bool = false
     @objc public var error: Error?
-    
+    @objc public var duration: TimeInterval = 0
+    @objc public var fileSize: UInt64 = 0
+    @objc public var coverImage: UIImage?
+
+
     @objc public init(url: URL) {
         self.url = url
         self.urlType = AudioInfo.determineURLType(from: url)
@@ -43,22 +48,28 @@ import MediaPlayer
         }
     }
     
+
     private func getAudioInfo(from url: URL) {
-        let asset = AVURLAsset(url: url)
         
-        if let audioTrack = asset.tracks(withMediaType: .audio).first {
-            sampleRate = Double(audioTrack.naturalTimeScale)
-            bitRate = Double(audioTrack.estimatedDataRate)
-            channels = audioTrack.formatDescriptions.compactMap { (formatDescription) -> Int? in
-                let format = CMAudioFormatDescriptionGetStreamBasicDescription(formatDescription as! CMAudioFormatDescription)
-                return Int(format?.pointee.mChannelsPerFrame ?? 0)
-            }.first ?? 0
+        let fileManager = FileManager.default
+        let asset = AVURLAsset(url: url)
+
+        do {
+            let audioFile = try AVAudioFile(forReading: url)
+            sampleRate = audioFile.fileFormat.sampleRate
+            bitRate = audioFile.processingFormat.settings[AVSampleRateConverterAudioQualityKey] as? Double ?? 0
+            channels = Int(audioFile.fileFormat.channelCount)
+            duration = Double(audioFile.length / Int64(audioFile.fileFormat.sampleRate))
+            fileSize = getFileSize(from: url)
+            coverImage = getCoverImage(from: asset)
             isValid = true
-        } else {
+        } catch {
+            print("Error reading audio file: \(error)")
             isValid = false
-            error = NSError(domain: "AudioInfoError", code: 1, userInfo: [NSLocalizedDescriptionKey: "Unable to load audio track"])
+            self.error = NSError(domain: "AudioInfoError", code: 1, userInfo: [NSLocalizedDescriptionKey: "Unable to load audio track"])
         }
     }
+
     
     private static func extractFileName(from url: URL, urlType: URLType) -> String {
         switch urlType {
@@ -81,4 +92,23 @@ import MediaPlayer
         let fileName = asset.url.lastPathComponent
         return fileName
     }
+    
+    private func getFileSize(from url: URL) -> UInt64 {
+        guard url.scheme != "ipod-library" else { return 0 }
+
+        guard let dict = try? FileManager.default.attributesOfItem(atPath: url.path) as NSDictionary else { return 0 }
+        
+        return UInt64(dict.fileSize())
+    }
+
+    private func getCoverImage(from asset: AVAsset) -> UIImage? {
+        let metadata = asset.metadata(forFormat: AVMetadataFormat.id3Metadata)
+        for item in metadata {
+            if let key = item.commonKey, key.rawValue == "artwork", let imageData = item.dataValue {
+                return UIImage(data: imageData)
+            }
+        }
+        return nil
+    }
+
 }

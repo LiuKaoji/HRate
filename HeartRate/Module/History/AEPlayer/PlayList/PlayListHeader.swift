@@ -10,13 +10,14 @@ import Foundation
 import UIKit
 
 class PlayListHeader: UIView {
+    static var selectedIndex = 0
     private var titleLabel: UILabel!
     private var fileCountLabel: UILabel!
     private var descriptionLabel: UILabel!
-
-    func configure(fileCount: Int, description: String) {
+    public var segmentedControl: UISegmentedControl!
+    
+    func configure(fileCount: Int) {
         fileCountLabel.text = "(\(fileCount))"
-        descriptionLabel.text = description
     }
 
     override init(frame: CGRect) {
@@ -30,38 +31,27 @@ class PlayListHeader: UIView {
     }
 
     private func setupUI() {
-        // Title label
-        titleLabel = UILabel()
-        titleLabel.font = UIFont.systemFont(ofSize: 22, weight: .bold)
-        titleLabel.textColor = .white
-        titleLabel.text = "播放列表"
-        addSubview(titleLabel)
-        titleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(10)
-            make.left.equalToSuperview().offset(16)
+    
+        // Segmented control
+        segmentedControl = UISegmentedControl(items: ["已录制", "媒体库"])
+        segmentedControl.selectedSegmentIndex =  PlayListHeader.selectedIndex
+        addSubview(segmentedControl)
+        segmentedControl.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(8)
+            make.centerX.equalToSuperview()
+            make.width.equalTo(200)
+            make.height.equalTo(30)
         }
 
         // File count label
         fileCountLabel = UILabel()
-        fileCountLabel.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        fileCountLabel.font = UIFont.systemFont(ofSize: 13, weight: .medium)
         fileCountLabel.textColor = .white
         addSubview(fileCountLabel)
         fileCountLabel.snp.makeConstraints { make in
-            make.centerY.equalTo(titleLabel.snp.centerY).offset(4)
-            make.left.equalTo(titleLabel.snp.right).offset(4)
+            make.centerX.equalToSuperview()
+            make.top.equalTo(segmentedControl.snp.bottom).offset(10)
         }
 
-        // Description label
-        descriptionLabel = UILabel()
-        descriptionLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        descriptionLabel.textColor = .white
-        descriptionLabel.numberOfLines = 0
-        addSubview(descriptionLabel)
-        descriptionLabel.snp.makeConstraints { make in
-            make.top.equalTo(fileCountLabel.snp.bottom).offset(4)
-            make.left.equalTo(titleLabel)
-            make.right.equalToSuperview().offset(-16)
-            make.bottom.equalToSuperview().offset(-8)
-        }
     }
 }

@@ -32,7 +32,7 @@ struct BPMViewConfig {
     
     // BarChartView
     static let axisMinimum: Double = 60
-    static let axisMaximum: Double = 210.0
+    static let axisMaximum: Double = 220.0
     static let noDataTextColor = UIColor.white
     static let noDataText = "佩戴手表再点击检测心率"
     static let noDataText2 = "当前音频位置无心率数据"

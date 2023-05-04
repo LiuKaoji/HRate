@@ -54,6 +54,7 @@ extension Reactive where Base: BPMView {
                 view.recordButton.buttonColor = .red
                 view.historyButton.isHidden = true
                 view.userInfoButton.isHidden = true
+                view.levelMeterView.isHidden = false
             }
             
             func resetUI(){
@@ -63,7 +64,7 @@ extension Reactive where Base: BPMView {
                 view.recordButton.buttonColor = .white
                 view.historyButton.isHidden = false
                 view.userInfoButton.isHidden = false
-            }
+                view.levelMeterView.isHidden = true            }
         }
     }
 }
@@ -141,6 +142,14 @@ extension Reactive where Base: SpectrumView {
     var spectrum: Binder<[Float]> {
         return Binder(base) { view, spectrum in
             view.updateSpectrum(with: spectrum)
+        }
+    }
+}
+
+extension Reactive where Base: LevelMeterView {
+    var state: Binder<AudioLevelProvider> {
+        return Binder(base) { view, provider in
+            view.levelProvider = provider
         }
     }
 }

@@ -15,33 +15,26 @@ import Foundation
     case paused
     case stopped
     case errorOccured
+    case finished
 }
+
 
 @objc public enum AudioPlayerError: Int {
-    case audioFileError = 0
-    case audioEngineError
-    case audioPlayerError
-    
-    var message: String {
-        switch self {
-        case .audioFileError:
-            return "Audio File Error"
-        case .audioEngineError:
-            return "Audio Engine Error"
-        case .audioPlayerError:
-            return "Audio Player Error"
-        }
-    }
-    
-    var messageCN: String {
-        switch self {
-        case .audioFileError:
-            return "文件打开失败"
-        case .audioEngineError:
-            return "音频引擎错误"
-        case .audioPlayerError:
-            return "播放器错误"
-        }
-    }
-}
-
+      case audioEngineError
+      case invalidURL
+      case fileReadingError
+      case otherError
+      
+      public func message()-> String {
+          switch self {
+          case .audioEngineError:
+              return "音频引擎错误。"
+          case .invalidURL:
+              return "无效的URL。"
+          case .fileReadingError:
+              return "文件读取错误。"
+          case .otherError:
+              return "其他错误。"
+          }
+      }
+  }

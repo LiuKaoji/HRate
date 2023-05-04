@@ -4,7 +4,7 @@ import SnapKit
 
 class AEPlayerView: UIView {
     
-    private let bgImgView = createBgImgView()
+    public let bgImgView = createBgImgView()
     private let visualEffectView = createVisualEffectView()
     public let backButton = createBackButton()
     public let shareButton = createShareButton()

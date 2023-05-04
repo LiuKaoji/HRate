@@ -28,7 +28,7 @@ class AlbumInfoView: UIView {
     }
     
     private func setupAlbumInfoView() {
-        let contentViews = [albumCoverView, albumView, titleLabel, infoLabel]
+        let contentViews = [albumCoverView, albumView.view, titleLabel, infoLabel]
         contentViews.forEach({ addSubview($0) })
         
         infoLabel.font = .systemFont(ofSize: 13)
@@ -41,7 +41,7 @@ class AlbumInfoView: UIView {
             make.height.equalTo(albumCoverView.snp.width)
         }
 
-        albumView.snp.makeConstraints { make in
+        albumView.view.snp.makeConstraints { make in
             make.edges.equalTo(albumCoverView)
         }
 

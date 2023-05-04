@@ -24,6 +24,7 @@ class AEPlayerController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.navigationBar.isHidden = false
+        PlayListHeader.selectedIndex = 0
     }
 
     override func viewDidLoad() {
@@ -49,33 +50,51 @@ class AEPlayerController: UIViewController {
     private func setupBindings() {
         // 播放暂停按钮
         playerView.controlsView.playPauseButton.rxTapClosure()
-            .bind(to: viewModel.playPauseButtonTapped)
+            .bind(to: viewModel.playPauseTapped)
             .disposed(by: disposeBag)
         
         // 上一首按钮
         playerView.controlsView.prevButton.rxTapClosure()
-            .bind(to: viewModel.previousButtonTapped)
+            .bind(to: viewModel.previousTapped)
             .disposed(by: disposeBag)
         
         // 下一首按钮
         playerView.controlsView.nextButton.rxTapClosure()
-            .bind(to: viewModel.nextButtonTapped)
+            .bind(to: viewModel.nextTapped)
             .disposed(by: disposeBag)
         
         // 循环按钮
         playerView.controlsView.loopButton.rxTapClosure()
-            .bind(to: viewModel.loopButtonTapped)
+            .bind(to: viewModel.loopTapped)
             .disposed(by: disposeBag)
         
         // 播放列表按钮
         playerView.controlsView.playlistButton.rxTapClosure()
-            .bind(to: viewModel.playlistButtonTapped)
+            .bind(to: viewModel.playlisTapped)
             .disposed(by: disposeBag)
         
         // 播放进度滑块
         playerView.controlsView.slider.rx.value
             .bind(to: viewModel.sliderValueChanged)
             .disposed(by: disposeBag)
+        
+        playerView.controlsView.slider.rx.controlEvent(.touchDown)
+            .bind(to: viewModel.sliderTouchDown)
+            .disposed(by: disposeBag)
+        
+        playerView.controlsView.slider.rx.controlEvent(.touchUpOutside)
+            .bind(to: viewModel.sliderTouchOutside)
+            .disposed(by: disposeBag)
+
+        playerView.controlsView.slider.rx.controlEvent(.touchCancel)
+            .bind(to: viewModel.sliderTouchCancel)
+            .disposed(by: disposeBag)
+        
+        
+        playerView.controlsView.slider.rx.controlEvent(.touchUpInside)
+            .bind(to: viewModel.sliderTouchUpInside)
+            .disposed(by: disposeBag)
+        
         
         // ViewModel -> View
         viewModel.title.asDriver()
@@ -85,6 +104,15 @@ class AEPlayerController: UIViewController {
         viewModel.fileInfo.asDriver()
             .drive(playerView.albumInfoView.infoLabel.rx.text)
             .disposed(by: disposeBag)
+        
+        viewModel.coverImage.asDriver()
+            .drive(playerView.albumInfoView.albumView.imageViewNode.rx.image)
+            .disposed(by: disposeBag)
+        
+        viewModel.coverImage.asDriver()
+            .drive(playerView.bgImgView.rx.image)
+            .disposed(by: disposeBag)
+        
         
         viewModel.currentTime.asDriver()
             .drive(playerView.controlsView.currentTimeLabel.rx.text)
@@ -117,13 +145,19 @@ class AEPlayerController: UIViewController {
             })
             .disposed(by: disposeBag)
         
+        viewModel.modeImage.asDriver()
+            .drive(onNext: { [weak self] image in
+                self?.playerView.controlsView.loopButton.setImage(image, for: .normal)
+            })
+            .disposed(by: disposeBag)
+        
         
         viewModel.isRotating.asDriver()
             .drive(onNext: { [weak self] isRotating in
                 if isRotating {
-                    self?.playerView.albumInfoView.albumView.imageView.startRotate()
+                    self?.playerView.albumInfoView.albumView.imageViewNode.startRotate()
                 } else {
-                    self?.playerView.albumInfoView.albumView.imageView.pauseRotate()
+                    self?.playerView.albumInfoView.albumView.imageViewNode.pauseRotate()
                 }
             })
             .disposed(by: disposeBag)
@@ -139,10 +173,26 @@ class AEPlayerController: UIViewController {
         playerView.shareButton.rxTapClosure()
             .subscribe(onNext: { [weak self]  in
                 guard let self = self, self.viewModel.audioEntities.value.count > 0  else { return }
-                let audio  = self.viewModel.audioEntities.value[self.viewModel.currentIndex.value]
-                BPMExporter.exportAndShare(audioEntity: audio, viewController: self)
+                guard let audio = self.viewModel.audioEntities.value[self.viewModel.currentIndex.value] as? AudioEntity else { return }
                 
+                let audioURL = audio.audioURL()
+                if audioURL.scheme == "ipod-library"{
+                    AudioLibraryManager.shared.exportAudio(at: audioURL) { result in
+                        AudioLibraryManager.shared.exportAudio(at: audioURL) { result in
+                            switch result {
+                            case .success(let outputURL):
+                                print("Audio export succeeded. Output URL: \(outputURL)")
+                                BPMExporter.shareFilesWithAirDrop(fileURL: outputURL, viewController: self)
+                            case .failure(_):
+                                HRToast(message: "文件导出失败", type: .error)
+                            }
+                        }
+                    }
+                }else{
+                    BPMExporter.exportAndShare(audioEntity: audio, viewController: self)
+                }
             })
             .disposed(by: disposeBag)
+
     }
 }

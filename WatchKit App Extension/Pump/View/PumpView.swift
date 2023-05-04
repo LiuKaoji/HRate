@@ -18,9 +18,9 @@ struct PumpView: View {
         VStack(alignment: .leading, spacing: 0) {
             
             Text(timerManager.timeStr)
-                .font(.system(size: 14))
+                .font(.system(size: 17))
                 .foregroundColor(.yellow)
-                .padding(.top, 8)
+                .padding(.top, 0)
                 .fixedSize()
             
             PumpZonesView(currentHeartRate: bpmCalculator.nowBPM)
@@ -31,7 +31,7 @@ struct PumpView: View {
                 PumpDescriptionView(currentHeartRate: bpmCalculator.nowBPM, geometry: geometry)
             }
             .frame(height: 40)
-            .padding(.top, 8)
+            .padding(.top, 0)
             Spacer(minLength: 0)
             
             HStack {
@@ -54,7 +54,7 @@ struct PumpView: View {
                 }
             }
             .padding(.top, 8)
-            .padding(.bottom, 8)
+            .padding(.bottom, 0)
         }
         .padding(.horizontal)
     }

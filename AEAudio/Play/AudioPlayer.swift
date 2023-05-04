@@ -19,6 +19,8 @@ import MediaPlayer
     @objc optional func player(_ player: AudioPlayer, didUpdateDuration duration: TimeInterval)
     @objc optional func player(_ player: AudioPlayer, didUpdateFrequencyData data: [Float])
     @objc optional func player(_ player: AudioPlayer, didUpdateAudioInfo info: AudioInfo)
+    @objc optional func player(_ player: AudioPlayer, didFailWithError error: AudioPlayerError)
+
 }
 
 @objc public class AudioPlayer: NSObject {
@@ -40,7 +42,7 @@ import MediaPlayer
     public static let shared = AudioPlayer()
     public weak var delegate: AudioPlayable?
     
-    public let defaultSampleRate: Double = 44100
+    public var fileSampleRate: Double = 44100
     
     public var status: AudioPlayerStatus = .idle {
         didSet {
@@ -49,11 +51,11 @@ import MediaPlayer
     }
     
     public var duration: TimeInterval {
-        TimeInterval(totalAudioFrameLength) / defaultSampleRate
+        TimeInterval(totalAudioFrameLength) / fileSampleRate
     }
     
     public var currentTime: TimeInterval {
-        TimeInterval(currentAudioFramePosition) / defaultSampleRate
+        TimeInterval(currentAudioFramePosition) / fileSampleRate
     }
     
     public var pitch: Float {
@@ -81,7 +83,7 @@ import MediaPlayer
         fftSetup = vDSP_create_fftsetup(vDSP_Length(log2(Float(fftSize))), FFTRadix(kFFTRadix2))
         NotificationCenter.default.addObserver(self, selector: #selector(appDidEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(appWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
-        
+
     }
     
     deinit {
@@ -106,10 +108,10 @@ private extension AudioPlayer {
         
         audioEngine.mainMixerNode.installTap(onBus: 0, bufferSize: AVAudioFrameCount(fftSize), format: audioEngine.mainMixerNode.outputFormat(forBus: 0)) { [weak self] buffer, _ in
             guard let strongSelf = self else { return }
-            guard let defaultSampleRate = self?.defaultSampleRate else {
+            guard let fileSampleRate = self?.fileSampleRate else {
                 return
             }
-            let convertedCount = Double(buffer.frameLength) * (defaultSampleRate / buffer.format.sampleRate)
+            let convertedCount = Double(buffer.frameLength) * (fileSampleRate / buffer.format.sampleRate)
             strongSelf.currentAudioFramePosition += AVAudioFramePosition(convertedCount)
             
             DispatchQueue.global(qos: .userInitiated).async {
@@ -122,17 +124,22 @@ private extension AudioPlayer {
     }
     
     func prepareAudioFile(with url: URL) {
-        sourceFile = try? AVAudioFile(forReading: url)
+        do {
+            sourceFile = try AVAudioFile(forReading: url)
+        } catch {
+            delegate?.player?(self, didFailWithError: .fileReadingError)
+            return
+        }
         format = sourceFile?.processingFormat
-        
+        fileSampleRate = sourceFile?.fileFormat.sampleRate ?? 44100.0
         guard let sourceFile = sourceFile else {
             return
         }
-        let convertedFrameLength = Double(sourceFile.length) * (defaultSampleRate / Double(sourceFile.fileFormat.sampleRate))
+        let convertedFrameLength = Double(sourceFile.length) * (fileSampleRate / Double(sourceFile.fileFormat.sampleRate))
         totalAudioFrameLength = AVAudioFramePosition(convertedFrameLength)
         status = .prepared
         
-        let totalTime = Double(totalAudioFrameLength) / defaultSampleRate
+        let totalTime = Double(totalAudioFrameLength) / fileSampleRate
         self.totalTime = totalTime
         delegate?.player?(self, didUpdateDuration: duration)
         
@@ -151,6 +158,7 @@ private extension AudioPlayer {
         do {
             try audioEngine.start()
         } catch {
+            delegate?.player?(self, didFailWithError: .audioEngineError)
             print(AudioPlayerError.audioEngineError.message)
             return
         }
@@ -161,15 +169,16 @@ private extension AudioPlayer {
         let isFinished = currentAudioFramePosition >= totalAudioFrameLength
         if isFinished {
             stop()
+            status = .finished // 设置状态为播放完成
         }
         
-        let currentTime = Double(currentAudioFramePosition) / defaultSampleRate
+        let currentTime = Double(currentAudioFramePosition) / fileSampleRate
         delegate?.player?(self, didUpdateTime: currentTime)
         MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = currentTime
     }
     
     func addAudioPlayerNodeTimer() {
-        audioPlayerNodeTimer = OSTimer.init(loop: 1.0, timerCallback: { _ in
+        audioPlayerNodeTimer = OSTimer.init(loop: 1.0, timerCallback: { loop in
             self.updateAudioPlayerNodeValue()
         })
         audioPlayerNodeTimer?.start()
@@ -219,7 +228,7 @@ extension AudioPlayer {
         audioPlayerNode.stop()
         
         let seekToTime = min(max(0, time), duration)
-        currentAudioFramePosition = AVAudioFramePosition(seekToTime * defaultSampleRate)
+        currentAudioFramePosition = AVAudioFramePosition(seekToTime * fileSampleRate)
         
         updateAudioPlayerNodeValue()
         

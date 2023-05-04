@@ -9,6 +9,7 @@
 import Foundation
 import AEAudio
 class PlayListView: UIView, UITableViewDelegate {
+    
     private var backgroundView: UIView!
     private var containerView: UIView!
     private var tableView: UITableView!
@@ -18,6 +19,7 @@ class PlayListView: UIView, UITableViewDelegate {
     private var visualEffectView: UIVisualEffectView!
     private var footLine: UIView!
     private var headLine: UIView!
+
     private let viewModel: AudioPlayerViewModel!
     private let disposeBag = DisposeBag()
 
@@ -67,7 +69,6 @@ class PlayListView: UIView, UITableViewDelegate {
         // Header view
         headerView = PlayListHeader()
         containerView.addSubview(headerView)
-        headerView.configure(fileCount: 0, description: "音频与心率及消耗关联.")
         headerView.snp.makeConstraints { make in
             make.top.left.right.equalToSuperview()
             make.height.equalTo(80)
@@ -114,6 +115,8 @@ class PlayListView: UIView, UITableViewDelegate {
             make.top.equalToSuperview()
         }
         
+        headerView.segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
+        
         self.layoutIfNeeded()
     }
     
@@ -138,22 +141,17 @@ class PlayListView: UIView, UITableViewDelegate {
         viewModel.audioEntities
             .bind(to: tableView.rx.items(cellIdentifier: "AudioCell", cellType: AudioCell.self)) { [weak self] (row, element, cell) in
                 guard let strongSelf = self else { return }
-                cell.configure(with: element, isPlaying: (row == strongSelf.viewModel.currentIndex.value))
+                guard let audioEntity = element as? AudioEntity else { return }
+                cell.configure(with: audioEntity, isPlaying: (row == strongSelf.viewModel.currentIndex.value))
                 cell.updateMusicIndicator(isPlaying: (row == strongSelf.viewModel.currentIndex.value))
             }
             .disposed(by: disposeBag)
         
-        viewModel.audioEntities
-               .subscribe(onNext: { [weak self] audioEntities in
-                   guard let strongSelf = self else { return }
-                   strongSelf.headerView.configure(fileCount: audioEntities.count, description: "音频与心率及消耗关联.")
-               })
-               .disposed(by: disposeBag)
         
         viewModel.audioEntities
                 .subscribe(onNext: { [weak self] audioEntities in
                     guard let strongSelf = self else { return }
-                    strongSelf.headerView.configure(fileCount: audioEntities.count, description: "音频与心率及消耗关联.")
+                    strongSelf.headerView.configure(fileCount: audioEntities.count)
                     
                     // Show empty label when there are no files
                     if audioEntities.count == 0 {
@@ -166,6 +164,21 @@ class PlayListView: UIView, UITableViewDelegate {
                 })
                 .disposed(by: disposeBag)
     }
+    
+    @objc private func segmentedControlValueChanged() {
+        switch headerView.segmentedControl.selectedSegmentIndex {
+        case 0:
+            // 已录制
+            viewModel.switchToRecordedList()
+        case 1:
+            // 媒体库
+            viewModel.switchToMediaLibraryList()
+        default:
+            break
+        }
+        PlayListHeader.selectedIndex = headerView.segmentedControl.selectedSegmentIndex
+    }
+
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60

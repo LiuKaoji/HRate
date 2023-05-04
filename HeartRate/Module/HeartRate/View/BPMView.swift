@@ -9,7 +9,7 @@
 import Foundation
 import KDCircularProgress
 import Charts
-
+import AEAudio
 
 class BPMView: UIView {
     
@@ -68,6 +68,13 @@ class BPMView: UIView {
         return view
     }()
     
+    lazy var levelMeterView: LevelMeterView = { // 小屏幕显示容器
+        let view = LevelMeterView()
+        view.layer.cornerRadius = 4
+        view.layer.masksToBounds = true
+        return view
+    }()
+    
     lazy var chart: BarChartView = { // 心率历史记录图表
         let chart = BarChartView()
         chart.noDataTextColor = BPMViewConfig.noDataTextColor
@@ -102,7 +109,7 @@ class BPMView: UIView {
     
     lazy var historyButton: UIButton = { // 历史记录按钮
         let button = UIButton()
-        button.setImage(R.image.usB(), for: .normal)
+        button.setImage(R.image.history(), for: .normal)
         return button
     }()
     
@@ -133,6 +140,7 @@ class BPMView: UIView {
         addSubview(userInfoButton)
         addSubview(historyButton)
         addSubview(containerForSmallDisplay)
+        addSubview(levelMeterView)
         
         verticalStack.addArrangedSubview(nowLabel)
         verticalStack.addArrangedSubview(timeLabel)
@@ -219,6 +227,13 @@ class BPMView: UIView {
             make.top.left.right.equalToSuperview()
             make.bottom.equalTo(recordButton.snp.top)
         }
+        
+        levelMeterView.snp.makeConstraints { (make) in
+            make.centerX.equalToSuperview()
+            make.width.equalTo(80)
+            make.height.equalTo(20)
+            make.top.equalTo(avgBar.snp.bottom).offset(10)
+        }
     }
     
     //MARK: - 圆环
@@ -270,5 +285,8 @@ extension BPMView {
         historyButton.rxTapClosure().bind(to: viewModel.historyButtonTapped).disposed(by: disposeBag)
         
         viewModel.isRecording.bind(to: self.deviceView.rx.isHidden).disposed(by: disposeBag)
+        
+        viewModel.levelProvider.bind(to: self.levelMeterView.rx.levelProvider).disposed(by: disposeBag)
+        
     }
 }

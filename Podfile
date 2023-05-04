@@ -16,7 +16,7 @@ target 'HRate' do
   pod 'Zip', '~> 2.1'
   pod 'Eureka'
   pod 'R.swift', '~> 5.0'  # https://github.com/mac-cain13/R.swift
-
+  pod 'Texture', '>= 2.0'
 end
 
 post_install do |installer|
