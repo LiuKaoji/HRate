@@ -32,10 +32,10 @@ class BaseAudioPlayerViewModel {
     var totalTime = BehaviorRelay(value: "00:00")
     var playPauseImage = BehaviorRelay.init(value: R.image.play()?.withRenderingMode(.alwaysOriginal))
     var modeImage = BehaviorRelay.init(value: R.image.repeatAll()?.withRenderingMode(.alwaysOriginal))
-    var coverImage = BehaviorRelay.init(value: R.image.backgroundJpg()?.withRenderingMode(.alwaysOriginal))
+    var coverImage = BehaviorRelay.init(value: R.image.cover()?.withRenderingMode(.alwaysOriginal))
     
     
-    lazy var fftData: BehaviorRelay<[Float]> = BehaviorRelay.init(value: [])
+    lazy var fftData: BehaviorRelay<[[Float]]> = BehaviorRelay.init(value: [])
     let chartBPMData = BehaviorRelay<[Int]>(value: [])
     var sliderValue = BehaviorRelay<Float>(value: 0.0)
     var progress = BehaviorRelay(value: Float(0.0))
@@ -149,17 +149,26 @@ class AudioPlayerViewModel: BaseAudioPlayerViewModel {
             .disposed(by: disposeBag)
         
         reactivePlayer.info.map({ info ->String in
-            "\(String.init(format: "%.1fkHz", info.sampleRate/100.0))"
+            "\(String.init(format: "%.1fkHz", info.sampleRate/1000.0))"
         })
         .bind(to: fileInfo)
         .disposed(by: disposeBag)
         
         reactivePlayer.info.map({ info -> UIImage? in
-            info.coverImage ?? R.image.backgroundJpg()
+            info.coverImage ?? R.image.cover()
         })
         .bind(to: coverImage)
         .disposed(by: disposeBag)
         
+        reactivePlayer.previous.subscribe { _ in
+            self.playPrevious()
+        }
+        .disposed(by: disposeBag)
+        
+        reactivePlayer.next.subscribe { _ in
+            self.playNext()
+        }
+        .disposed(by: disposeBag)
         
         // 读取心率数据更新UI
         reactivePlayer.currentTime
@@ -300,7 +309,7 @@ class AudioPlayerViewModel: BaseAudioPlayerViewModel {
             if currentIndex.value == index && player.status == .playing {
                 return
             }
-            
+            title.accept(audioEntity.name ?? "未知")
             currentIndex.accept(index)
             player.play(with: audioEntity.audioURL())
         } else {

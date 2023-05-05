@@ -1,6 +1,7 @@
 import Foundation
 import UIKit
 import SnapKit
+import AEAudio
 
 class AEPlayerView: UIView {
     
@@ -10,7 +11,8 @@ class AEPlayerView: UIView {
     public let shareButton = createShareButton()
     public let albumInfoView = AlbumInfoView()
     public let controlsView = PlayerControlsView()
-    public let chartView = AEChartView(height: 400)
+    public let chartView = AEChartView(frame: .zero)
+    lazy var playTitle: UILabel = UILabel()
     
     private lazy var parallaxScrollView: ParallaxScrollView = {
         let items = [
@@ -33,13 +35,19 @@ class AEPlayerView: UIView {
     }
     
     private func setupViews() {
+        
+        playTitle.text = "HRate"
+        playTitle.textColor = UIColor.init(white: 1.0, alpha: 0.8)
+        playTitle.font = .boldSystemFont(ofSize: 18)
+        playTitle.textAlignment = .center
+        
         addSubview(bgImgView)
         addSubview(visualEffectView)
         addSubview(parallaxScrollView)
         addSubview(controlsView)
         addSubview(backButton)
         addSubview(shareButton)
-        
+        addSubview(playTitle)
     
         bgImgView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -62,13 +70,14 @@ class AEPlayerView: UIView {
         
         albumInfoView.snp.makeConstraints { make in
             make.width.equalToSuperview()
-            make.left.top.bottom.equalTo(parallaxScrollView)
+            make.left.top.equalTo(parallaxScrollView)
+            make.bottom.equalTo(controlsView.snp.top).offset(-16)
         }
         
         chartView.snp.makeConstraints { make in
             make.width.equalToSuperview()
             make.centerX.centerY.equalToSuperview()
-            make.height.equalToSuperview().multipliedBy(0.6)
+            make.height.equalToSuperview().multipliedBy(0.7)
         }
         
         backButton.snp.makeConstraints { make in
@@ -81,6 +90,11 @@ class AEPlayerView: UIView {
             make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(10)
             make.right.equalTo(safeAreaLayoutGuide.snp.right).offset(-10)
             make.width.height.equalTo(44)
+        }
+        
+        playTitle.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.centerY.equalTo(backButton.snp.centerY)
         }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
@@ -107,7 +121,7 @@ class AEPlayerView: UIView {
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.masksToBounds = true
-        imageView.image = R.image.backgroundJpg()
+        imageView.image = R.image.cover()
         return imageView
     }
     

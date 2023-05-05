@@ -69,9 +69,9 @@ extension Reactive where Base: AudioPlayer {
     }
     
     /// 播放状态
-    public var frequencyData: Observable<[Float]> {
+    public var frequencyData: Observable<[[Float]]> {
         delegate.methodInvoked(#selector(AudioPlayable.player(_:didUpdateFrequencyData:))).map { a in
-            let value = try castOrThrow([Float].self, a[1])
+            let value = try castOrThrow([[Float]].self, a[1])
             return value
         }
     }
@@ -88,6 +88,18 @@ extension Reactive where Base: AudioPlayer {
         delegate.methodInvoked(#selector(AudioPlayable.player(_:didFailWithError:))).map { a in
             let value = try castOrThrow(AudioPlayerError.self, a[1])
             return value
+        }
+    }
+    
+    public var next: Observable<Void> {
+        delegate.methodInvoked(#selector(AudioPlayable.playerDidHandleNext)).map { a in
+            return
+        }
+    }
+    
+    public var previous: Observable<Void> {
+        delegate.methodInvoked(#selector(AudioPlayable.playerDidHandlePrevious)).map { a in
+            return
         }
     }
 }

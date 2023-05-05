@@ -139,9 +139,9 @@ extension Reactive where Base: PlaybackIndicator {
 
 // 录制历史: - 绑定FFT数据
 extension Reactive where Base: SpectrumView {
-    var spectrum: Binder<[Float]> {
-        return Binder(base) { view, spectrum in
-            view.updateSpectrum(with: spectrum)
+    var spectrum: Binder<[[Float]]> {
+        return Binder(base) { view, data in
+            view.spectra = data
         }
     }
 }

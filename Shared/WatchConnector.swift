@@ -158,7 +158,6 @@ class WatchConnector: NSObject, WCSessionDelegate {
         
         if activationState == .activated {
             DispatchQueue.main.async {
-                
                 self.sessionActivationCompletionHandlers.forEach { $0(session) }
                 self.sessionActivationCompletionHandlers.removeAll()
             }

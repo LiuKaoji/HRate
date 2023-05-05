@@ -65,7 +65,7 @@ class PlayerControlsView: UIView {
         slider.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.centerX.equalToSuperview()
-            make.width.equalToSuperview().multipliedBy(0.95)
+            make.width.equalToSuperview().inset(10)
         }
 
         currentTimeLabel.snp.makeConstraints { make in

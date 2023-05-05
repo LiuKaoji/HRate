@@ -195,7 +195,7 @@ class PlayListView: UIView, UITableViewDelegate {
     }
     
    @objc func show() {
-        SpectrumView.isEnable = false
+        
         guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
         window.addSubview(self)
         self.frame = window.bounds
@@ -217,7 +217,6 @@ class PlayListView: UIView, UITableViewDelegate {
             self.containerView.transform = CGAffineTransform(translationX: 0, y: height)
         }) { _ in
             self.removeFromSuperview()
-            SpectrumView.isEnable = true
         }
     }
 }

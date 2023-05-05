@@ -56,25 +56,24 @@ class AEChartView: UIView {
         return chart
     }()
     
-    init(height: CGFloat) {
-        super.init(frame: .zero)
-        backgroundColor = .clear
-        setupView(height: height)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupView()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupView(height: CGFloat) {
+    private func setupView() {
         addSubview(durationLabel)
         addSubview(chart)
         addSubview(bpmLable)
         
         chart.snp.makeConstraints { make in
-            make.bottom.equalToSuperview()
-            make.height.equalTo(150)
-            make.left.right.equalToSuperview()
+            make.centerY.equalToSuperview()
+            make.height.equalToSuperview().multipliedBy(0.8)
+            make.left.right.equalToSuperview().inset(30)
         }
         
         durationLabel.snp.makeConstraints { make in

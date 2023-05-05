@@ -17,10 +17,12 @@ import MediaPlayer
     @objc optional func player(_ player: AudioPlayer, didChangeStatus status: AudioPlayerStatus)
     @objc optional func player(_ player: AudioPlayer, didUpdateTime currentTime: TimeInterval)
     @objc optional func player(_ player: AudioPlayer, didUpdateDuration duration: TimeInterval)
-    @objc optional func player(_ player: AudioPlayer, didUpdateFrequencyData data: [Float])
+    @objc optional func player(_ player: AudioPlayer, didUpdateFrequencyData data: [[Float]])
     @objc optional func player(_ player: AudioPlayer, didUpdateAudioInfo info: AudioInfo)
     @objc optional func player(_ player: AudioPlayer, didFailWithError error: AudioPlayerError)
-
+    @objc optional func playerDidHandleNext()
+    @objc optional func playerDidHandlePrevious()
+    
 }
 
 @objc public class AudioPlayer: NSObject {
@@ -35,9 +37,10 @@ import MediaPlayer
     private var audioPlayerNodeTimer: OSTimer?
     private var currentAudioFramePosition: AVAudioFramePosition = 0
     private var totalAudioFrameLength: AVAudioFramePosition = 0
-    private let fftSize: Int = 1024 * 4
+    private let fftSize: Int = 1024
     private var fftSetup: FFTSetup?
-    public var analyzer: AudioAnalyzer!
+    public var analyzer: RealtimeAnalyzer!
+    public var playingInfo: AudioInfo?
     
     public static let shared = AudioPlayer()
     public weak var delegate: AudioPlayable?
@@ -83,11 +86,11 @@ import MediaPlayer
         fftSetup = vDSP_create_fftsetup(vDSP_Length(log2(Float(fftSize))), FFTRadix(kFFTRadix2))
         NotificationCenter.default.addObserver(self, selector: #selector(appDidEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(appWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
-
+        setupRemoteCommandCenter()
     }
     
     deinit {
-        clearNowPlayingInfoCenter()
+        teardownRemoteCommandCenter()
         NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.willEnterForegroundNotification, object: nil)
     }
@@ -104,7 +107,7 @@ private extension AudioPlayer {
             audioEngine.connect(nodes[count], to: nodes[count + 1], format: format)
         }
         
-        analyzer = AudioAnalyzer(fftSize: fftSize)
+        analyzer = RealtimeAnalyzer(fftSize: fftSize)
         
         audioEngine.mainMixerNode.installTap(onBus: 0, bufferSize: AVAudioFrameCount(fftSize), format: audioEngine.mainMixerNode.outputFormat(forBus: 0)) { [weak self] buffer, _ in
             guard let strongSelf = self else { return }
@@ -144,7 +147,9 @@ private extension AudioPlayer {
         delegate?.player?(self, didUpdateDuration: duration)
         
         let info = AudioInfo.init(url: url)
+        playingInfo = info
         delegate?.player?(self, didUpdateAudioInfo: info)
+        updateNowPlayingInfo()
     }
     
     func scheduleFile() {
@@ -215,7 +220,7 @@ extension AudioPlayer {
     }
     
     public func skipBackward(seconds: Double) {
-        let seekToTime = currentTime - seconds
+        let seekToTime = max(currentTime - seconds, 0)
         seek(to: seekToTime)
     }
     
@@ -223,7 +228,7 @@ extension AudioPlayer {
         guard let sourceFile = sourceFile else {
             return
         }
-    
+        
         let wasPlaying = audioPlayerNode.isPlaying
         audioPlayerNode.stop()
         
@@ -283,51 +288,72 @@ extension AudioPlayer {
         isAppActive = true
     }
     
-    func updateNowPlayingInfoCenter(title: String) {
-        let nowPlayingInfo: [String: Any] = [
-            MPMediaItemPropertyTitle: title, // 此处可以替换为实际音频标题
-            MPMediaItemPropertyArtist: "HRate", // 此处可以替换为实际音频作者
-            MPMediaItemPropertyPlaybackDuration: duration,
-            MPNowPlayingInfoPropertyElapsedPlaybackTime: currentTime,
-            MPNowPlayingInfoPropertyPlaybackRate: status == .playing ? 1.0 : 0.0
+    private func updateNowPlayingInfo() {
+        guard let info = self.playingInfo else { return }
+        
+        let currentTime = Double(currentAudioFramePosition) / fileSampleRate
+        
+        var nowPlayingInfo: [String: Any] = [
+            MPMediaItemPropertyTitle: info.fileName,
+            MPMediaItemPropertyPlaybackDuration: info.duration,
+            MPNowPlayingInfoPropertyElapsedPlaybackTime: currentTime
         ]
+        
+        // 如果 info.coverImage 非空，则创建 MPMediaItemArtwork 对象并添加到 nowPlayingInfo 字典中
+        if let coverImage = info.coverImage {
+            let artwork = MPMediaItemArtwork(boundsSize: coverImage.size) { _ in
+                return coverImage
+            }
+            nowPlayingInfo[MPMediaItemPropertyArtwork] = artwork
+        }
+        
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
     }
-
-    func setupRemoteCommandCenter() {
+    
+    
+    private func setupRemoteCommandCenter() {
+        
         let commandCenter = MPRemoteCommandCenter.shared()
-
-        commandCenter.playCommand.addTarget { [unowned self] _ in
-            self.resume()
-            return .success
-        }
-
-        commandCenter.pauseCommand.addTarget { [unowned self] _ in
-            self.pause()
-            return .success
-        }
-
-        commandCenter.nextTrackCommand.addTarget { [unowned self] _ in
-            self.skipForward(seconds: 15) // 你可以自定义跳跃的秒数
-            return .success
-        }
-
-        commandCenter.previousTrackCommand.addTarget { [unowned self] _ in
-            self.skipBackward(seconds: 15) // 你可以自定义跳跃的秒数
+        
+        commandCenter.playCommand.isEnabled = true
+        commandCenter.playCommand.addTarget { [weak self] _ in
+            self?.resume()
             return .success
         }
         
-        commandCenter.changePlaybackPositionCommand.addTarget { [unowned self] event in
+        commandCenter.pauseCommand.isEnabled = true
+        commandCenter.pauseCommand.addTarget { [weak self] _ in
+            self?.pause()
+            return .success
+        }
+        
+        commandCenter.nextTrackCommand.isEnabled = true
+        commandCenter.nextTrackCommand.addTarget { [unowned self] _ in
+            self.delegate?.playerDidHandleNext?()
+            return .success
+        }
+        
+        commandCenter.previousTrackCommand.isEnabled = true
+        commandCenter.previousTrackCommand.addTarget { [unowned self] _ in
+            self.delegate?.playerDidHandlePrevious?()
+            return .success
+        }
+        
+        commandCenter.changePlaybackPositionCommand.isEnabled = true
+        commandCenter.changePlaybackPositionCommand.addTarget { [weak self] event in
             if let event = event as? MPChangePlaybackPositionCommandEvent {
-                self.seek(to: event.positionTime)
+                self?.seek(to: event.positionTime)
                 return .success
             }
-            return .commandFailed
+            return .success
         }
-
     }
-
-    func clearNowPlayingInfoCenter() {
+    
+    private func teardownRemoteCommandCenter() {
+        let commandCenter = MPRemoteCommandCenter.shared()
+        commandCenter.playCommand.isEnabled = false
+        commandCenter.pauseCommand.isEnabled = false
+        commandCenter.changePlaybackPositionCommand.isEnabled = false
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nil
     }
 }

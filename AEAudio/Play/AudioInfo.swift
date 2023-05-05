@@ -88,9 +88,19 @@ import AVFAudio
     
     ///需要查询媒体库 此方法不通
     private static func extractFileNameFromMediaLibraryURL(_ url: URL) -> String {
-        let asset = AVURLAsset(url: url)
-        let fileName = asset.url.lastPathComponent
-        return fileName
+        // 创建一个媒体查询，它将返回所有的音乐项目
+        let query = MPMediaQuery.songs()
+        
+        // 检查查询结果中的每一个项目
+        for item in query.items ?? [] {
+            // 如果项目的 assetURL 与我们正在查找的 URL 匹配，返回项目的标题
+            if item.assetURL == url {
+                return item.title ?? "未知"
+            }
+        }
+        
+        // 如果没有找到匹配的项目，返回 nil
+        return "未知"
     }
     
     private func getFileSize(from url: URL) -> UInt64 {

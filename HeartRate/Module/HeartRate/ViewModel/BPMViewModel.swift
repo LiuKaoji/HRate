@@ -116,13 +116,6 @@ class BPMViewModel: NSObject {
                 self?.handleuserInfoButtonTapped()
             })
             .disposed(by: disposeBag)
-//
-//        // 心率监听状态
-//        tracker.state.subscribe { state in
-//        }
-//        .disposed(by: disposeBag)
-
-       
 
         // 心率数据回调
         tracker.workoutData.filter { $0 != nil }.map { $0! }.subscribe { [weak self] data in

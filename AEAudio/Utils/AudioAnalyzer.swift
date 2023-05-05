@@ -128,26 +128,38 @@ import Accelerate
     
     
     private func highlightWaveform(spectrum: [Float]) -> [Float] {
-        let scaleFactor: Float = 0.5 // 缩放因子，可调整
-        //1: 定义权重数组，数组中间的5表示自己的权重
-        //   可以随意修改，个数需要奇数
-        let weights: [Float] = [1, 3, 5, 7, 5, 3, 1]
-        let totalWeights = Float(weights.reduce(0, +))
-        let startIndex = weights.count / 2
-        //2: 开头几个不参与计算
-        var averagedSpectrum = Array(spectrum[0..<startIndex])
-        for i in startIndex..<spectrum.count - startIndex {
-            //3: zip作用: zip([a,b,c], [x,y,z]) -> [(a,x), (b,y), (c,z)]
-            let zipped = zip(Array(spectrum[i - startIndex...i + startIndex]), weights)
-            let averaged = zipped.reduce(0) { $0 + $1.0 * $1.1 } / totalWeights
+        let endIndex = frequencyBands
+        var averagedSpectrum = [Float]()
+        let startPointSmooth = 10
+        let endPointSmooth = 10 // 增加终点平滑系数
+        
+        for i in 0..<endIndex {
+            let weightFactor = 1.0 + pow(Float(i) / Float(frequencyBands), 3.0) * 20.0
+            let weightsSize = max(5, Int(weightFactor))
+            let weights = Array(repeating: 1.0, count: weightsSize)
+            
+            let totalWeights = Float(weights.count)
+            
+            let halfWeightsSize = weightsSize / 2
+            let windowStart = max(0, i - halfWeightsSize)
+            let windowEnd = min(spectrum.count, i + halfWeightsSize)
+            
+            let zipped = zip(Array(spectrum[windowStart..<windowEnd]), weights)
+            var averaged = zipped.map { $0.0 * Float($0.1) }.reduce(0, +) / totalWeights
+            
+            // 对起点前和终点前的数据点进行平滑处理
+            if i < startPointSmooth {
+                let factor = Float(i + 1) / Float(startPointSmooth + 1)
+                averaged *= factor
+            } else if i >= endIndex - endPointSmooth {
+                let factor = Float(endIndex - i) / Float(endPointSmooth + 1)
+                averaged *= factor * 7 // 增加终点权重系数
+            }
+            
             averagedSpectrum.append(averaged)
         }
-        //4：末尾几个不参与计算
-        averagedSpectrum.append(contentsOf: Array(spectrum.suffix(startIndex)))
         
-        // 应用缩放因子
-        let scaledSpectrum = averagedSpectrum.map { $0 * scaleFactor }
-        return scaledSpectrum
+        return averagedSpectrum
     }
 }
 

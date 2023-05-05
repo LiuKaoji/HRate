@@ -106,7 +106,7 @@ class AEPlayerController: UIViewController {
             .disposed(by: disposeBag)
         
         viewModel.coverImage.asDriver()
-            .drive(playerView.albumInfoView.albumView.imageViewNode.rx.image)
+            .drive(playerView.albumInfoView.albumView.imageNode.rx.image)
             .disposed(by: disposeBag)
         
         viewModel.coverImage.asDriver()
@@ -124,7 +124,7 @@ class AEPlayerController: UIViewController {
         
         
         viewModel.fftData.asDriver()
-            .drive(playerView.albumInfoView.albumView.rx.spectrum)
+            .drive(playerView.albumInfoView.specView.rx.spectrum)
             .disposed(by: disposeBag)
         
         viewModel.chartBPMData.asDriver()
@@ -155,9 +155,9 @@ class AEPlayerController: UIViewController {
         viewModel.isRotating.asDriver()
             .drive(onNext: { [weak self] isRotating in
                 if isRotating {
-                    self?.playerView.albumInfoView.albumView.imageViewNode.startRotate()
+                    self?.playerView.albumInfoView.albumView.imageNode.startRotate()
                 } else {
-                    self?.playerView.albumInfoView.albumView.imageViewNode.pauseRotate()
+                    self?.playerView.albumInfoView.albumView.imageNode.pauseRotate()
                 }
             })
             .disposed(by: disposeBag)

@@ -14,9 +14,11 @@ import AEAudio
 class AlbumInfoView: UIView {
     let albumView = createAlbumView()
     let albumCoverView: UIView = UIView()
-    
     lazy var titleLabel: UILabel = createLabel(fontSize: 18, alignment: .left)
     lazy var infoLabel: UILabel = createLabel(fontSize: 13, alignment: .left)
+    lazy var playTitle: UILabel = createLabel(fontSize: 18, alignment: .left)
+    
+    public let specView = SpectrumView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -28,7 +30,7 @@ class AlbumInfoView: UIView {
     }
     
     private func setupAlbumInfoView() {
-        let contentViews = [albumCoverView, albumView.view, titleLabel, infoLabel]
+        let contentViews = [albumCoverView, albumView.view, titleLabel, infoLabel, specView]
         contentViews.forEach({ addSubview($0) })
         
         infoLabel.font = .systemFont(ofSize: 13)
@@ -47,12 +49,18 @@ class AlbumInfoView: UIView {
 
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(albumCoverView.snp.bottom)
-            make.leading.trailing.equalToSuperview().inset(30)
+            make.leading.trailing.equalToSuperview().inset(40)
         }
 
         infoLabel.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(10)
-            make.leading.trailing.equalToSuperview().inset(30)
+            make.leading.trailing.equalToSuperview().inset(40)
+        }
+        
+        specView.snp.makeConstraints { make in
+            make.top.equalTo(infoLabel.snp.bottom).offset(10)
+            make.leading.trailing.equalToSuperview().inset(40)
+            make.bottom.equalToSuperview()
         }
     }
     
@@ -65,8 +73,8 @@ class AlbumInfoView: UIView {
         return label
     }
     
-    private static func createAlbumView() -> SpectrumView {
-        let view = SpectrumView()
+    private static func createAlbumView() -> CoverView {
+        let view = CoverView()
         view.backgroundColor = .clear
         return view
     }

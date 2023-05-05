@@ -35,6 +35,6 @@ struct BPMViewConfig {
     static let axisMaximum: Double = 220.0
     static let noDataTextColor = UIColor.white
     static let noDataText = "佩戴手表再点击检测心率"
-    static let noDataText2 = "当前音频位置无心率数据"
+    static let noDataText2 = "无心率数据记录"
     static let labelTextColor = UIColor.white
 }
