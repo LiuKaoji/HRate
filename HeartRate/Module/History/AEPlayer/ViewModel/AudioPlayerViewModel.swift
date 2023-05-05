@@ -149,7 +149,7 @@ class AudioPlayerViewModel: BaseAudioPlayerViewModel {
             .disposed(by: disposeBag)
         
         reactivePlayer.info.map({ info ->String in
-            "\(String.init(format: "%.1fkHz", info.sampleRate/3.0))"
+            "\(String.init(format: "%.1fkHz", info.sampleRate/100.0))"
         })
         .bind(to: fileInfo)
         .disposed(by: disposeBag)
