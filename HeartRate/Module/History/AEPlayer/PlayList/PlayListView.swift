@@ -19,10 +19,10 @@ class PlayListView: UIView, UITableViewDelegate {
     private var visualEffectView: UIVisualEffectView!
     private var footLine: UIView!
     private var headLine: UIView!
-
+    
     private let viewModel: AudioPlayerViewModel!
     private let disposeBag = DisposeBag()
-
+    
     init(viewModel: AudioPlayerViewModel, frame: CGRect) {
         self.viewModel = viewModel
         super.init(frame: frame)
@@ -30,12 +30,12 @@ class PlayListView: UIView, UITableViewDelegate {
         setupTableView()
         bindViewModel()
     }
-
+    
     required init?(coder: NSCoder) {
         self.viewModel = AudioPlayerViewModel()
         super.init(coder: coder)
     }
-
+    
     private func setupUI() {
         
         //点击空白处关闭
@@ -149,20 +149,37 @@ class PlayListView: UIView, UITableViewDelegate {
         
         
         viewModel.audioEntities
-                .subscribe(onNext: { [weak self] audioEntities in
-                    guard let strongSelf = self else { return }
-                    strongSelf.headerView.configure(fileCount: audioEntities.count)
-                    
-                    // Show empty label when there are no files
-                    if audioEntities.count == 0 {
-                        strongSelf.tableView.setEmptyStateViewVisible(true)
-                        strongSelf.tableView.separatorStyle = .none
-                    } else {
-                        strongSelf.tableView.setEmptyStateViewVisible(false)
-                        strongSelf.tableView.separatorStyle = .singleLine
-                    }
-                })
-                .disposed(by: disposeBag)
+            .subscribe(onNext: { [weak self] audioEntities in
+                guard let strongSelf = self else { return }
+                strongSelf.headerView.configure(fileCount: audioEntities.count)
+                
+                // Show empty label when there are no files
+                if audioEntities.count == 0 {
+                    strongSelf.tableView.setEmptyStateViewVisible(true)
+                    strongSelf.tableView.separatorStyle = .none
+                } else {
+                    strongSelf.tableView.setEmptyStateViewVisible(false)
+                    strongSelf.tableView.separatorStyle = .singleLine
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.currentIndex.subscribe { [weak self] index in
+            guard let self = self else { return }
+            let numberOfSections = self.tableView.numberOfSections
+            
+            if numberOfSections > 0 {
+                let numberOfRows = self.tableView.numberOfRows(inSection: 0)
+                
+                if numberOfRows > index {
+                    let indexPath = IndexPath(row: index, section: 0)
+                    self.tableView.scrollToRow(at: indexPath, at: .middle, animated: true)
+                }
+            }
+        }
+        .disposed(by: disposeBag)
+        
+        
     }
     
     @objc private func segmentedControlValueChanged() {
@@ -178,7 +195,7 @@ class PlayListView: UIView, UITableViewDelegate {
         }
         PlayListHeader.selectedIndex = headerView.segmentedControl.selectedSegmentIndex
     }
-
+    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
@@ -194,7 +211,7 @@ class PlayListView: UIView, UITableViewDelegate {
         hide()
     }
     
-   @objc func show() {
+    @objc func show() {
         
         guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
         window.addSubview(self)
@@ -207,6 +224,20 @@ class PlayListView: UIView, UITableViewDelegate {
         UIView.animate(withDuration: 0.3) {
             self.backgroundView.alpha = 1
             self.containerView.transform = .identity
+        }completion: { [weak self] complete in
+            
+            guard let self = self else { return }
+            let numberOfSections = self.tableView.numberOfSections
+            
+            let index = self.viewModel.currentIndex.value
+            if numberOfSections > 0 {
+                let numberOfRows = self.tableView.numberOfRows(inSection: 0)
+                
+                if numberOfRows > index {
+                    let indexPath = IndexPath(row: index, section: 0)
+                    self.tableView.scrollToRow(at: indexPath, at: .middle, animated: true)
+                }
+            }
         }
     }
     
@@ -223,7 +254,7 @@ class PlayListView: UIView, UITableViewDelegate {
     func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
         return headerView.segmentedControl.selectedSegmentIndex == 0
     }
-
+    
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return headerView.segmentedControl.selectedSegmentIndex == 0
     }
@@ -239,6 +270,4 @@ class PlayListView: UIView, UITableViewDelegate {
         configuration.performsFirstActionWithFullSwipe = false
         return configuration
     }
-
-
 }
