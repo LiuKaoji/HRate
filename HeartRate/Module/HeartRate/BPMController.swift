@@ -11,6 +11,7 @@ import UIKit
 import Charts
 import AEAudio
 import AVFAudio
+import WatchConnectivity
 
 class BPMController: UIViewController {
     
@@ -18,12 +19,19 @@ class BPMController: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
+    
+//    let session = RxWCSession()
+//    lazy var result = session.activate()
 
     // 双向绑定
     private lazy var viewModel = BPMViewModel()
 
     // 视图
     private lazy var bpmView = BPMView(frame: UIScreen.main.bounds)
+    
+    // dispose
+    private lazy var disposeBag = DisposeBag()
+
 
     // MARK: - Lifecycle
     override func viewWillAppear(_ animated: Bool) {
@@ -38,7 +46,7 @@ class BPMController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        AVAudioSession.switchToRecordMode()
         // 添加视图
         view.addSubview(bpmView)
         bpmView.snp.makeConstraints { make in
@@ -56,10 +64,27 @@ class BPMController: UIViewController {
             }
         }
         
-        // 弹出页面窗口
-        viewModel.presentScreen = { [weak self] vc in
-            self?.present(vc, animated: true)
+        viewModel.presentScreen = { [weak self]  info in
+            self?.present(info, animated: true)
         }
+        
+        
+//        session.isReachable
+//            .map { $0 ? "Is reachable" : "Is not reachable" }
+//            .subscribe(onNext: { text in
+//                print(text)
+//            })
+//            .disposed(by: disposeBag)
+//
+//        session.activationState
+//            .map { $0 == .activated ? "Activated" : "Not activated" }
+//            .subscribe(onNext: { text in
+//                print(text)
+//            })
+//            .disposed(by: disposeBag)
+//
+//
+//        print("Session was activated \(result)")
     }
 
 

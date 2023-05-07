@@ -55,7 +55,7 @@ class PlayListView: UIView, UITableViewDelegate {
         containerView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.bottom.equalToSuperview()
-            make.height.equalToSuperview().multipliedBy(0.6)
+            make.height.equalToSuperview().multipliedBy(0.8)
         }
         
         // Add visual effect view for blur effect
@@ -141,8 +141,8 @@ class PlayListView: UIView, UITableViewDelegate {
         viewModel.audioEntities
             .bind(to: tableView.rx.items(cellIdentifier: "AudioCell", cellType: AudioCell.self)) { [weak self] (row, element, cell) in
                 guard let strongSelf = self else { return }
-                guard let audioEntity = element as? AudioEntity else { return }
-                cell.configure(with: audioEntity, isPlaying: (row == strongSelf.viewModel.currentIndex.value))
+                let playable = element
+                cell.configure(with: playable, isPlaying: (row == strongSelf.viewModel.currentIndex.value))
                 cell.updateMusicIndicator(isPlaying: (row == strongSelf.viewModel.currentIndex.value))
             }
             .disposed(by: disposeBag)
@@ -186,7 +186,7 @@ class PlayListView: UIView, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        viewModel.playAudioEntity(viewModel.audioEntities.value[indexPath.row])
+        viewModel.playAudioEntity(indexPath.row, viewModel.audioEntities.value[indexPath.row])
         tableView.reloadData()
     }
     
@@ -219,4 +219,26 @@ class PlayListView: UIView, UITableViewDelegate {
             self.removeFromSuperview()
         }
     }
+    
+    func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
+        return headerView.segmentedControl.selectedSegmentIndex == 0
+    }
+
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return headerView.segmentedControl.selectedSegmentIndex == 0
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteAction = UIContextualAction(style: .destructive, title: "删除") { [weak self] (_, _, completionHandler) in
+            self?.viewModel.removeAudioEntity(at: indexPath.row)
+            tableView.reloadData()
+            completionHandler(true)
+        }
+        
+        let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+        configuration.performsFirstActionWithFullSwipe = false
+        return configuration
+    }
+
+
 }

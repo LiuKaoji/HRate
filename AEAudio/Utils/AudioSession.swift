@@ -12,7 +12,7 @@ public extension AVAudioSession{
     static func switchToRecordMode() {
         do {
             try AVAudioSession.sharedInstance().setActive(false)
-            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, options: [.defaultToSpeaker])
+            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, options: [.defaultToSpeaker,.allowBluetoothA2DP])
             try AVAudioSession.sharedInstance().setActive(true)
         } catch let error {
             print("Error switching to record mode: \(error.localizedDescription)")

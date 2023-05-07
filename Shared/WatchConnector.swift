@@ -7,6 +7,9 @@
 //
 
 import WatchConnectivity
+#if canImport(RxSwift)
+import RxSwift
+#endif
 
 /// iPhone 和 Apple Watch 之间的通信管理器。
 class WatchConnector: NSObject, WCSessionDelegate {
@@ -51,6 +54,15 @@ class WatchConnector: NSObject, WCSessionDelegate {
     /// 在主队列中调用。
     private var sessionActivationCompletionHandlers = [((WCSession) -> Void)]()
     
+#if os(iOS)
+    // 新增状态观察者
+#if canImport(RxSwift)
+    var isReachableSubject = BehaviorSubject<Bool>(value: false)
+    var isPairedSubject = BehaviorSubject<Bool>(value: false)
+    var isWatchAppInstalledSubject = BehaviorSubject<Bool>(value: false)
+#endif
+#endif
+
     
     // MARK: - 函数
     
@@ -179,6 +191,22 @@ class WatchConnector: NSObject, WCSessionDelegate {
         // 支持在 iOS 应用程序中快速切换 Apple Watch 设备
         defaultSession.activate()
     }
+    
+//    func sessionReachabilityDidChange(_ session: WCSession) {
+//    // 新增状态观察者
+//#if canImport(RxSwift)
+//        isReachableSubject.onNext(session.isReachable)
+//#endif
+//    
+//    }
+//    
+//    func sessionWatchStateDidChange(_ session: WCSession) {
+//#if canImport(RxSwift)
+//        isPairedSubject.onNext(session.isPaired)
+//        isWatchAppInstalledSubject.onNext(session.isWatchAppInstalled)
+//#endif
+//    }
+    
 #endif
     
     

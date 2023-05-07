@@ -1,5 +1,5 @@
 //
-//  RxAudioPlayable.swift
+//  RxAudioPlayerDelegate.swift
 //  AEAudio
 //
 //  Created by kaoji on 4/28/23.
@@ -9,7 +9,7 @@
 import Foundation
 import AEAudio
 
-open class RxAudioPlayerDelegate: DelegateProxy<AudioPlayer, AudioPlayable>, DelegateProxyType, AudioPlayable {
+open class RxAudioPlayerDelegate: DelegateProxy<AudioPlayer, AudioPlayerDelegate>, DelegateProxyType, AudioPlayerDelegate {
 
     // 对象
     public weak private(set) var player: AudioPlayer?
@@ -25,11 +25,11 @@ open class RxAudioPlayerDelegate: DelegateProxy<AudioPlayer, AudioPlayable>, Del
         self.register { RxAudioPlayerDelegate(player: $0) }
     }
 
-    public static func currentDelegate(for object: AudioPlayer) -> AudioPlayable? {
+    public static func currentDelegate(for object: AudioPlayer) -> AudioPlayerDelegate? {
         object.delegate
     }
 
-    public static func setCurrentDelegate(_ delegate: AudioPlayable?, to object: AudioPlayer) {
+    public static func setCurrentDelegate(_ delegate: AudioPlayerDelegate?, to object: AudioPlayer) {
         object.delegate = delegate
     }
 }
@@ -37,21 +37,21 @@ open class RxAudioPlayerDelegate: DelegateProxy<AudioPlayer, AudioPlayable>, Del
 extension Reactive where Base: AudioPlayer {
     
 
-    public var delegate: DelegateProxy<AudioPlayer, AudioPlayable> {
+    public var delegate: DelegateProxy<AudioPlayer, AudioPlayerDelegate> {
         RxAudioPlayerDelegate.proxy(for: base)
     }
     
     
     /// 当前播放时间
     public var currentTime: Observable<TimeInterval> {
-        delegate.methodInvoked(#selector(AudioPlayable.player(_:didUpdateTime:))).map { a in
+        delegate.methodInvoked(#selector(AudioPlayerDelegate.player(_:didUpdateTime:))).map { a in
             try castOrThrow(TimeInterval.self, a[1])
         }
     }
     
     // 总时长
     public var totalTime: Observable<TimeInterval> {
-        delegate.methodInvoked(#selector(AudioPlayable.player(_:didUpdateDuration:))).map { a in
+        delegate.methodInvoked(#selector(AudioPlayerDelegate.player(_:didUpdateDuration:))).map { a in
             try castOrThrow(TimeInterval.self, a[1])
         }
     }
@@ -59,7 +59,7 @@ extension Reactive where Base: AudioPlayer {
 
     /// 播放状态
     public var state: Observable<AudioPlayerStatus> {
-        delegate.methodInvoked(#selector(AudioPlayable.player(_:didChangeStatus:))).map { a in
+        delegate.methodInvoked(#selector(AudioPlayerDelegate.player(_:didChangeStatus:))).map { a in
             let rawValue = try castOrThrow(NSNumber.self, a[1])
             guard let state = AudioPlayerStatus(rawValue: Int(truncating: rawValue)) else {
                 throw RxCocoaError.castingError(object: a[1], targetType: AudioPlayerStatus.self)
@@ -70,36 +70,36 @@ extension Reactive where Base: AudioPlayer {
     
     /// 播放状态
     public var frequencyData: Observable<[[Float]]> {
-        delegate.methodInvoked(#selector(AudioPlayable.player(_:didUpdateFrequencyData:))).map { a in
+        delegate.methodInvoked(#selector(AudioPlayerDelegate.player(_:didUpdateFrequencyData:))).map { a in
             let value = try castOrThrow([[Float]].self, a[1])
-            return value
-        }
-    }
-    
-    /// 文件信息
-    public var info: Observable<AudioInfo> {
-        delegate.methodInvoked(#selector(AudioPlayable.player(_:didUpdateAudioInfo:))).map { a in
-            let value = try castOrThrow(AudioInfo.self, a[1])
             return value
         }
     }
 
     public var fail: Observable<AudioPlayerError> {
-        delegate.methodInvoked(#selector(AudioPlayable.player(_:didFailWithError:))).map { a in
+        delegate.methodInvoked(#selector(AudioPlayerDelegate.player(_:didFailWithError:))).map { a in
             let value = try castOrThrow(AudioPlayerError.self, a[1])
             return value
         }
     }
     
     public var next: Observable<Void> {
-        delegate.methodInvoked(#selector(AudioPlayable.playerDidHandleNext)).map { a in
+        delegate.methodInvoked(#selector(AudioPlayerDelegate.playerDidHandleNext)).map { a in
             return
         }
     }
     
     public var previous: Observable<Void> {
-        delegate.methodInvoked(#selector(AudioPlayable.playerDidHandlePrevious)).map { a in
+        delegate.methodInvoked(#selector(AudioPlayerDelegate.playerDidHandlePrevious)).map { a in
             return
         }
     }
+    
+    public var coverImage: Observable<UIImage> {
+        delegate.methodInvoked(#selector(AudioPlayerDelegate.player(_:didUpdateCoverImage:))).map { a in
+            let value = try castOrThrow(UIImage.self, a[1])
+            return value
+        }
+    }
+    
 }

@@ -43,7 +43,7 @@ class BaseAudioPlayerViewModel {
     
     var showAudioList: (() -> Void)?
     
-    public let audioEntities = BehaviorRelay<[Any]>(value: [])
+    public let audioEntities = BehaviorRelay<[AudioPlayable]>(value: [])
     public let currentIndex = BehaviorRelay<Int>(value: 0)
     
     public var disposeBag = DisposeBag()
@@ -54,10 +54,8 @@ class BaseAudioPlayerViewModel {
     // 子类需要实现此方法
     func stopAndReleaseMemory() {}
     func removeAudioEntity(at index: Int) {}
-    func playAudioEntity(_ audioEntity: Any) {}
+    func playAudioEntity(_ index: Int, _ playable: AudioPlayable) {}
 }
-
-
 
 class AudioPlayerViewModel: BaseAudioPlayerViewModel {
     
@@ -87,7 +85,7 @@ class AudioPlayerViewModel: BaseAudioPlayerViewModel {
         
         // 切换到后台播放模式
         DispatchQueue.global().async {
-            AVAudioSession.switchToPlaybackMode()
+            //AVAudioSession.switchToPlaybackMode()
             DispatchQueue.main.async { [self] in
                 //自动播放当前索引
                 playCurrentIndex()
@@ -139,6 +137,17 @@ class AudioPlayerViewModel: BaseAudioPlayerViewModel {
         .bind(to: currentTime)
         .disposed(by: disposeBag)
         
+        Observable.combineLatest(
+            reactivePlayer.currentTime,
+            reactivePlayer.totalTime,
+            isDragging.asObservable()
+        )
+        .filter { !$0.2 } // 当 isDragging.value == true 的时候，过滤掉 进度事件
+        .map { Float($0.0 / $0.1) }
+        .bind(to: progress)
+        .disposed(by: disposeBag)
+        
+        
         reactivePlayer.totalTime
             .map { TimeFormat.formatTimeInterval(seconds: $0) }
             .bind(to: totalTime)
@@ -148,17 +157,6 @@ class AudioPlayerViewModel: BaseAudioPlayerViewModel {
             .bind(to: fftData)
             .disposed(by: disposeBag)
         
-        reactivePlayer.info.map({ info ->String in
-            "\(String.init(format: "%.1fkHz", info.sampleRate/1000.0))"
-        })
-        .bind(to: fileInfo)
-        .disposed(by: disposeBag)
-        
-        reactivePlayer.info.map({ info -> UIImage? in
-            info.coverImage ?? R.image.cover()
-        })
-        .bind(to: coverImage)
-        .disposed(by: disposeBag)
         
         reactivePlayer.previous.subscribe { _ in
             self.playPrevious()
@@ -170,31 +168,54 @@ class AudioPlayerViewModel: BaseAudioPlayerViewModel {
         }
         .disposed(by: disposeBag)
         
-        // 读取心率数据更新UI
-        reactivePlayer.currentTime
-            .subscribe(onNext: { [weak self] currentTimeStamp in
-                guard let strongSelf = self else { return }
-                guard strongSelf.audioEntities.value.count > 0 else{return}
-                guard let audioEntity = strongSelf.audioEntities.value[strongSelf.currentIndex.value] as? AudioEntity else { return }
-                let bpms = audioEntity.bpms
-                // 取整或设置误差范围
-                let tolerance: TimeInterval = 0.5
-                
-                // 从当前索引开始，查找符合条件的BPMDescription
-                while strongSelf.bpmIndex < bpms.count && abs(bpms[strongSelf.bpmIndex].ts - currentTimeStamp) <= tolerance {
-                    // 将BPM值添加到chartBPMData数组中
-                    strongSelf.chartBPMData.accept(strongSelf.chartBPMData.value + [bpms[strongSelf.bpmIndex].bpm])
-                    // 更新当前处理的索引
-                    strongSelf.bpmIndex += 1
-                    // 将新的数据添加到计算器
-                    if  strongSelf.bpmIndex < bpms.count - 1{
-                        let bpmDesc = bpms[strongSelf.bpmIndex]
-                        let displayString = "当前:\(bpmDesc.bpm) 最大:\(bpmDesc.max) 平均:\(bpmDesc.max) 消耗: \(bpmDesc.kcal)kcal"
-                        strongSelf.bpmInfo.accept(displayString)
-                    }
-                }
-            })
+        reactivePlayer.next.subscribe { _ in
+            self.playNext()
+        }
+        .disposed(by: disposeBag)
+        
+        reactivePlayer.coverImage
+            .map { image -> UIImage in
+                return image
+            }
+            .asObservable()
+            .bind(to: coverImage)
             .disposed(by: disposeBag)
+
+        
+        // 读取心率数据更新UI
+//        reactivePlayer.currentTime
+//            .subscribe(onNext: { [weak self] currentTimeStamp in
+//                guard let strongSelf = self else { return }
+//                guard strongSelf.audioEntities.value.count > 0 else{return}
+//                guard let audioEntity = strongSelf.audioEntities.value[strongSelf.currentIndex.value] as? AudioEntity else { return }
+//                let bpms = audioEntity.bpms
+//                // 取整或设置误差范围
+//                let tolerance: TimeInterval = 0.5
+//
+//                // 从当前索引开始，查找符合条件的BPMDescription
+//                while strongSelf.bpmIndex < bpms.count && abs(bpms[strongSelf.bpmIndex].ts - currentTimeStamp) <= tolerance {
+//                    // 将BPM值添加到chartBPMData数组中
+//                    strongSelf.chartBPMData.accept(strongSelf.chartBPMData.value + [bpms[strongSelf.bpmIndex].bpm])
+//                    // 更新当前处理的索引
+//                    strongSelf.bpmIndex += 1
+//                    // 将新的数据添加到计算器
+//                    if  strongSelf.bpmIndex < bpms.count - 1{
+//                        let bpmDesc = bpms[strongSelf.bpmIndex]
+//                        let displayString = "当前:\(bpmDesc.bpm) 最大:\(bpmDesc.max) 平均:\(bpmDesc.max) 消耗: \(bpmDesc.kcal)kcal"
+//                        strongSelf.bpmInfo.accept(displayString)
+//                    }
+//                }
+//            })
+//            .disposed(by: disposeBag)
+    }
+    
+    func updateBPMLineChart(){
+        if let audioEntity = audioEntities.value[currentIndex.value] as? AudioEntity {
+            let bpmValues: [Int] = audioEntity.bpms.map { $0.bpm }
+            chartBPMData.accept(bpmValues)
+            return
+        }
+        chartBPMData.accept([])
     }
     
     func setupControlBindings() {
@@ -243,6 +264,7 @@ class AudioPlayerViewModel: BaseAudioPlayerViewModel {
             })
             .disposed(by: disposeBag)
         
+        
         // 播放进度滑块值改变事件
         sliderValueChanged
             .subscribe(onNext: { [weak self] value in
@@ -279,15 +301,16 @@ class AudioPlayerViewModel: BaseAudioPlayerViewModel {
     
     private func playCurrentIndex() {
         guard currentIndex.value < audioEntities.value.count - 1 else { return }
-        if let entity = audioEntities.value[currentIndex.value] as? AudioEntity {
-            title.accept(entity.name ?? "标题")
-            player.play(with: entity.audioURL())
-        }
+        let playable = audioEntities.value[currentIndex.value]
+        title.accept(playable.audioName())
+        player.play(with: playable)
+        updateBPMLineChart()
     }
     
     override func removeAudioEntity(at index: Int) {
         var currentEntities = audioEntities.value
         if index < currentEntities.count {
+            PersistManager.shared.deleteAudio(audioEntity: audioEntities.value[index] as! AudioEntity)
             currentEntities.remove(at: index)
             audioEntities.accept(currentEntities)
             
@@ -302,26 +325,15 @@ class AudioPlayerViewModel: BaseAudioPlayerViewModel {
     }
     
     // 点击列表播放指定 内容
-    func playAudioEntity(_ audioEntity: AudioEntity) {
+    override func playAudioEntity(_ index: Int, _ playable: AudioPlayable) {
         // 检查是否需要播放新的音频
-        if let entities = audioEntities.value as? [AudioEntity], let index = entities.firstIndex(where: { $0.id == audioEntity.id }) {
-            // 如果要播放的音频与当前音频相同且正在播放，则不执行播放操作
-            if currentIndex.value == index && player.status == .playing {
-                return
-            }
-            title.accept(audioEntity.name ?? "未知")
-            currentIndex.accept(index)
-            player.play(with: audioEntity.audioURL())
-        } else {
-            print("音频未找到")
+        guard index != self.currentIndex.value else {
+            return
         }
+        self.currentIndex.accept(index)
+        playCurrentIndex()
     }
     
-    override func playAudioEntity(_ audioEntity: Any){
-        if let audio = audioEntity as? AudioEntity {
-            playAudioEntity(audio)
-        }
-    }
     
     func playNewAudioAfterStop() {
         let currentEntities = audioEntities.value
@@ -365,7 +377,7 @@ class AudioPlayerViewModel: BaseAudioPlayerViewModel {
     
     func switchToMediaLibraryList(){
         player.stop()
-        let audios = AudioLibraryManager.shared.fetchMediaItems()
+        let audios = PersistManager.shared.loadAllMusicInfos()
         self.audioEntities.accept(audios)
         currentIndex.accept(0)
         playCurrentIndex()

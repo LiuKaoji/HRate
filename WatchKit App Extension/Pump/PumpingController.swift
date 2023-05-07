@@ -57,6 +57,7 @@ class PumpingController: WKHostingController<PumpView> {
         // 处理开始事件
         let _ = NotificationManager.shared.handleSubscription(for: .start, action: .subscribe) { [weak self] _ in
             self?.timer.start()
+            WatchConnector.shared.send([.workoutStart: true])
         }
         
         // 处理心率数据
@@ -70,6 +71,7 @@ class PumpingController: WKHostingController<PumpView> {
         let _ = NotificationManager.shared.handleSubscription(for: .stop, action: .subscribe) { [weak self] _ in
             self?.bpmCalculator.reset()
             self?.timer.stop()
+            WatchConnector.shared.send([.workoutStop: true])
         }
         
         //处理跳转事件事件

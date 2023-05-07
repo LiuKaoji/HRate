@@ -31,39 +31,33 @@ class AvgMinMaxBar: UIView {
         return s
     }()
     
-    lazy var avgStack = StackView(axis: .vertical)
-    lazy var minStack = StackView(axis: .vertical)
-    lazy var maxStack = StackView(axis: .vertical)
+    lazy var stacks: [UIStackView] = {
+        return [
+            createStack(dataLabel: avgBPMLabel, descriptionLabel: avgLabel),
+            createStack(dataLabel: minBPMLabel, descriptionLabel: minLabel),
+            createStack(dataLabel: maxBPMLabel, descriptionLabel: maxLabel)
+        ]
+    }()
     
+    private func createStack(dataLabel: UILabel, descriptionLabel: UILabel) -> UIStackView {
+        let stack = StackView(axis: .vertical)
+        stack.addArrangedSubview(dataLabel)
+        stack.addArrangedSubview(descriptionLabel)
+        return stack
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         addSubview(mainStack)
+        stacks.forEach { mainStack.addArrangedSubview($0) }
         
-        mainStack.addArrangedSubview(avgStack)
-        mainStack.addArrangedSubview(minStack)
-        mainStack.addArrangedSubview(maxStack)
-        
-        avgStack.addArrangedSubview(avgBPMLabel)
-        avgStack.addArrangedSubview(avgLabel)
-        
-        minStack.addArrangedSubview(minBPMLabel)
-        minStack.addArrangedSubview(minLabel)
-        
-        maxStack.addArrangedSubview(maxBPMLabel)
-        maxStack.addArrangedSubview(maxLabel)
-
         mainStack.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
-            make.bottom.equalToSuperview()
+            make.edges.equalToSuperview()
         }
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }

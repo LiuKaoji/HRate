@@ -13,13 +13,13 @@ import Accelerate
 import UIKit
 import MediaPlayer
 
-@objc public protocol AudioPlayable: AnyObject {
+@objc public protocol AudioPlayerDelegate: AnyObject {
     @objc optional func player(_ player: AudioPlayer, didChangeStatus status: AudioPlayerStatus)
     @objc optional func player(_ player: AudioPlayer, didUpdateTime currentTime: TimeInterval)
     @objc optional func player(_ player: AudioPlayer, didUpdateDuration duration: TimeInterval)
     @objc optional func player(_ player: AudioPlayer, didUpdateFrequencyData data: [[Float]])
-    @objc optional func player(_ player: AudioPlayer, didUpdateAudioInfo info: AudioInfo)
     @objc optional func player(_ player: AudioPlayer, didFailWithError error: AudioPlayerError)
+    @objc optional func player(_ player: AudioPlayer, didUpdateCoverImage image: UIImage)
     @objc optional func playerDidHandleNext()
     @objc optional func playerDidHandlePrevious()
     
@@ -40,10 +40,10 @@ import MediaPlayer
     private let fftSize: Int = 1024
     private var fftSetup: FFTSetup?
     public var analyzer: RealtimeAnalyzer!
-    public var playingInfo: AudioInfo?
+    public var playable: AudioPlayable?
     
     public static let shared = AudioPlayer()
-    public weak var delegate: AudioPlayable?
+    public weak var delegate: AudioPlayerDelegate?
     
     public var fileSampleRate: Double = 44100
     
@@ -86,6 +86,8 @@ import MediaPlayer
         fftSetup = vDSP_create_fftsetup(vDSP_Length(log2(Float(fftSize))), FFTRadix(kFFTRadix2))
         NotificationCenter.default.addObserver(self, selector: #selector(appDidEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(appWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleAudioSessionInterruption(_:)), name: AVAudioSession.interruptionNotification, object: nil)
+
         setupRemoteCommandCenter()
     }
     
@@ -93,6 +95,8 @@ import MediaPlayer
         teardownRemoteCommandCenter()
         NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.willEnterForegroundNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: AVAudioSession.interruptionNotification, object: nil)
+
     }
 }
 
@@ -145,11 +149,6 @@ private extension AudioPlayer {
         let totalTime = Double(totalAudioFrameLength) / fileSampleRate
         self.totalTime = totalTime
         delegate?.player?(self, didUpdateDuration: duration)
-        
-        let info = AudioInfo.init(url: url)
-        playingInfo = info
-        delegate?.player?(self, didUpdateAudioInfo: info)
-        updateNowPlayingInfo()
     }
     
     func scheduleFile() {
@@ -192,15 +191,17 @@ private extension AudioPlayer {
 
 // MARK: public
 extension AudioPlayer {
-    public func play(with url: URL) {
+    public func play(with playable: AudioPlayable) {
         if status != .stopped {
             stop()
         }
-        prepareAudioFile(with: url)
+        prepareAudioFile(with: playable.audioURL()!)
         scheduleFile()
         startEngine()
         status = .playing
         addAudioPlayerNodeTimer()
+        self.playable = playable
+        updateNowPlayingInfo()
     }
     
     public func resume() {
@@ -254,7 +255,6 @@ extension AudioPlayer {
             if !audioEngine.isRunning {
                 try? audioEngine.start()
             }
-            
             audioPlayerNode.play()
         }
     }
@@ -289,25 +289,28 @@ extension AudioPlayer {
     }
     
     private func updateNowPlayingInfo() {
-        guard let info = self.playingInfo else { return }
+        guard let info = self.playable else { return }
         
         let currentTime = Double(currentAudioFramePosition) / fileSampleRate
         
         var nowPlayingInfo: [String: Any] = [
-            MPMediaItemPropertyTitle: info.fileName,
-            MPMediaItemPropertyPlaybackDuration: info.duration,
+            MPMediaItemPropertyTitle: info.audioName(),
+            MPMediaItemPropertyPlaybackDuration: info.audioDuration(),
             MPNowPlayingInfoPropertyElapsedPlaybackTime: currentTime
         ]
         
         // 如果 info.coverImage 非空，则创建 MPMediaItemArtwork 对象并添加到 nowPlayingInfo 字典中
-        if let coverImage = info.coverImage {
+        let image = self.getCoverImage()
+        if let coverImage = image {
             let artwork = MPMediaItemArtwork(boundsSize: coverImage.size) { _ in
                 return coverImage
             }
             nowPlayingInfo[MPMediaItemPropertyArtwork] = artwork
+            delegate?.player?(self, didUpdateCoverImage: coverImage)
         }
         
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
+        
     }
     
     
@@ -355,5 +358,53 @@ extension AudioPlayer {
         commandCenter.pauseCommand.isEnabled = false
         commandCenter.changePlaybackPositionCommand.isEnabled = false
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nil
+    }
+    
+    private func getCoverImage() -> UIImage? {
+        guard let info = self.playable, let url = info.audioURL() else {
+            return nil
+        }
+        let asset = AVURLAsset.init(url: url)
+        let metadata = asset.metadata(forFormat: AVMetadataFormat.id3Metadata)
+        for item in metadata {
+            if let key = item.commonKey, key.rawValue == "artwork", let imageData = item.dataValue {
+                return UIImage(data: imageData)
+            }
+        }
+
+        // 如果没有从音频元数据中找到封面图片，尝试从 framework 中加载 cover.png
+        let bundle = Bundle(for: AudioPlayer.self)
+        if let imageURL = bundle.url(forResource: "cover", withExtension: "png") {
+            return UIImage(contentsOfFile: imageURL.path)
+        }
+
+        return nil
+    }
+
+    
+    @objc private func handleAudioSessionInterruption(_ notification: Notification) {
+        guard let info = notification.userInfo,
+              let typeValue = info[AVAudioSessionInterruptionTypeKey] as? UInt,
+              let type = AVAudioSession.InterruptionType(rawValue: typeValue) else {
+            return
+        }
+
+        switch type {
+        case .began:
+            // 音频会话中断开始，例如电话呼入
+            // 这里你可以暂停播放器，或者执行其他相关操作
+            pause()
+        case .ended:
+            // 音频会话中断结束
+            if let optionsValue = info[AVAudioSessionInterruptionOptionKey] as? UInt {
+                let options = AVAudioSession.InterruptionOptions(rawValue: optionsValue)
+                if options.contains(.shouldResume) {
+                    // 恢复播放
+                    resume()
+                }
+            }
+        @unknown default:
+            break
+        }
     }
 }

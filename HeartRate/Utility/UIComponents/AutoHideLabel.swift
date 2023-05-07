@@ -15,21 +15,25 @@ class AutoHideLabel: UILabel {
     private var hideTask: DispatchWorkItem?
     
     func setTextWithAutoHide(_ text: String) {
-        // Cancel the previous task if any
+        // 取消之前的稍后隐藏任务
         hideTask?.cancel()
         
-        // Show the label and set the text
+        // 显示文本
         self.isHidden = false
         self.text = text
         
-        // Create a new task
+        // 创建一个新的任务
         hideTask = DispatchWorkItem { [weak self] in
             self?.isHidden = true
         }
         
-        // Schedule the task to be executed after a delay
+        // 稍后隐藏文本
         if let task = hideTask {
             DispatchQueue.main.asyncAfter(deadline: .now() + hideDelay, execute: task)
         }
+    }
+    
+    deinit{
+        hideTask?.cancel()
     }
 }

@@ -28,6 +28,7 @@ class PersistManager {
             try database.create(table: "AudioEntity", of: AudioEntity.self)
             try database.create(table: "UserEntity", of: UserEntity.self)
             try database.create(table: "PlayModeEntity", of: PlayModeEntity.self)
+            try database.create(table: "RPMEntity", of: RPMEntity.self)
         } catch {
             print("创建表错误：\(error)")
         }
@@ -35,7 +36,7 @@ class PersistManager {
 }
 
 
-//MARK: - 音频相关
+//MARK: -录音相关
 extension PersistManager{
     
     // 新增录音并用于关联心跳数据
@@ -68,7 +69,9 @@ extension PersistManager{
     // 获取所有音频
     func fetchAllAudios() -> [AudioEntity] {
         do {
-            return try database.getObjects(fromTable: "AudioEntity")
+            return try database.getObjects(fromTable: "AudioEntity").sorted(by: { audioA, audioB in
+                audioA.id ?? 0  > audioB.id ?? 0
+            })
         } catch {
             print("获取音频错误：\(error)")
             return []
@@ -87,6 +90,17 @@ extension PersistManager{
         }
     }
     
+    // 更新音频
+    func updateAudio(audioEntity: AudioEntity) {
+        guard let audioId = audioEntity.id else { return }
+        
+        do {
+            try database.update(table: "AudioEntity", on: UserEntity.CodingKeys.all, with: audioEntity, where: AudioEntity.CodingKeys.id == audioId)
+        } catch {
+            print("更新音频错误：\(error)")
+        }
+    }
+
 }
 
 //MARK: - 个人资料相关
@@ -135,6 +149,7 @@ extension PersistManager{
     }
 }
 
+//MARK: - 播放模式相关
 extension PersistManager {
     // 获取或创建并保存播放模式实体
     func getPlayModeEntity() -> PlayModeEntity {
@@ -163,6 +178,87 @@ extension PersistManager {
             try database.update(table: "PlayModeEntity", on: PlayModeEntity.CodingKeys.all, with: playModeEntity)
         } catch {
             print("保存PlayModeEntity错误：\(error)")
+        }
+    }
+}
+
+//MARK: - 自定义音频包相关
+extension PersistManager {
+    
+    func loadAllMusicInfos() -> [MusicInfo] {
+        var allMusicInfos: [MusicInfo] = []
+
+        // 获取所有的 RPMEntities
+        guard let rpmEntities = loadRPMEntities() else {
+            return allMusicInfos
+        }
+
+        // 遍历 RPMEntities 并提取 musicInfo 属性
+        for rpmEntity in rpmEntities {
+            let musicInfo = rpmEntity.musicInfo
+            allMusicInfos.append(contentsOf: musicInfo)
+        }
+
+        // 对 allMusicInfos 进行排序
+        allMusicInfos.sort { (musicInfo1, musicInfo2) -> Bool in
+            if musicInfo1.albumName == musicInfo2.albumName {
+                return musicInfo1.serialNumber < musicInfo2.serialNumber
+            } else {
+                return musicInfo1.albumName > musicInfo2.albumName
+            }
+        }
+
+        return allMusicInfos
+    }
+
+
+    // 保存音乐包到数据库
+    func saveRPMEntitiesToDatabase(_ rpmEntities: [RPMEntity]) {
+        do {
+            for rpmEntity in rpmEntities {
+                try database.insert(objects: rpmEntity, intoTable: "RPMEntity")
+            }
+        } catch {
+            print("Error saving data to database: \(error)")
+        }
+    }
+
+    // 从数据库获取所有音乐包
+    func fetchRPMEntitiesFromDatabase() -> [RPMEntity]? {
+        do {
+            let entities: [RPMEntity] = try database.getObjects(fromTable: "RPMEntity")
+            return entities
+        } catch {
+            print("Error fetching data from database: \(error)")
+            return nil
+        }
+    }
+
+    // 从 Bundle 或数据库加载音乐包
+    func loadRPMEntities() -> [RPMEntity]? {
+        let rpmEntitiesFromDatabase = fetchRPMEntitiesFromDatabase()
+
+        if let rpmEntities = rpmEntitiesFromDatabase, !rpmEntities.isEmpty {
+            return rpmEntities
+        } else {
+            let rpmEntitiesFromBundle = RPMResources.loadRPMEntities()
+
+            if let rpmEntities = rpmEntitiesFromBundle {
+                saveRPMEntitiesToDatabase(rpmEntities)
+                return rpmEntities
+            } else {
+                return nil
+            }
+        }
+    }
+
+    // 删除音乐包
+    func deleteRPMEntity(_ rpmEntity: RPMEntity) {
+        guard let entityId = rpmEntity.id else { return }
+        do {
+            try database.delete(fromTable: "RPMEntity", where: RPMEntity.CodingKeys.id == entityId)
+        } catch {
+            print("Error deleting rpm entity: \(error)")
         }
     }
 }

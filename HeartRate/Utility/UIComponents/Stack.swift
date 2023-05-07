@@ -7,25 +7,14 @@
 
 import UIKit
 
-
 public class StackView: UIStackView {
     
-    enum StackViewAxis {
-        case horizontal
-        case vertical
-    }
-    
-    init(axis: StackViewAxis) {
+    init(axis: NSLayoutConstraint.Axis) {
         super.init(frame: .zero)
         
-        switch axis {
-        case .horizontal:
-            self.axis    = .horizontal
-            distribution = .equalSpacing
-        case .vertical:
-            self.axis = .vertical
-        }
-    
+        self.axis = axis
+        distribution = axis == .horizontal ? .equalSpacing : .fill
+        
         translatesAutoresizingMaskIntoConstraints = false
     }
     
@@ -34,4 +23,3 @@ public class StackView: UIStackView {
     }
     
 }
-

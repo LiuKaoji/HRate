@@ -54,18 +54,6 @@ class BPMViewModel: NSObject {
         setupSubscriptions()
     }
     
-    // MARK: - 录制开关
-    private func startRec() {
-        isRecording.accept(true)
-        tracker.startHandle()
-    }
-    
-    private func stopRec() {
-        isRecording.accept(false)
-        tracker.stopHandle()
-        time.accept("--:--")
-    }
-    
     // MARK: - 按钮事件处理
     private func handleRecordButtonTapped() {
 
@@ -75,7 +63,7 @@ class BPMViewModel: NSObject {
             
             if let error = error {
                 self?.trackerCauseError?(error)
-                self?.stopRec()
+                self?.stopRecorder()
                 return
             }
             print("state: \(self!.tracker.state.value)")
@@ -128,18 +116,27 @@ class BPMViewModel: NSObject {
             }
         }
         .disposed(by: disposeBag)
+        
+        //程序退出
+        NotificationCenter.default.rx.notification(UIApplication.willTerminateNotification)
+            .subscribe(onNext: { [weak self] notification in
+                if self?.recoder?.isRecording == true {
+                    self?.stopRecorder()
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
 
     func startRecorder(){
         guard recoder == nil else { return }
-        AVAudioSession.switchToRecordMode()
+        //AVAudioSession.switchToRecordMode()
         let new: AudioEntity = PersistManager.shared.newAudioEntity()//建立新的实体
         let newURL = new.audioURL()//获取预先设计好的录制路径
+        audioET = new
         
         recoder = AudioRecorder()
-        recoder?.startRecord(url: newURL)
-        PersistManager.shared.insertAudio(audioEntity: new)
+        recoder?.startRecord(url: newURL!)
         if recoder?.isDenied == false{
             isRecording.accept(true)
             tracker.startHandle()
@@ -157,14 +154,7 @@ class BPMViewModel: NSObject {
         .disposed(by: disposeBag)
         
         recoder?.rx.finish.subscribe(onNext: { [weak self] url, duration, fileSize in
-            if let model = self?.audioET {
-                model.duration = TimeFormat.formatTimeInterval(seconds: duration)
-                model.size = toByteString(UInt64(fileSize))
-                model.bpms = self?.bpmArray ?? []
-                PersistManager.shared.insertAudio(audioEntity: model)
-            }
-            self?.audioET = nil
-            self?.bpmArray.removeAll()
+            self?.saveAudioET(url, duration, UInt64(fileSize))
         })
         .disposed(by: disposeBag)
     }
@@ -176,8 +166,18 @@ class BPMViewModel: NSObject {
         recoder = nil
         isRecording.accept(false)
         tracker.stopHandle()
-        AVAudioSession.switchToAmbient()
         levelProvider.on(.next(nil))
+    }
+    
+    func saveAudioET(_ url: URL, _ duration: Double, _ fileSize: UInt64){
+        if let model = self.audioET {
+            model.duration = duration
+            model.size = toByteString(fileSize)
+            model.bpms = self.bpmArray
+            PersistManager.shared.insertAudio(audioEntity: model)
+            self.audioET = nil
+            self.bpmArray.removeAll()
+        }
     }
 }
 

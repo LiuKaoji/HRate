@@ -10,8 +10,8 @@ import Foundation
 import Zip
 
 class BPMExporter {
-    static var activityViewController: UIActivityViewController?
-    
+    static var  documentInteractionController: UIDocumentInteractionController?
+
     static func exportAndShare(audioEntity: AudioEntity, viewController: UIViewController) {
         let fileManager = FileManager.default
         let documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
@@ -83,10 +83,8 @@ class BPMExporter {
     
     // AirDrop投送
     public static func shareFilesWithAirDrop(fileURL: URL, viewController: UIViewController) {
-        let activityViewController = UIActivityViewController(activityItems: [fileURL], applicationActivities: nil)
-        BPMExporter.activityViewController = activityViewController
-        activityViewController.excludedActivityTypes = [.assignToContact, .saveToCameraRoll, .openInIBooks, .markupAsPDF]
-        viewController.present(activityViewController, animated: true, completion: nil)
+        documentInteractionController = UIDocumentInteractionController.init(url: fileURL)
+        documentInteractionController?.presentOptionsMenu(from: viewController.view.bounds, in: viewController.view, animated: true)
     }
     
 }

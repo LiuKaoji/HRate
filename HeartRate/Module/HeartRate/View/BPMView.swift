@@ -282,7 +282,7 @@ extension BPMView {
         viewModel.isRecording.bind(to: self.rx.isRecording).disposed(by: disposeBag)
         
         // 绑定 历史按钮点击事件
-        historyButton.rxTapClosure().bind(to: viewModel.historyButtonTapped).disposed(by: disposeBag)
+        historyButton.rx.tap.bind(to: viewModel.historyButtonTapped).disposed(by: disposeBag)
         
         viewModel.isRecording.bind(to: self.deviceView.rx.isHidden).disposed(by: disposeBag)
         

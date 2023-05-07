@@ -72,32 +72,29 @@ class AudioCell: UITableViewCell{
             make.leading.equalToSuperview().offset(8)
         }
         
-        nameLabel.snp.remakeConstraints { make in
+        nameLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.leading.equalTo(musicIndicator.snp.trailing).offset(8)
+            make.trailing.lessThanOrEqualTo(durationLabel.snp.leading).offset(-10)
         }
         
-//        dateLabel.snp.makeConstraints { make in
-//            make.top.equalTo(nameLabel.snp.bottom).offset(4)
-//            make.leading.equalTo(nameLabel)
-//            make.bottom.equalToSuperview().offset(-8)
-//        }
-//
         durationLabel.snp.makeConstraints { make in
             make.trailing.equalToSuperview().offset(-16)
-            make.centerY.equalTo(nameLabel)
+            make.centerY.equalToSuperview()
         }
         
-//        sizeLabel.snp.makeConstraints { make in
-//            make.trailing.equalTo(durationLabel)
-//            make.centerY.equalTo(dateLabel)
-//        }
+        nameLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        nameLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        durationLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        durationLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
     }
+
+
     
-    func configure(with audioEntity: AudioEntity, isPlaying: Bool) {
-        nameLabel.text = audioEntity.name
+    func configure(with playable: AudioPlayable, isPlaying: Bool) {
+        nameLabel.text = playable.audioName()
         //dateLabel.text = audioEntity.date
-        durationLabel.text = audioEntity.duration
+        durationLabel.text = playable.audioDurationText()
         //sizeLabel.text = audioEntity.size
     }
     

@@ -77,7 +77,7 @@ class BPMCalculator: ObservableObject {
         } else { // 女性
             caloriesPerMinute = ((age * 0.074) + (weight * 0.1263) + (heartRate * 0.4472) - 20.4022) * timeInMinutes / 4.184
         }
-        return caloriesPerMinute
+        return max(0, caloriesPerMinute)//确保不会出现负数
     }
     
     func reset() {

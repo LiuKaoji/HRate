@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 class Label: UILabel {
     
     enum LabelStyle {
@@ -23,6 +22,23 @@ class Label: UILabel {
         case tableTopText
         case tableBottomText
         case appTitle
+        
+        var fontData: (name: String, size: CGFloat) {
+            switch self {
+            case .heading:          return ("OpenSans-Bold", 18)
+            case .body:             return ("OpenSans-Regular", 15)
+            case .separator:        return ("OpenSans-Regular", 12)
+            case .nowBPMHeading:    return ("OpenSans-Bold", 50)
+            case .timeTitle:        return ("OpenSans-SemiBold", 10)
+            case .time:             return ("OpenSans-Bold", 20)
+            case .avgMinMax:        return ("OpenSans-Bold", 15)
+            case .tableLabel:       return ("OpenSans-SemiBold", 15)
+            case .titleLabel:       return ("OpenSans-SemiBold", 17)
+            case .tableTopText:     return ("OpenSans-Regular", 14)
+            case .tableBottomText:  return ("OpenSans-Regular", 10)
+            case .appTitle:         return ("REEJI-PinboGB", 18)
+            }
+        }
     }
     
     init(style: LabelStyle, _ text: String?) {
@@ -31,42 +47,17 @@ class Label: UILabel {
         self.text     = text
         textColor     = .white
         numberOfLines = 0
-        textAlignment = .center
+        textAlignment = style == .tableLabel ? .left : .center
         
         translatesAutoresizingMaskIntoConstraints = false
+        font = UIFont(name: style.fontData.name, size: style.fontData.size)
         
-        switch style {
-        case .heading:
-            font = UIFont(name: "OpenSans-Bold", size: 18)
-        case .body:
-            font = UIFont(name: "OpenSans-Regular", size: 15)
-        case .separator:
-            font = UIFont(name: "OpenSans-Regular", size: 12)
+        if style == .separator {
             self.text = "|"
-        case .nowBPMHeading:
-            font = UIFont(name: "OpenSans-Bold", size: 50)
-        case .timeTitle:
-            font = UIFont(name: "OpenSans-SemiBold", size: 10)
-        case .time:
-            font = UIFont(name: "OpenSans-Bold", size: 20)
-        case .avgMinMax:
-            font = UIFont(name: "OpenSans-Bold", size: 15)
-        case .tableLabel:
-            font = UIFont(name: "OpenSans-SemiBold", size: 15)
-            textAlignment = .left
-        case .titleLabel:
-            font = UIFont(name: "OpenSans-SemiBold", size: 17)
-        case .tableTopText:
-            font = UIFont(name: "OpenSans-Regular", size: 14)
-        case .tableBottomText:
-            font = UIFont(name: "OpenSans-Regular", size: 10)
-        case .appTitle:
-            font = UIFont(name: "REEJI-PinboGB", size: 18)
         }
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }

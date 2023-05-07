@@ -8,6 +8,7 @@
 
 import Foundation
 import HealthKit
+import WatchConnectivity
 
 
 // 监听心率的状态
@@ -110,7 +111,7 @@ extension BPMTracker{
                 DispatchQueue.main.async {
                     if let error = error {
                         print("healthStore.startWatchApp error:", error)
-                        HRToast(message: error.localizedDescription, type: .error)
+                        HRToast(message: WCErrorParser.parseError(WCError.Code(rawValue: (error as NSError).code) ?? .deviceNotPaired), type: .error)
                         handler(error)
                     } else {
                         HRToast(message: "手表端已响应,请耐心等待数据...", type: .success)

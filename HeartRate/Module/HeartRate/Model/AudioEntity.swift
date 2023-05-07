@@ -8,6 +8,8 @@
 
 import Foundation
 import WCDBSwift
+import AEAudio
+
 
 public struct BPMDescription: Codable{
     var bpm: Int = 0 // 心率
@@ -29,15 +31,15 @@ public struct BPMDescription: Codable{
 
 // 记录一次训练过程的录音数据
 final public class AudioEntity: TableCodable {
+    
     var id: Int? // 标识
     var name: String? // 文件名
     var ext: String? // 扩展名
     var date: String? // 创建日期
-    var duration: String = "00:00" // 录制时长
+    var duration: Double = 0 // 录制时长
     var size: String = "0 KB" // 文件大小
     var bpms: [BPMDescription] = [] // 心率数据
-    
-    var assetURL: URL? // 媒体资源 URL
+    var isFavor: Bool = false
 
 
     public enum CodingKeys: String, CodingTableKey {
@@ -66,17 +68,36 @@ extension AudioEntity: Hashable {
     }
 }
 
-
-extension AudioEntity {
+extension AudioEntity: AudioPlayable {
     
-    func audioURL()-> URL {
-        if let assetURL = assetURL {
-            return assetURL
-        }
+    
+    public func audioName() -> String {
+        return name ?? "unknown"
+    }
+    
+    public func audioDurationText() -> String {
+        return TimeFormat.formatTimeInterval(seconds: duration)
+    }
+    
+    public func audioDuration() -> Double {
+        return duration
+    }
+    
+    public func audioURL() -> URL? {
         let fileManager = FileManager.default
         let documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
         let audioURL = documentsDirectory.appendingPathComponent(self.name!)
         return audioURL
     }
     
+    public func audioSize() -> String {
+        return size
+    }
+    
+    public func remove() {
+        PersistManager.shared.deleteAudio(audioEntity: self)
+    }
+    
+    public func markFavor() { self.isFavor = true}// 标记收藏
+    public func unMarkFavor() { self.isFavor = false } // 取消收藏
 }

@@ -76,8 +76,8 @@ class AEPlayerView: UIView {
         
         chartView.snp.makeConstraints { make in
             make.width.equalToSuperview()
-            make.centerX.centerY.equalToSuperview()
-            make.height.equalToSuperview().multipliedBy(0.7)
+            make.left.top.equalTo(parallaxScrollView)
+            make.bottom.equalTo(controlsView.snp.top).offset(-16)
         }
         
         backButton.snp.makeConstraints { make in
@@ -97,7 +97,7 @@ class AEPlayerView: UIView {
             make.centerY.equalTo(backButton.snp.centerY)
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
             self.parallaxScrollView.updateParallaxLayout()
         })
     }

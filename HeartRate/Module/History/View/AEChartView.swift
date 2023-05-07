@@ -71,8 +71,8 @@ class AEChartView: UIView {
         addSubview(bpmLable)
         
         chart.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.height.equalToSuperview().multipliedBy(0.8)
+            make.centerY.equalTo(self.snp.centerY)
+            make.height.equalToSuperview().multipliedBy(0.6)
             make.left.right.equalToSuperview().inset(30)
         }
         

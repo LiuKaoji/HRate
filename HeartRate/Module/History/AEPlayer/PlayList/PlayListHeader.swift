@@ -33,7 +33,7 @@ class PlayListHeader: UIView {
     private func setupUI() {
     
         // Segmented control
-        segmentedControl = UISegmentedControl(items: ["已录制", "媒体库"])
+        segmentedControl = UISegmentedControl(items: ["已录制", "音频包"])
         segmentedControl.selectedSegmentIndex =  PlayListHeader.selectedIndex
         addSubview(segmentedControl)
         segmentedControl.snp.makeConstraints { make in

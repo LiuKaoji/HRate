@@ -22,12 +22,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidFinishLaunching(_ application: UIApplication) {
 
         //注册控制中心显示歌曲信息
-        AudioLibraryManager.shared.requestAuthorization { state in
-            
-        }
+//        AudioLibraryManager.shared.requestAuthorization { state in
+//            
+//        }
 //        PersistManager.shared.fetchAllAudios().forEach { audio in
 //            PersistManager.shared.deleteAudio(audioEntity: audio)
 //        }
+        
+        
+        
+        
         // 创建一个窗口并设置根视图控制器
         window = UIWindow.init(frame: UIScreen.main.bounds)
         window?.backgroundColor = .black

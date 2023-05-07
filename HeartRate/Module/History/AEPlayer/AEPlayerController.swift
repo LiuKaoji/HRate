@@ -172,23 +172,13 @@ class AEPlayerController: UIViewController {
         
         playerView.shareButton.rxTapClosure()
             .subscribe(onNext: { [weak self]  in
-                guard let self = self, self.viewModel.audioEntities.value.count > 0  else { return }
-                guard let audio = self.viewModel.audioEntities.value[self.viewModel.currentIndex.value] as? AudioEntity else { return }
-                
-                let audioURL = audio.audioURL()
-                if audioURL.scheme == "ipod-library"{
-                    AudioLibraryManager.shared.exportAudio(at: audioURL) { result in
-                        AudioLibraryManager.shared.exportAudio(at: audioURL) { result in
-                            switch result {
-                            case .success(let outputURL):
-                                print("Audio export succeeded. Output URL: \(outputURL)")
-                                BPMExporter.shareFilesWithAirDrop(fileURL: outputURL, viewController: self)
-                            case .failure(_):
-                                HRToast(message: "文件导出失败", type: .error)
-                            }
-                        }
-                    }
-                }else{
+                guard let self = self else { return }
+             
+                if let audio = self.viewModel.audioEntities.value[self.viewModel.currentIndex.value] as? MusicInfo,
+                    let audioURL = audio.audioURL() {
+                    BPMExporter.shareFilesWithAirDrop(fileURL: audioURL, viewController: self)
+                }
+                else if let audio = self.viewModel.audioEntities.value[self.viewModel.currentIndex.value] as? AudioEntity {
                     BPMExporter.exportAndShare(audioEntity: audio, viewController: self)
                 }
             })
