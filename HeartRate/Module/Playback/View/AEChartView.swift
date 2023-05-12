@@ -12,20 +12,12 @@ import Charts
 
 class AEChartView: UIView {
     
-    
-    lazy var durationLabel: UILabel = {
-        let label = UILabel()
+    lazy var bpmLable: AutoHideLabel = {
+        let label = AutoHideLabel()
         label.textColor = .white
         label.text = ""
         label.font = .systemFont(ofSize: 12)
-        return label
-    }()
-    
-    lazy var bpmLable: UILabel = {
-        let label = UILabel()
-        label.textColor = .white
-        label.text = ""
-        label.font = .systemFont(ofSize: 12)
+        label.numberOfLines = 2
         return label
     }()
     
@@ -66,24 +58,20 @@ class AEChartView: UIView {
     }
     
     private func setupView() {
-        addSubview(durationLabel)
         addSubview(chart)
         addSubview(bpmLable)
         
         chart.snp.makeConstraints { make in
-            make.centerY.equalTo(self.snp.centerY)
+            make.centerY.equalTo(self.snp.centerY).offset(44)
             make.height.equalToSuperview().multipliedBy(0.6)
             make.left.right.equalToSuperview().inset(30)
         }
-        
-        durationLabel.snp.makeConstraints { make in
-            make.right.equalToSuperview().offset(-30)
-            make.bottom.equalTo(chart.snp.top)
-        }
+
         
         bpmLable.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(30)
+            make.left.equalTo(chart.snp.left).offset(30)
             make.bottom.equalTo(chart.snp.top)
+            make.height.equalTo(30)
         }
     }
 }

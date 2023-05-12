@@ -153,3 +153,11 @@ extension Reactive where Base: LevelMeterView {
         }
     }
 }
+
+extension Reactive where Base: AutoHideLabel {
+    var hiddenText: Binder<String> {
+        return Binder(base) { view, text in
+            view.setTextWithAutoHide(text)
+        }
+    }
+}

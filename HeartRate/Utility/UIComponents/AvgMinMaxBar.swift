@@ -19,30 +19,20 @@ class AvgMinMaxBar: UIView {
     lazy var maxLabel = Label(style: .avgMinMax, "最大")
     
     lazy var mainStack: UIStackView = {
-        let s = UIStackView()
-        
-        s.axis         = .horizontal
-        s.alignment    = .fill
-        s.distribution = .fillProportionally
-        s.spacing      = 50
-        
-        s.translatesAutoresizingMaskIntoConstraints = false
-        
-        return s
-    }()
-    
-    lazy var stacks: [UIStackView] = {
-        return [
-            createStack(dataLabel: avgBPMLabel, descriptionLabel: avgLabel),
-            createStack(dataLabel: minBPMLabel, descriptionLabel: minLabel),
-            createStack(dataLabel: maxBPMLabel, descriptionLabel: maxLabel)
-        ]
+        let stack = UIStackView(axis: .horizontal, spacing: 50)
+        stack.addArrangedSubviews(
+            [
+                createStack(dataLabel: avgBPMLabel, descriptionLabel: avgLabel),
+                createStack(dataLabel: minBPMLabel, descriptionLabel: minLabel),
+                createStack(dataLabel: maxBPMLabel, descriptionLabel: maxLabel)
+            ]
+        )
+        return stack
     }()
     
     private func createStack(dataLabel: UILabel, descriptionLabel: UILabel) -> UIStackView {
-        let stack = StackView(axis: .vertical)
-        stack.addArrangedSubview(dataLabel)
-        stack.addArrangedSubview(descriptionLabel)
+        let stack = UIStackView(axis: .vertical)
+        stack.addArrangedSubviews([dataLabel, descriptionLabel])
         return stack
     }
     
@@ -50,11 +40,7 @@ class AvgMinMaxBar: UIView {
         super.init(frame: frame)
         
         addSubview(mainStack)
-        stacks.forEach { mainStack.addArrangedSubview($0) }
-        
-        mainStack.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
+        addConstraintsToFillSuperview(with: mainStack)
     }
     
     required init?(coder: NSCoder) {

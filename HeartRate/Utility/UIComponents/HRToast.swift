@@ -32,5 +32,5 @@ func HRToast(message: String, type: ToastType, duration: TimeInterval = 2.0, pos
         }
         
         topWindow.makeToast(message, duration: duration, position: position, style: style)
-    }
+    } 
 }

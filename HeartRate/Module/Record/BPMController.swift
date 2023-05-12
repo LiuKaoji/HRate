@@ -68,24 +68,6 @@ class BPMController: UIViewController {
             self?.present(info, animated: true)
         }
         
-        
-//        session.isReachable
-//            .map { $0 ? "Is reachable" : "Is not reachable" }
-//            .subscribe(onNext: { text in
-//                print(text)
-//            })
-//            .disposed(by: disposeBag)
-//
-//        session.activationState
-//            .map { $0 == .activated ? "Activated" : "Not activated" }
-//            .subscribe(onNext: { text in
-//                print(text)
-//            })
-//            .disposed(by: disposeBag)
-//
-//
-//        print("Session was activated \(result)")
     }
-
 
 }

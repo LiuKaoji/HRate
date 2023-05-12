@@ -46,8 +46,8 @@ class BPMView: UIView {
         return progress
     }()
     
-    lazy var verticalStack: StackView = { // 竖直方向的StackView，包含当前心率、录制时间、录制时间标题
-        let stack = StackView(axis: .vertical)
+    lazy var verticalStack: UIStackView = { // 竖直方向的StackView，包含当前心率、录制时间、录制时间标题
+        let stack = UIStackView(axis: .vertical)
         return stack
     }()
     

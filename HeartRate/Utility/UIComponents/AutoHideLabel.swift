@@ -11,7 +11,7 @@ import UIKit
 
 class AutoHideLabel: UILabel {
     
-    private let hideDelay: TimeInterval = 3.0
+    private let hideDelay: TimeInterval = 5.0
     private var hideTask: DispatchWorkItem?
     
     func setTextWithAutoHide(_ text: String) {

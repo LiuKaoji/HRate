@@ -7,18 +7,15 @@
 //
 
 import WatchConnectivity
-#if canImport(RxSwift)
-import RxSwift
-#endif
 
 /// iPhone 和 Apple Watch 之间的通信管理器。
-class WatchConnector: NSObject, WCSessionDelegate {
+open class WatchConnector: NSObject, WCSessionDelegate {
     
     // MARK: - 初始化
     
 #if os(iOS)
     /// 一个共享的单例。如果当前设备不支持 Watch Connectivity 框架，则返回 nil。
-    static var shared: WatchConnector? {
+    public static var shared: WatchConnector? {
         if WCSession.isSupported() {
             return WatchConnector.sharedInstance
         }
@@ -54,14 +51,7 @@ class WatchConnector: NSObject, WCSessionDelegate {
     /// 在主队列中调用。
     private var sessionActivationCompletionHandlers = [((WCSession) -> Void)]()
     
-#if os(iOS)
-    // 新增状态观察者
-#if canImport(RxSwift)
-    var isReachableSubject = BehaviorSubject<Bool>(value: false)
-    var isPairedSubject = BehaviorSubject<Bool>(value: false)
-    var isWatchAppInstalledSubject = BehaviorSubject<Bool>(value: false)
-#endif
-#endif
+    
 
     
     // MARK: - 函数
@@ -69,7 +59,7 @@ class WatchConnector: NSObject, WCSessionDelegate {
     /// 添加用于响应来自配对设备的消息和传输的用户信息的处理程序句柄。
     ///
     /// 处理程序承诺从主队列调用。
-    func addMessageHandler(_ messageHandler: MessageHandler) {
+    public func addMessageHandler(_ messageHandler: MessageHandler) {
         guard !messageHandlers.contains(messageHandler) else{
             return
         }
@@ -77,14 +67,14 @@ class WatchConnector: NSObject, WCSessionDelegate {
     }
     
     /// 从列表中移除处理程序句柄。
-    func removeMessageHandler(_ messageHandler: MessageHandler) {
+    public func removeMessageHandler(_ messageHandler: MessageHandler) {
         if let index = messageHandlers.firstIndex(of: messageHandler) {
             messageHandlers.remove(at: index)
         }
     }
     
     /// 异步激活 wcSession。
-    func activate() {
+    public func activate() {
         defaultSession.delegate = self
         defaultSession.activate()
     }
@@ -92,7 +82,7 @@ class WatchConnector: NSObject, WCSessionDelegate {
     /// 获取已激活的 WCSession。如果当前会话尚未激活，则会先激活它。
     ///
     /// - parameter handler: 如果当前设备不支持 Watch Connectivity，则返回 nil。将从主队列中调用。
-    func fetchActivatedSession(handler: @escaping (WCSession) -> Void, error: (() -> Void)? = nil) {
+    public func fetchActivatedSession(handler: @escaping (WCSession) -> Void, error: (() -> Void)? = nil) {
         
         activate()
         
@@ -105,14 +95,14 @@ class WatchConnector: NSObject, WCSessionDelegate {
     }
     
     /// 获取会话是否可达。
-    func fetchReachableState(handler: @escaping (Bool) -> Void) {
+    public func fetchReachableState(handler: @escaping (Bool) -> Void) {
         fetchActivatedSession { session in
             handler(session.isReachable)
         }
     }
     
     /// 向配对设备发送消息。如果配对设备不可达，则不会发送该消息。
-    func send(_ message: [MessageKey : Any]) {
+    public func send(_ message: [MessageKey : Any]) {
         fetchActivatedSession { session in
             session.sendMessage(self.sessionMessage(for: message), replyHandler: nil)
         }
@@ -123,7 +113,7 @@ class WatchConnector: NSObject, WCSessionDelegate {
     /// - parameter message: 要发送的消息
     /// - parameter replyHandler: 成功发送消息后的处理程序。将从主队列调用。
     /// - parameter errorHandler: 发送消息失败时的处理程序。将从主队列调用。
-    func sendWithReply(_ message: [MessageKey: Any], replyHandler: (() -> Void)?, errorHandler: ((String) -> Void)?) {
+    public func sendWithReply(_ message: [MessageKey: Any], replyHandler: (() -> Void)?, errorHandler: ((String) -> Void)?) {
         fetchActivatedSession { session in
             guard session.isReachable else {
                 if let errorHandler = errorHandler {
@@ -140,7 +130,7 @@ class WatchConnector: NSObject, WCSessionDelegate {
 
     
     /// 传输消息到配对设备。
-    func transfer(_ message: [MessageKey : Any]) {
+    public func transfer(_ message: [MessageKey : Any]) {
         fetchActivatedSession { session in
             session.transferUserInfo(self.sessionMessage(for: message))
         }
@@ -165,7 +155,7 @@ class WatchConnector: NSObject, WCSessionDelegate {
     
     // MARK: - WCSessionDelegate
     
-    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+    public func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         print(#function)
         
         if activationState == .activated {
@@ -176,86 +166,71 @@ class WatchConnector: NSObject, WCSessionDelegate {
         }
     }
     
-    func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
+    public func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
         handle(message)
     }
     
-    func session(_ session: WCSession, didReceiveUserInfo userInfo: [String : Any] = [:]) {
+    public func session(_ session: WCSession, didReceiveUserInfo userInfo: [String : Any] = [:]) {
         handle(userInfo)
     }
     
 #if os(iOS)
-    func sessionDidBecomeInactive(_ session: WCSession) {}
+    public func sessionDidBecomeInactive(_ session: WCSession) {}
     
-    func sessionDidDeactivate(_ session: WCSession) {
+    public func sessionDidDeactivate(_ session: WCSession) {
         // 支持在 iOS 应用程序中快速切换 Apple Watch 设备
         defaultSession.activate()
     }
-    
-//    func sessionReachabilityDidChange(_ session: WCSession) {
-//    // 新增状态观察者
-//#if canImport(RxSwift)
-//        isReachableSubject.onNext(session.isReachable)
-//#endif
-//    
-//    }
-//    
-//    func sessionWatchStateDidChange(_ session: WCSession) {
-//#if canImport(RxSwift)
-//        isPairedSubject.onNext(session.isPaired)
-//        isWatchAppInstalledSubject.onNext(session.isWatchAppInstalled)
-//#endif
-//    }
     
 #endif
     
     
     // MARK: - 结构体
     
-    struct MessageKey: RawRepresentable, Hashable {
+    public struct MessageKey: RawRepresentable, Hashable {
         
-        private static var hashDictionary = [String : Int]()
+        public static var hashDictionary = [String : Int]()
         
-        let rawValue: String
+        public let rawValue: String
         
-        let hashValue: Int
+        public let hashValue: Int
         
-        init(_ rawValue: String) {
+        public init(_ rawValue: String) {
             self.rawValue = rawValue
             self.hashValue = rawValue.hashValue
         }
         
-        init(rawValue: String) {
+        public init(rawValue: String) {
             self.rawValue = rawValue
             self.hashValue = rawValue.hashValue
         }
         
-        static func ==(lhs: MessageKey, rhs: MessageKey) -> Bool {
+        public static func ==(lhs: MessageKey, rhs: MessageKey) -> Bool {
             return lhs.rawValue == rhs.rawValue
         }
     }
     
-    struct MessageHandler: Hashable {
+    public struct MessageHandler: Hashable {
         
         fileprivate let uuid: UUID
         
         fileprivate let handler: (([MessageKey : Any]) -> Void)
         
-        func hash(into hasher: inout Hasher) {
+        public func hash(into hasher: inout Hasher) {
             hasher.combine(uuid)
         }
         
-        func invalidate() {
+        public func invalidate() {
             let manager: WatchConnector? = WatchConnector.shared
             manager?.removeMessageHandler(self)
         }
         
-        init(handler: @escaping (([MessageKey : Any]) -> Void)) {
+        public init(handler: @escaping (([MessageKey : Any]) -> Void)) {
             self.handler = handler
             self.uuid = UUID()
         }
         
-        static func ==(lhs: MessageHandler, rhs: MessageHandler) -> Bool {
+        public static func ==(lhs: MessageHandler, rhs: MessageHandler) -> Bool {
             return lhs.uuid == rhs.uuid
         }
     }

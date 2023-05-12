@@ -132,7 +132,7 @@ class AEPlayerController: UIViewController {
             .disposed(by: disposeBag)
         
         viewModel.bpmInfo.asDriver()
-            .drive(playerView.chartView.bpmLable.rx.text)
+            .drive(playerView.chartView.bpmLable.rx.hiddenText)
             .disposed(by: disposeBag)
         
         viewModel.progress.asDriver()

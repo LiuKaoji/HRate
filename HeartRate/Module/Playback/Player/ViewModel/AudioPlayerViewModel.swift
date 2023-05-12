@@ -65,7 +65,6 @@ class AudioPlayerViewModel: BaseAudioPlayerViewModel {
     // 新增特定输出属性
     let fitData = BehaviorRelay(value: "心率样本: 0个 能量消耗: 0 kcal")
     
-    private var bpmIndex: Int = 0
     private var player =  AudioPlayer.shared
     private var modeEntity =  PersistManager.shared.getPlayModeEntity()
     
@@ -183,30 +182,33 @@ class AudioPlayerViewModel: BaseAudioPlayerViewModel {
 
         
         // 读取心率数据更新UI
-//        reactivePlayer.currentTime
-//            .subscribe(onNext: { [weak self] currentTimeStamp in
-//                guard let strongSelf = self else { return }
-//                guard strongSelf.audioEntities.value.count > 0 else{return}
-//                guard let audioEntity = strongSelf.audioEntities.value[strongSelf.currentIndex.value] as? AudioEntity else { return }
-//                let bpms = audioEntity.bpms
-//                // 取整或设置误差范围
-//                let tolerance: TimeInterval = 0.5
-//
-//                // 从当前索引开始，查找符合条件的BPMDescription
-//                while strongSelf.bpmIndex < bpms.count && abs(bpms[strongSelf.bpmIndex].ts - currentTimeStamp) <= tolerance {
-//                    // 将BPM值添加到chartBPMData数组中
-//                    strongSelf.chartBPMData.accept(strongSelf.chartBPMData.value + [bpms[strongSelf.bpmIndex].bpm])
-//                    // 更新当前处理的索引
-//                    strongSelf.bpmIndex += 1
-//                    // 将新的数据添加到计算器
-//                    if  strongSelf.bpmIndex < bpms.count - 1{
-//                        let bpmDesc = bpms[strongSelf.bpmIndex]
-//                        let displayString = "当前:\(bpmDesc.bpm) 最大:\(bpmDesc.max) 平均:\(bpmDesc.max) 消耗: \(bpmDesc.kcal)kcal"
-//                        strongSelf.bpmInfo.accept(displayString)
-//                    }
-//                }
-//            })
-//            .disposed(by: disposeBag)
+        reactivePlayer.currentTime
+            .subscribe(onNext: { [weak self] currentTimeStamp in
+                guard let strongSelf = self else { return }
+                guard strongSelf.audioEntities.value.count > 0 else { return }
+                guard let audioEntity = strongSelf.audioEntities.value[strongSelf.currentIndex.value] as? AudioEntity else { return }
+                let bpms = audioEntity.bpms
+                let tolerance: TimeInterval = 0.5
+
+                // 查找当前时间对应的索引
+                guard let currentIndex = bpms.firstIndex(where: { abs($0.ts - currentTimeStamp) <= tolerance }) else { return }
+
+                // 将BPM值添加到chartBPMData数组中
+                var matchedBPMs: [Int] = []
+                for i in 0...currentIndex {
+                    let bpm = bpms[i].bpm
+                    matchedBPMs.append(bpm)
+                }
+                strongSelf.chartBPMData.accept(matchedBPMs)
+
+                // 处理其他逻辑
+                let bpmDesc = bpms[currentIndex]
+                //let displayString = "现在:\(bpmDesc.bpm) 最大:\(bpmDesc.max) 平均:\(bpmDesc.avg) (次/分) \n消耗: \(bpmDesc.kcal) (千卡)"
+                let displayString = "心率:\(bpmDesc.bpm) 次/分 \n消耗: \(bpmDesc.kcal) 千卡"
+                strongSelf.bpmInfo.accept(displayString)
+            })
+            .disposed(by: disposeBag)
+
     }
     
     func updateBPMLineChart(){
@@ -303,6 +305,9 @@ class AudioPlayerViewModel: BaseAudioPlayerViewModel {
         guard currentIndex.value < audioEntities.value.count - 1 else { return }
         let playable = audioEntities.value[currentIndex.value]
         title.accept(playable.audioName())
+        progress.accept(0)
+        currentTime.accept("00:00")
+        chartBPMData.accept([])
         player.play(with: playable)
         updateBPMLineChart()
     }

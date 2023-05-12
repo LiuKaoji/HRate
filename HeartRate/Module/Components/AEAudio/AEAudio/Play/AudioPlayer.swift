@@ -22,7 +22,6 @@ import MediaPlayer
     @objc optional func player(_ player: AudioPlayer, didUpdateCoverImage image: UIImage)
     @objc optional func playerDidHandleNext()
     @objc optional func playerDidHandlePrevious()
-    
 }
 
 @objc public class AudioPlayer: NSObject {
@@ -192,10 +191,13 @@ private extension AudioPlayer {
 // MARK: public
 extension AudioPlayer {
     public func play(with playable: AudioPlayable) {
+        guard let audioURL = playable.audioURL() else {
+            return
+        }
         if status != .stopped {
             stop()
         }
-        prepareAudioFile(with: playable.audioURL()!)
+        prepareAudioFile(with: audioURL)
         scheduleFile()
         startEngine()
         status = .playing
@@ -280,19 +282,23 @@ extension AudioPlayer {
         status = .stopped
     }
     
+    // 当应用进入后台时调用
     @objc private func appDidEnterBackground() {
-        isAppActive = false
+        isAppActive = false  // 设置应用的状态为非活跃
     }
     
+    // 当应用即将进入前台时调用
     @objc private func appWillEnterForeground() {
-        isAppActive = true
+        isAppActive = true  // 设置应用的状态为活跃
     }
     
+    // 更新正在播放的信息
     private func updateNowPlayingInfo() {
         guard let info = self.playable else { return }
         
         let currentTime = Double(currentAudioFramePosition) / fileSampleRate
         
+        // 创建包含播放信息的字典
         var nowPlayingInfo: [String: Any] = [
             MPMediaItemPropertyTitle: info.audioName(),
             MPMediaItemPropertyPlaybackDuration: info.audioDuration(),
@@ -309,39 +315,44 @@ extension AudioPlayer {
             delegate?.player?(self, didUpdateCoverImage: coverImage)
         }
         
+        // 更新播放信息
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
-        
     }
     
-    
+    // 设置远程命令中心
     private func setupRemoteCommandCenter() {
         
         let commandCenter = MPRemoteCommandCenter.shared()
         
+        // 添加播放命令
         commandCenter.playCommand.isEnabled = true
         commandCenter.playCommand.addTarget { [weak self] _ in
             self?.resume()
             return .success
         }
         
+        // 添加暂停命令
         commandCenter.pauseCommand.isEnabled = true
         commandCenter.pauseCommand.addTarget { [weak self] _ in
             self?.pause()
             return .success
         }
         
+        // 添加下一曲命令
         commandCenter.nextTrackCommand.isEnabled = true
         commandCenter.nextTrackCommand.addTarget { [unowned self] _ in
             self.delegate?.playerDidHandleNext?()
             return .success
         }
         
+        // 添加上一曲命令
         commandCenter.previousTrackCommand.isEnabled = true
         commandCenter.previousTrackCommand.addTarget { [unowned self] _ in
             self.delegate?.playerDidHandlePrevious?()
             return .success
         }
         
+        // 添加改变播放位置命令
         commandCenter.changePlaybackPositionCommand.isEnabled = true
         commandCenter.changePlaybackPositionCommand.addTarget { [weak self] event in
             if let event = event as? MPChangePlaybackPositionCommandEvent {
@@ -352,36 +363,41 @@ extension AudioPlayer {
         }
     }
     
+    // 解构远程命令中心
     private func teardownRemoteCommandCenter() {
         let commandCenter = MPRemoteCommandCenter.shared()
+        // 移除所有命令
         commandCenter.playCommand.isEnabled = false
         commandCenter.pauseCommand.isEnabled = false
         commandCenter.changePlaybackPositionCommand.isEnabled = false
+        // 清空正在播放信息
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nil
     }
     
-    private func getCoverImage() -> UIImage? {
-        guard let info = self.playable, let url = info.audioURL() else {
-            return nil
-        }
-        let asset = AVURLAsset.init(url: url)
-        let metadata = asset.metadata(forFormat: AVMetadataFormat.id3Metadata)
-        for item in metadata {
-            if let key = item.commonKey, key.rawValue == "artwork", let imageData = item.dataValue {
-                return UIImage(data: imageData)
-            }
-        }
+    // 获取封面图像
+     private func getCoverImage() -> UIImage? {
+         guard let info = self.playable, let url = info.audioURL() else {
+             return nil  // 如果没有可播放的信息或者音频URL为空，则返回nil
+         }
+         let asset = AVURLAsset.init(url: url)  // 使用音频URL初始化AVURLAsset对象
+         let metadata = asset.metadata(forFormat: AVMetadataFormat.id3Metadata)  // 获取音频元数据
+         for item in metadata {
+             if let key = item.commonKey, key.rawValue == "artwork", let imageData = item.dataValue {
+                 // 如果找到了封面图像，使用图像数据创建并返回UIImage对象
+                 return UIImage(data: imageData)
+             }
+         }
 
-        // 如果没有从音频元数据中找到封面图片，尝试从 framework 中加载 cover.png
-        let bundle = Bundle(for: AudioPlayer.self)
-        if let imageURL = bundle.url(forResource: "cover", withExtension: "png") {
-            return UIImage(contentsOfFile: imageURL.path)
-        }
+         // 如果没有从音频元数据中找到封面图片，尝试从 framework 中加载 cover.png
+         let bundle = Bundle(for: AudioPlayer.self)
+         if let imageURL = bundle.url(forResource: "cover", withExtension: "png") {
+             return UIImage(contentsOfFile: imageURL.path)
+         }
 
-        return nil
-    }
+         return nil
+     }
 
-    
+    // 处理音频会话中断
     @objc private func handleAudioSessionInterruption(_ notification: Notification) {
         guard let info = notification.userInfo,
               let typeValue = info[AVAudioSessionInterruptionTypeKey] as? UInt,
