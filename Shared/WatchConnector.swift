@@ -1,6 +1,6 @@
 //
 //  WatchConnector.swift
-//  HRate
+//  HRTune
 //
 //  Created by kaoji on 01/25/23.
 //  Copyright © 2023 kaoji. All rights reserved.
@@ -21,6 +21,22 @@ open class WatchConnector: NSObject, WCSessionDelegate {
         }
         return nil
     }
+    
+    // 是否有配对的设备
+    public var isPaired: Bool {
+        return defaultSession.isPaired
+    }
+    
+    // 当前配对设备是否可达
+    public var isReachable: Bool {
+        return defaultSession.isReachable
+    }
+
+    // 是否安装watchApp
+    public var isWatchAppInstalled: Bool {
+        return defaultSession.isWatchAppInstalled
+    }
+
 #elseif os(watchOS)
     /// 一个共享的单例。
     static var shared: WatchConnector {

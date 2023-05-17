@@ -87,7 +87,7 @@ class PumpingController: WKHostingController<PumpView> {
                 do {
                     let unarchiver = try NSKeyedUnarchiver(forReadingFrom: data)
                     unarchiver.requiresSecureCoding = false
-                    NSKeyedUnarchiver.setClass(UserInfo.self, forClassName: "HRate.UserInfo")
+                    NSKeyedUnarchiver.setClass(UserInfo.self, forClassName: "HRTune.UserInfo")
                     if let userInfo = try unarchiver.decodeTopLevelObject(forKey: NSKeyedArchiveRootObjectKey) as? UserInfo {
                         UserInfo.save(userInfo)
                         self?.bpmCalculator.updateUserInfo(With: userInfo)

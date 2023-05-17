@@ -8,6 +8,7 @@
 
 import Foundation
 import WatchConnectivity
+import HealthKit
 
 class WCErrorParser {
     static func parseError(_ errorCode: WCError.Code) -> String {
@@ -51,10 +52,26 @@ class WCErrorParser {
         case .watchOnlyApp:
             return "仅限手表应用"
         @unknown default:
-            return "未知错误"
+            return "未建立有效连接"
         }
     }
 }
+
+
+class HealthStoreError {
+
+   static func parse(_ error: NSError) -> String {
+//        guard error.domain == "FBSOpenApplicationErrorDomain" else {
+//            return "提供的错误不是来自FBSOpenApplicationErrorDomain"
+//        }
+
+       return error.localizedDescription
+    }
+
+}
+
+
+
 
 enum CustomError: Error {
     case watchCommunicationError

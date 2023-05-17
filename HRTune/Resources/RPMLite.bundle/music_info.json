@@ -1,0 +1,84 @@
+[
+  {
+    "albumName": "77",
+    "musicInfo": [
+      {
+        "title": "06 Fractures.mp3",
+        "bitRate": 128000,
+        "sampleRate": 44100,
+        "duration": 36.048980,
+        "size": 719526,
+        "serialNumber": "06",
+        "albumName": "77",
+        "isFavor": false,
+        "favorDate": 0.0
+      },
+      {
+        "title": "07 All Aboard.mp3",
+        "bitRate": 128000,
+        "sampleRate": 44100,
+        "duration": 56.737959,
+        "size": 1050597,
+        "serialNumber": "07",
+        "albumName": "77",
+        "isFavor": false,
+        "favorDate": 0.0
+      },
+      {
+        "title": "03 Sounds Good To Me.mp3",
+        "bitRate": 128000,
+        "sampleRate": 44100,
+        "duration": 19.826939,
+        "size": 460026,
+        "serialNumber": "03",
+        "albumName": "77",
+        "isFavor": false,
+        "favorDate": 0.0
+      },
+      {
+        "title": "04 Keep Me Crazy.mp3",
+        "bitRate": 128000,
+        "sampleRate": 44100,
+        "duration": 39.836735,
+        "size": 780122,
+        "serialNumber": "04",
+        "albumName": "77",
+        "isFavor": false,
+        "favorDate": 0.0
+      },
+      {
+        "title": "01 Hung Up.mp3",
+        "bitRate": 128000,
+        "sampleRate": 44100,
+        "duration": 31.529796,
+        "size": 647228,
+        "serialNumber": "01",
+        "albumName": "77",
+        "isFavor": false,
+        "favorDate": 0.0
+      },
+      {
+        "title": "05 Hypnotic.mp3",
+        "bitRate": 128000,
+        "sampleRate": 44100,
+        "duration": 64.026122,
+        "size": 1167182,
+        "serialNumber": "05",
+        "albumName": "77",
+        "isFavor": false,
+        "favorDate": 0.0
+      },
+      {
+        "title": "02 Green Light.mp3",
+        "bitRate": 128000,
+        "sampleRate": 44100,
+        "duration": 61.048163,
+        "size": 1119500,
+        "serialNumber": "02",
+        "albumName": "77",
+        "isFavor": false,
+        "favorDate": 0.0
+      }
+    ]
+  }
+]

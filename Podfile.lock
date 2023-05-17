@@ -5,6 +5,7 @@ PODS:
     - SwiftAlgorithms (~> 1.0)
   - Eureka (5.4.0)
   - KDCircularProgress (1.5.4)
+  - lottie-ios (4.1.3)
   - "NSObject+Rx (5.2.2)":
     - RxSwift (~> 6.2)
   - OptimizedSQLCipher (1.2.2)
@@ -65,6 +66,7 @@ DEPENDENCIES:
   - Charts (from `https://github.com/danielgindi/Charts.git`, branch `master`)
   - Eureka
   - KDCircularProgress
+  - lottie-ios
   - "NSObject+Rx"
   - R.swift (~> 5.0)
   - RxCocoa
@@ -78,6 +80,7 @@ SPEC REPOS:
   trunk:
     - Eureka
     - KDCircularProgress
+    - lottie-ios
     - "NSObject+Rx"
     - OptimizedSQLCipher
     - PINCache
@@ -109,6 +112,7 @@ SPEC CHECKSUMS:
   Charts: 354f86803d11d9c35de280587fef50d1af063978
   Eureka: fadaa9fa3d6e402d3c60f78f24edf3d7bafc9c29
   KDCircularProgress: 98200c6b8e85d22bc04eb644721d3b1e12b0686b
+  lottie-ios: d0954d3150061f662ed0adf96ef98d7421864c47
   "NSObject+Rx": 61cf1f7306a73dcef8b36649198af0813ec18dfd
   OptimizedSQLCipher: 92a1bf5cc94139e1da49de9c883ff9891bcd2a37
   PINCache: 7a8fc1a691173d21dbddbf86cd515de6efa55086
@@ -126,6 +130,6 @@ SPEC CHECKSUMS:
   WCDBSwift: 6687dc2d4bebce2b237017ca367730f5f8409e67
   Zip: b3fef584b147b6e582b2256a9815c897d60ddc67
 
-PODFILE CHECKSUM: e260a5224b6ce932fb441f7ce1a3fbf8c4ef5029
+PODFILE CHECKSUM: 6c629164e5549caeac47d69dfcb89d76ccae4cf9
 
 COCOAPODS: 1.12.0

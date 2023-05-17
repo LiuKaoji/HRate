@@ -2,14 +2,13 @@
 <document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="21701" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="AgC-eL-Hgc">
     <device id="watch38"/>
     <dependencies>
-        <deployment identifier="watchOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="21615"/>
     </dependencies>
     <scenes>
-        <!--HRate-->
+        <!--HRTune-->
         <scene sceneID="aou-V4-d1y">
             <objects>
-                <controller identifier="InterfaceControllerID" title="HRate" fullScreen="YES" id="AgC-eL-Hgc" customClass="InterfaceController" customModule="WatchKit_App" customModuleProvider="target">
+                <controller identifier="InterfaceControllerID" title="HRTune" fullScreen="YES" id="AgC-eL-Hgc" customClass="InterfaceController" customModule="WatchKit_App" customModuleProvider="target">
                     <items>
                         <group width="1" widthAdjustment="-1" alignment="center" verticalAlignment="center" id="IDw-g6-C08">
                             <items>

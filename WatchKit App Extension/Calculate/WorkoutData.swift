@@ -59,4 +59,18 @@ class WorkoutData: NSObject, NSCoding {
         aCoder.encode(totalCalories, forKey: "totalCalories")
         aCoder.encode(bpmData, forKey: "bpmData")
     }
+    
+    // 仅用于清空数据
+    static var defaultWorkout: WorkoutData {
+          return WorkoutData(
+              date: Date(),
+              nowBPM: 0,
+              minBPM: 0,
+              maxBPM: 0,
+              avgBPM: 0,
+              bpmPercent: 0.0,
+              totalCalories: 0.0,
+              bpmData: []
+          )
+      }
 }

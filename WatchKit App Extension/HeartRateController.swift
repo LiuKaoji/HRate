@@ -1,5 +1,5 @@
 //
-//  HRateController.swift
+//  HRTuneController.swift
 //  InstantHeart
 //
 //  Created by kaoji on 3/27/16.
