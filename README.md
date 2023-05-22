@@ -1,16 +1,10 @@
 # HRate 将心率与录音关联起来
   
 
-   https://user-images.githubusercontent.com/47659827/231647479-57ce7081-b2bf-46d9-bf0b-5cd96db1fe51.mp4
+ ![IMG_8823](https://github.com/LiuKaoji/HRate/assets/47659827/2403973f-6eec-44a8-98c1-0a621ea32549)
 
+  https://user-images.githubusercontent.com/47659827/231647479-57ce7081-b2bf-46d9-bf0b-5cd96db1fe51.mp4
 
-   ![IMG_8823](https://github.com/LiuKaoji/HRate/assets/47659827/2403973f-6eec-44a8-98c1-0a621ea32549)
-
-
-
-
-## 项目背景和动机
-HRate 应用旨在帮助用户通过实时监测心率并将其与音频记录关联，以便用户在运动、工作或其他场景下了解自己的心率变化。
 
 ## 功能和特点
 - 跨设备支持：通过 iPhone 和 Apple Watch 实现心率监测与音频记录的同步。
@@ -19,7 +13,7 @@ HRate 应用旨在帮助用户通过实时监测心率并将其与音频记录�
 - 数据可视化：利用图表展示心率数据，帮助用户更直观地了解心率变化。
 
 ## 技术栈
-- 使用 Swift 编程语言进行开发。
+- 使用 Swift 编程语言进行开发， SwiftUI构建AppleWatch界面
 - 利用 Apple Watch 和 iPhone 的 WatchConnectivity 框架实现设备间通信。
 - 通过 HealthKit 框架获取和展示心率数据。
 
