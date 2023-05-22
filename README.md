@@ -4,11 +4,8 @@
    https://user-images.githubusercontent.com/47659827/231647479-57ce7081-b2bf-46d9-bf0b-5cd96db1fe51.mp4
 
 
-   https://user-images.githubusercontent.com/47659827/232798250-2feef93f-3d02-4529-8d36-d67d2d6d94a3.mp4
+   ![IMG_8823](https://github.com/LiuKaoji/HRate/assets/47659827/2403973f-6eec-44a8-98c1-0a621ea32549)
 
-
-
-   https://user-images.githubusercontent.com/47659827/233249231-0db2812c-e6d0-41ca-887c-4b511480cd33.mp4
 
 
 
@@ -57,16 +54,6 @@ sequenceDiagram
     iPhone->>HRateiPhone: 发送消息关闭HRate AppleWatch App
 ```
   
-### 引用
-
-- [KDCircularProgress: 圆形进度指示器](https://github.com/kaandedeoglu/KDCircularProgress)
-- [Charts: 交互式美观的图表库](https://github.com/danielgindi/Charts) 
-- [SnapKit: Swift Auto Layout 约束库](https://github.com/SnapKit/SnapKit)
-- [WCDBSwift: 腾讯的高性能数据库框架](https://github.com/Tencent/wcdb/tree/master/swift)
-- [RxSwift: Swift 响应式编程框架](https://github.com/ReactiveX/RxSwift)
-- [RxCocoa: 基于 RxSwift 的 Cocoa 和 Cocoa Touch 框架扩展](https://github.com/ReactiveX/RxSwift/tree/main/RxCocoa)
-- [Zip: Swift 文件压缩与解压缩库](https://github.com/marmelroy/Zip) 
-- [SSLineChart: 简单易用的折线图表库](https://github.com/luojh/SSLineChart)
 
 
 
