@@ -34,13 +34,13 @@ public struct HorizontalParallaxScrollViewItem {
 
 public class ParallaxScrollView: UIScrollView {
     
-    private var parallaxItems: [HorizontalParallaxScrollViewItem] = []
+    private var GuideItems: [HorizontalParallaxScrollViewItem] = []
     
     public init(frame: CGRect, items: [HorizontalParallaxScrollViewItem]) {
-        self.parallaxItems = items
+        self.GuideItems = items
         super.init(frame: frame)
 
-        for item in parallaxItems {
+        for item in GuideItems {
             addSubview(item.view)
         }
 
@@ -59,7 +59,7 @@ public class ParallaxScrollView: UIScrollView {
     private func applyParallaxEffect() {
         let contentOffsetX = contentOffset.x
         
-        for item in parallaxItems {
+        for item in GuideItems {
             let acceleration: CGPoint
             
             switch item.acceleration {
@@ -81,9 +81,9 @@ public class ParallaxScrollView: UIScrollView {
     }
     
     func updateParallaxLayout() {
-        let contentWidth = bounds.width * CGFloat(parallaxItems.count)
+        let contentWidth = bounds.width * CGFloat(GuideItems.count)
 
-        for (index, item) in parallaxItems.enumerated() {
+        for (index, item) in GuideItems.enumerated() {
             item.view.frame.origin = CGPoint(x: bounds.width * CGFloat(index), y: item.originOffset.y)
         }
 

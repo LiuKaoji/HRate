@@ -21,7 +21,7 @@ class AvgMinMaxBar: UIView {
     lazy var calorieLabel = Label(style: .avgMinMax, "消耗")
     
     lazy var mainStack: UIStackView = {
-        let stack = UIStackView(axis: .horizontal, spacing: 50)
+        let stack = UIStackView(axis: .horizontal, spacing: 40)
         stack.addArrangedSubviews(
             [
                 createStack(dataLabel: avgBPMLabel, descriptionLabel: avgLabel),

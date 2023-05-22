@@ -17,7 +17,7 @@ class UserInfoFormViewController: FormViewController {
         super.viewDidLoad()
         
         // 设置视图的背景颜色为半透明
-        view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.1)
+        view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.6)
         
         // 设置圆角边框
         let formView = UIView()

@@ -87,6 +87,29 @@
 		36ABE4392A03B142003197FF /* CoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 364EA61929FB7C3D0072C792 /* CoverView.swift */; };
 		36ABE43F2A03B2FD003197FF /* AERotateImageNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36ABE43E2A03B2FD003197FF /* AERotateImageNode.swift */; };
 		36ABE4432A04CCBD003197FF /* disc.png in Resources */ = {isa = PBXBuildFile; fileRef = 36ABE4422A04CCBD003197FF /* disc.png */; };
+		36C23F862A18F87600E82211 /* PVItemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C23F742A18F87600E82211 /* PVItemType.swift */; };
+		36C23F872A18F87600E82211 /* PVTimingFunctionName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C23F762A18F87600E82211 /* PVTimingFunctionName.swift */; };
+		36C23F882A18F87600E82211 /* PVActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C23F772A18F87600E82211 /* PVActionType.swift */; };
+		36C23F892A18F87600E82211 /* PVActionFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C23F782A18F87600E82211 /* PVActionFrame.swift */; };
+		36C23F8A2A18F87600E82211 /* PVParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C23F792A18F87600E82211 /* PVParameters.swift */; };
+		36C23F8B2A18F87600E82211 /* PVTimingFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C23F7A2A18F87600E82211 /* PVTimingFunction.swift */; };
+		36C23F8C2A18F87600E82211 /* PVActionGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C23F7B2A18F87600E82211 /* PVActionGroup.swift */; };
+		36C23F8D2A18F87600E82211 /* PVView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C23F7C2A18F87600E82211 /* PVView.swift */; };
+		36C23F8E2A18F87600E82211 /* PVActionMove.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C23F7D2A18F87600E82211 /* PVActionMove.swift */; };
+		36C23F8F2A18F87600E82211 /* PVViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C23F7E2A18F87600E82211 /* PVViewDelegate.swift */; };
+		36C23F902A18F87600E82211 /* PVActionScale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C23F7F2A18F87600E82211 /* PVActionScale.swift */; };
+		36C23F912A18F87600E82211 /* PVActionFade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C23F802A18F87600E82211 /* PVActionFade.swift */; };
+		36C23F922A18F87600E82211 /* PVActionSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C23F812A18F87600E82211 /* PVActionSize.swift */; };
+		36C23F932A18F87600E82211 /* PVTimingFunctionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C23F822A18F87600E82211 /* PVTimingFunctionType.swift */; };
+		36C23F942A18F87600E82211 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C23F832A18F87600E82211 /* Helper.swift */; };
+		36C23F962A18F87600E82211 /* PVActionRotate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C23F852A18F87600E82211 /* PVActionRotate.swift */; };
+		36C23F992A18F95700E82211 /* GuideItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C23F972A18F95700E82211 /* GuideItem.swift */; };
+		36C23F9A2A18F95700E82211 /* GuideController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C23F982A18F95700E82211 /* GuideController.swift */; };
+		36C23F9E2A18FB3A00E82211 /* LetterSpacingAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C23F9C2A18FB3A00E82211 /* LetterSpacingAction.swift */; };
+		36C23F9F2A18FB3A00E82211 /* StrokePathAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C23F9D2A18FB3A00E82211 /* StrokePathAction.swift */; };
+		36C23FA12A18FBD900E82211 /* Guide.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 36C23FA02A18FBD900E82211 /* Guide.bundle */; };
+		36C23FA32A18FC1200E82211 /* GuideImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C23FA22A18FC1200E82211 /* GuideImageLoader.swift */; };
+		36C23FA52A1A0DE900E82211 /* TabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C23FA42A1A0DE900E82211 /* TabbarController.swift */; };
 		36C3C69529ED82D400E8A4DB /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C3C69429ED82D400E8A4DB /* ChartView.swift */; };
 		36C3C69929ED845800E8A4DB /* PlayListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C3C69829ED845800E8A4DB /* PlayListCell.swift */; };
 		36C3C69F29EE167500E8A4DB /* RxCastOrThrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C3C69E29EE167500E8A4DB /* RxCastOrThrow.swift */; };
@@ -285,6 +308,29 @@
 		36ABE43E2A03B2FD003197FF /* AERotateImageNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AERotateImageNode.swift; sourceTree = "<group>"; };
 		36ABE4422A04CCBD003197FF /* disc.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = disc.png; sourceTree = "<group>"; };
 		36ABE4492A04F521003197FF /* AutoHideLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoHideLabel.swift; sourceTree = "<group>"; };
+		36C23F742A18F87600E82211 /* PVItemType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PVItemType.swift; sourceTree = "<group>"; };
+		36C23F762A18F87600E82211 /* PVTimingFunctionName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PVTimingFunctionName.swift; sourceTree = "<group>"; };
+		36C23F772A18F87600E82211 /* PVActionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PVActionType.swift; sourceTree = "<group>"; };
+		36C23F782A18F87600E82211 /* PVActionFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PVActionFrame.swift; sourceTree = "<group>"; };
+		36C23F792A18F87600E82211 /* PVParameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PVParameters.swift; sourceTree = "<group>"; };
+		36C23F7A2A18F87600E82211 /* PVTimingFunction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PVTimingFunction.swift; sourceTree = "<group>"; };
+		36C23F7B2A18F87600E82211 /* PVActionGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PVActionGroup.swift; sourceTree = "<group>"; };
+		36C23F7C2A18F87600E82211 /* PVView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PVView.swift; sourceTree = "<group>"; };
+		36C23F7D2A18F87600E82211 /* PVActionMove.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PVActionMove.swift; sourceTree = "<group>"; };
+		36C23F7E2A18F87600E82211 /* PVViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PVViewDelegate.swift; sourceTree = "<group>"; };
+		36C23F7F2A18F87600E82211 /* PVActionScale.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PVActionScale.swift; sourceTree = "<group>"; };
+		36C23F802A18F87600E82211 /* PVActionFade.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PVActionFade.swift; sourceTree = "<group>"; };
+		36C23F812A18F87600E82211 /* PVActionSize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PVActionSize.swift; sourceTree = "<group>"; };
+		36C23F822A18F87600E82211 /* PVTimingFunctionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PVTimingFunctionType.swift; sourceTree = "<group>"; };
+		36C23F832A18F87600E82211 /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
+		36C23F852A18F87600E82211 /* PVActionRotate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PVActionRotate.swift; sourceTree = "<group>"; };
+		36C23F972A18F95700E82211 /* GuideItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideItem.swift; sourceTree = "<group>"; };
+		36C23F982A18F95700E82211 /* GuideController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideController.swift; sourceTree = "<group>"; };
+		36C23F9C2A18FB3A00E82211 /* LetterSpacingAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LetterSpacingAction.swift; sourceTree = "<group>"; };
+		36C23F9D2A18FB3A00E82211 /* StrokePathAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StrokePathAction.swift; sourceTree = "<group>"; };
+		36C23FA02A18FBD900E82211 /* Guide.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Guide.bundle; sourceTree = "<group>"; };
+		36C23FA22A18FC1200E82211 /* GuideImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideImageLoader.swift; sourceTree = "<group>"; };
+		36C23FA42A1A0DE900E82211 /* TabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarController.swift; sourceTree = "<group>"; };
 		36C3C69429ED82D400E8A4DB /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		36C3C69829ED845800E8A4DB /* PlayListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayListCell.swift; sourceTree = "<group>"; };
 		36C3C69E29EE167500E8A4DB /* RxCastOrThrow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxCastOrThrow.swift; sourceTree = "<group>"; };
@@ -436,6 +482,7 @@
 			children = (
 				3674C96F2A13B81A0045F9AB /* connect.json */,
 				3674C9562A13253A0045F9AB /* splash.png */,
+				36C23FA02A18FBD900E82211 /* Guide.bundle */,
 				3674C9502A1321DE0045F9AB /* Player.bundle */,
 				36FCE1892A1214CB007BC6B8 /* RPMLite.bundle */,
 				364EA5EB29FABAC20072C792 /* R.swift */,
@@ -717,8 +764,8 @@
 		369BD4F229E93D9F00CB6B97 /* Module */ = {
 			isa = PBXGroup;
 			children = (
+				36C23FA62A1A1B6800E82211 /* Base */,
 				3674C92F2A1315F40045F9AB /* AEAudio */,
-				3674C91E2A126C1E0045F9AB /* Splash */,
 				369BD4EF29E93CB300CB6B97 /* Persist */,
 				369BD4F329E93D9F00CB6B97 /* Playback */,
 				369BD4F629E93D9F00CB6B97 /* Record */,
@@ -806,6 +853,60 @@
 				36C3C6B229EEC0CA00E8A4DB /* PlayIndicator.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		36C23F712A18F86900E82211 /* Guide */ = {
+			isa = PBXGroup;
+			children = (
+				36C23F732A18F87600E82211 /* PVView */,
+				36C23F9B2A18FB3A00E82211 /* CustomActions */,
+				36C23F982A18F95700E82211 /* GuideController.swift */,
+				36C23F972A18F95700E82211 /* GuideItem.swift */,
+				36C23FA22A18FC1200E82211 /* GuideImageLoader.swift */,
+			);
+			path = Guide;
+			sourceTree = "<group>";
+		};
+		36C23F732A18F87600E82211 /* PVView */ = {
+			isa = PBXGroup;
+			children = (
+				36C23F742A18F87600E82211 /* PVItemType.swift */,
+				36C23F762A18F87600E82211 /* PVTimingFunctionName.swift */,
+				36C23F772A18F87600E82211 /* PVActionType.swift */,
+				36C23F782A18F87600E82211 /* PVActionFrame.swift */,
+				36C23F792A18F87600E82211 /* PVParameters.swift */,
+				36C23F7A2A18F87600E82211 /* PVTimingFunction.swift */,
+				36C23F7B2A18F87600E82211 /* PVActionGroup.swift */,
+				36C23F7C2A18F87600E82211 /* PVView.swift */,
+				36C23F7D2A18F87600E82211 /* PVActionMove.swift */,
+				36C23F7E2A18F87600E82211 /* PVViewDelegate.swift */,
+				36C23F7F2A18F87600E82211 /* PVActionScale.swift */,
+				36C23F802A18F87600E82211 /* PVActionFade.swift */,
+				36C23F812A18F87600E82211 /* PVActionSize.swift */,
+				36C23F822A18F87600E82211 /* PVTimingFunctionType.swift */,
+				36C23F832A18F87600E82211 /* Helper.swift */,
+				36C23F852A18F87600E82211 /* PVActionRotate.swift */,
+			);
+			path = PVView;
+			sourceTree = "<group>";
+		};
+		36C23F9B2A18FB3A00E82211 /* CustomActions */ = {
+			isa = PBXGroup;
+			children = (
+				36C23F9C2A18FB3A00E82211 /* LetterSpacingAction.swift */,
+				36C23F9D2A18FB3A00E82211 /* StrokePathAction.swift */,
+			);
+			path = CustomActions;
+			sourceTree = "<group>";
+		};
+		36C23FA62A1A1B6800E82211 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				3674C91E2A126C1E0045F9AB /* Splash */,
+				36C23F712A18F86900E82211 /* Guide */,
+				36C23FA42A1A0DE900E82211 /* TabbarController.swift */,
+			);
+			path = Base;
 			sourceTree = "<group>";
 		};
 		9C0B78B3EF604FE8B0A3FF61 /* Pods */ = {
@@ -1074,6 +1175,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				36C23FA12A18FBD900E82211 /* Guide.bundle in Resources */,
 				36C3C6CB29EF881D00E8A4DB /* REEJI-PinboGB.ttf in Resources */,
 				3674C9702A13B81A0045F9AB /* connect.json in Resources */,
 				3674C9572A13253B0045F9AB /* splash.png in Resources */,
@@ -1218,33 +1320,48 @@
 				3674C9362A1317AB0045F9AB /* Persist + PlayModeEntity.swift in Sources */,
 				36245AD02A112BCF0057F1C8 /* SearchTextField.swift in Sources */,
 				3668664D29F7B3F0009136B9 /* PlayScrollView.swift in Sources */,
+				36C23F8B2A18F87600E82211 /* PVTimingFunction.swift in Sources */,
 				36FCE17D2A11C964007BC6B8 /* UIAlertController + confirm.swift in Sources */,
 				3668664029F7823A009136B9 /* PlayView.swift in Sources */,
+				36C23F962A18F87600E82211 /* PVActionRotate.swift in Sources */,
 				36A8B4542A0119270065B48F /* UIButton + Style.swift in Sources */,
 				36974BBF2A0EA529005D431E /* AutoHideLabel.swift in Sources */,
+				36C23F8D2A18F87600E82211 /* PVView.swift in Sources */,
 				369BD51729E93E0100CB6B97 /* AvgMinMaxBar.swift in Sources */,
+				36C23F872A18F87600E82211 /* PVTimingFunctionName.swift in Sources */,
 				364EA5E829FABA610072C792 /* Public.swift in Sources */,
 				3670AD4B29F4DDAF0026F2B5 /* WorkoutData.swift in Sources */,
 				3674C9392A13181B0045F9AB /* Persist + UserEntity.swift in Sources */,
 				36C3C69929ED845800E8A4DB /* PlayListCell.swift in Sources */,
+				36C23F892A18F87600E82211 /* PVActionFrame.swift in Sources */,
 				369BD51B29E93E0100CB6B97 /* RecordButton.swift in Sources */,
 				369BD51829E93E0100CB6B97 /* Label.swift in Sources */,
 				369BD50229E93D9F00CB6B97 /* ShareExporter.swift in Sources */,
+				36C23F922A18F87600E82211 /* PVActionSize.swift in Sources */,
+				36C23F942A18F87600E82211 /* Helper.swift in Sources */,
 				36A8B4DB2A033BAC0065B48F /* RxAudioRecordable.swift in Sources */,
 				3674C93E2A1318B00045F9AB /* Persist + MusicInfo.swift in Sources */,
 				362EFD752A034D96006243E0 /* FAQController.swift in Sources */,
+				36C23F9A2A18F95700E82211 /* GuideController.swift in Sources */,
 				36C3C69529ED82D400E8A4DB /* ChartView.swift in Sources */,
+				36C23F9E2A18FB3A00E82211 /* LetterSpacingAction.swift in Sources */,
 				36974BC12A0F2DD5005D431E /* PagingView.swift in Sources */,
 				369BD50829E93D9F00CB6B97 /* RecordView.swift in Sources */,
+				36C23F9F2A18FB3A00E82211 /* StrokePathAction.swift in Sources */,
+				36C23F8F2A18F87600E82211 /* PVViewDelegate.swift in Sources */,
 				364EA5ED29FABAF50072C792 /* R.generated.swift in Sources */,
+				36C23F882A18F87600E82211 /* PVActionType.swift in Sources */,
 				36C3C6B329EEC0CA00E8A4DB /* PlayIndicator.swift in Sources */,
 				36EB7C272A0F5EBE00531995 /* PageInfo.swift in Sources */,
 				36C3C69F29EE167500E8A4DB /* RxCastOrThrow.swift in Sources */,
+				36C23FA32A18FC1200E82211 /* GuideImageLoader.swift in Sources */,
 				3670AD5429F51EDD0026F2B5 /* HRToast.swift in Sources */,
 				3670AD4329F3FFC50026F2B5 /* UserEntity.swift in Sources */,
 				3668665329F7B79F009136B9 /* PlayControlView.swift in Sources */,
 				36974BB22A0E7AEB005D431E /* UIStackView + Style.swift in Sources */,
 				369BD50729E93D9F00CB6B97 /* AudioEntity.swift in Sources */,
+				36C23F862A18F87600E82211 /* PVItemType.swift in Sources */,
+				36C23F8A2A18F87600E82211 /* PVParameters.swift in Sources */,
 				36EB7C242A0F5DE800531995 /* PlayListController.swift in Sources */,
 				369BD4F129E93CB300CB6B97 /* Persist.swift in Sources */,
 				3668665529F7C47F009136B9 /* HorizontalScrollView.swift in Sources */,
@@ -1253,27 +1370,34 @@
 				3674C9532A1324550045F9AB /* PlayImageLoader.swift in Sources */,
 				3674C95A2A13312F0045F9AB /* MemoryTracker.swift in Sources */,
 				36974BB02A0E7ABC005D431E /* UIView  + fill.swift in Sources */,
+				36C23F992A18F95700E82211 /* GuideItem.swift in Sources */,
 				364EA62829FB8E510072C792 /* RxAudioPlayable.swift in Sources */,
+				36C23F912A18F87600E82211 /* PVActionFade.swift in Sources */,
 				3668664F29F7B49C009136B9 /* AlbumInfoView.swift in Sources */,
 				369BD50929E93D9F00CB6B97 /* RecordViewConfig.swift in Sources */,
 				369BD50629E93D9F00CB6B97 /* RecordController.swift in Sources */,
 				369BD50429E93D9F00CB6B97 /* RecordViewModel.swift in Sources */,
 				363434DF2A0F6C04004B74F6 /* PlayList.swift in Sources */,
+				36C23F8E2A18F87600E82211 /* PVActionMove.swift in Sources */,
 				3668664429F7851B009136B9 /* PlayController.swift in Sources */,
 				36974BA82A0E77B2005D431E /* WatchConnectorConstants.swift in Sources */,
 				36974BAA2A0E77B2005D431E /* WCErrorParser.swift in Sources */,
+				36C23F8C2A18F87600E82211 /* PVActionGroup.swift in Sources */,
 				36ABE43F2A03B2FD003197FF /* AERotateImageNode.swift in Sources */,
 				369BD51429E93E0100CB6B97 /* TimeFormat.swift in Sources */,
+				36C23FA52A1A0DE900E82211 /* TabbarController.swift in Sources */,
 				36A8B4CE2A025AF20065B48F /* PlayModeEntity.swift in Sources */,
 				36974BA92A0E77B2005D431E /* WatchConnector.swift in Sources */,
 				3668664929F786E8009136B9 /* PlayViewModel.swift in Sources */,
 				3674C93C2A1318720045F9AB /* Persist + Collection.swift in Sources */,
+				36C23F932A18F87600E82211 /* PVTimingFunctionType.swift in Sources */,
 				369BD50329E93D9F00CB6B97 /* Binder.swift in Sources */,
 				36C989C52A065AE600600A57 /* RPM.swift in Sources */,
 				36C4581529F925EE00A06819 /* UITableView+emptyState.swift in Sources */,
 				3670AD4C29F4FC9A0026F2B5 /* UserInfo.swift in Sources */,
 				3670AD4129F3F57A0026F2B5 /* InfoController.swift in Sources */,
 				3674C9272A1286C20045F9AB /* SplashView.swift in Sources */,
+				36C23F902A18F87600E82211 /* PVActionScale.swift in Sources */,
 				3674C9332A1316B90045F9AB /* Persist + AudioEntity.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

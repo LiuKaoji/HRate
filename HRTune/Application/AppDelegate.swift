@@ -36,6 +36,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
 
         SplashView.show(iconImage: R.image.splash()!, backgroundColor: .white)
+        
+        //GuideView.init(frame: window!.frame).showInWindow()
+        
     }
     
     // 申请访问健康数据的权限

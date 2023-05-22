@@ -121,7 +121,7 @@ extension Reactive where Base: RecordView {
             view.avgBar.minBPMLabel.text = "\(data.minBPM)"
             view.avgBar.maxBPMLabel.text = "\(data.maxBPM)"
             view.avgBar.avgBPMLabel.text = "\(data.avgBPM)"
-            view.avgBar.kcalLabel.text = "\(data.totalCalories)"
+            view.avgBar.kcalLabel.text = "\(String.init(format: "%.1f", data.totalCalories))"
             view.progress.progress = data.bpmPercent
         }
     }

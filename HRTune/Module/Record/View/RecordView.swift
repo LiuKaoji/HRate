@@ -40,7 +40,7 @@ class RecordView: UIView {
     }()
     
     lazy var timeTitleLabel: Label = { // 录制时间标题
-        let label = Label(style: .timeTitle, "时间")
+        let label = Label(style: .timeTitle, "次/分")
         return label
     }()
     
@@ -154,8 +154,8 @@ class RecordView: UIView {
         addSubview(faqButton)
         
         verticalStack.addArrangedSubview(nowLabel)
-        verticalStack.addArrangedSubview(timeLabel)
         verticalStack.addArrangedSubview(timeTitleLabel)
+        verticalStack.addArrangedSubview(timeLabel)
         
         if Constants().isBig {
             recordContainView.addSubview(avgBar)
@@ -226,14 +226,14 @@ class RecordView: UIView {
         historyButton.snp.makeConstraints { (make) in
             make.right.equalToSuperview().offset(-15)
             make.size.equalTo(80)
-            make.bottom.equalToSuperview().offset(-34)
+            make.centerY.equalTo(recordButton.snp.centerY)
         }
         
         
         userInfoButton.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(15)
             make.size.equalTo(80)
-            make.bottom.equalToSuperview().offset(-34)
+            make.centerY.equalTo(recordButton.snp.centerY)
         }
         
         faqButton.snp.makeConstraints { make in
